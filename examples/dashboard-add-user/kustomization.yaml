@@ -1,0 +1,5 @@
+bases:
+  - vendor/bases/addons/dashboard #FIXME
+
+patches: 
+  - ark-backup.yml

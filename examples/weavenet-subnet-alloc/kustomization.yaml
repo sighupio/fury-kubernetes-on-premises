@@ -1,0 +1,5 @@
+bases:
+- vendor/bases/network/weave #FIXME
+
+patches: 
+- weave-subnet.yml
