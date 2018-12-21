@@ -1,10 +1,11 @@
-# Kubernetes Dashboard Adding User
+# Accessing Kubernetes Dashboard with Token
 
-This example shows how to create a User and to use a Bearer Token to access Kubernetes dashboard.  
+This example shows how to access Kubernetes dashboard with authentication using a Bearer Token. 
+Example uses `cluster-admin` ClusterRole which is already created after cluster provisioning.   
 
 0. Run furyctl to get packages: `$ furyctl install --dev`
 
-1. Create a ServiceAccount, ClusterRole and ClusterRoleBinding to create a new user to access the dashboard.
+1. `rbac.yml` creates a ServiceAccount and binds it to the ClusterRole `cluster-admin`.
 
 2. Run `make build` to see output of kustomize with your modifications.
 
@@ -22,4 +23,4 @@ Then visiting following endpoint from your browser:
 
 `$ kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')` 
 
-6. Copy token and paste it to `Enter token` field at login page. Now you can login and see Kubernetes dashboard.
+6. Copy&paste token to `Enter token` field at login page. Now you can login and see Kubernetes dashboard.
