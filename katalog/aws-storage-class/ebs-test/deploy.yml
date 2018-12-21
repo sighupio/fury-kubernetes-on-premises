@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
       - name: alpine
-        image: nginx
+        image: alpine:3.8
         volumeMounts:
         - name: db
           mountPath: "/var/lib/data"

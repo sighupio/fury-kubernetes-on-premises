@@ -1,5 +1,5 @@
 ---
-apiVersion: storage.k8s.io/v1beta1
+apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: gp2-a
@@ -8,7 +8,7 @@ parameters:
   type: gp2
   zones: eu-west-1a
 ---
-apiVersion: storage.k8s.io/v1beta1
+apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: gp2-b
@@ -17,7 +17,7 @@ parameters:
   type: gp2
   zones: eu-west-1b
 ---
-apiVersion: storage.k8s.io/v1beta1
+apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: gp2-c
@@ -26,7 +26,7 @@ parameters:
   type: gp2
   zones: eu-west-1c
 ---
-apiVersion: storage.k8s.io/v1beta1
+apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: gp2
