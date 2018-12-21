@@ -1,0 +1,1 @@
+# fury-kubernetes-kubeadm
