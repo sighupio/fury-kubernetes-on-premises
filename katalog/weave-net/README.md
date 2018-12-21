@@ -1,6 +1,8 @@
-# Weave Net Katalog
+# Weave Net
 
-Weave Net is a popular CNI plug-in that creates a virtual network for Kubernetes and provides one IP address per pod. It doesn’t require any configuration or extra code to run.
+Weave Net is a popular CNI plugin that creates a virtual network for Kubernetes
+and provides one IP address per pod. It doesn’t require any configuration or
+extra code to run.
 
 ## Requirements
 
@@ -18,7 +20,7 @@ Weave Net is a popular CNI plug-in that creates a virtual network for Kubernetes
 
 ## Configuration
 
-Fury distribution Weave Net is deployed with following configuration:
+Fury distribution Weave Net is deployed with the following configuration:
 
 - Metrics are scraped by Prometheus every `15s`
 
@@ -27,15 +29,19 @@ Fury distribution Weave Net is deployed with following configuration:
 
 You can deploy Weave Net by running following command in the root of the project:
 
-`$ kustomize build | kubectl apply -f -`
+```shell
+$ kustomize build | kubectl apply -f -
+```
 
 
 ## Alerts
 
-Followings Prometheus [alerts](https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/) are already defined for this package.
+The followings Prometheus
+[alerts](https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/)
+are already defined for this package.
 
-### weave-net.rules  
-| Parameter | Description | Severity | Interval | 
+### weave-net.rules
+| Parameter | Description | Severity | Interval |
 |------|-------------|----------|:-----:|
 | WeaveNetUnreachablePercentage | This alert fires if the unreachable percentage of a given weave-net pod was more than 0 in the last 10 minutes. | critical | 10m |
 | WeaveNetUnreachablePeers | This alert fires if there were more than 0 unreachable weave-net peers in the last 10 minutes. | critical | 10m |
@@ -47,4 +53,4 @@ Followings Prometheus [alerts](https://prometheus.io/docs/prometheus/latest/conf
 
 ## License
 
-For license details please see [LICENSE](https://sighup.io/fury/license) 
+For license details please see [LICENSE](https://sighup.io/fury/license)
