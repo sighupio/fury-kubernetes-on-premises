@@ -1,1 +1,1 @@
-# Fury Kubernetes Kubeadm
+# Fury Kubernetes On-premise
