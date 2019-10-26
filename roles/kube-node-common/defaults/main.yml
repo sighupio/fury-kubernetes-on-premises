@@ -1,15 +1,18 @@
 ---
 
+kubernetes_hostname: "{{ ansible_hostname }}"
+
 # CRI
 container_runtime: docker
-docker_version: 18.06.1~ce~3-0~ubuntu
+docker_version: 18.06.2~ce~3-0~ubuntu
 
 # Kurnetes Components Versions
-kubelet_version: "1.12.1"
-kubectl_version: "1.12.1"
-kubeadm_version: "1.12.1"
-critools_version: "1.12.0"
-
+kubernetes_repo_distribution: 'xenial'
+kubelet_version: '1.15.4'
+kubectl_version: '1.15.4'
+kubeadm_version: '1.15.4'
+critools_version: '1.13.0'
+kubernetescni_version: '0.7.5'
 # Docker Configurations
 # registry_mirrors:
 # - ""

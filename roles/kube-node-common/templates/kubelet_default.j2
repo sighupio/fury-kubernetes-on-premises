@@ -1,0 +1,1 @@
+KUBELET_EXTRA_ARGS='--hostname-override={{ kubernetes_hostname }} --node-labels={{ group_names | map('regex_replace', '^(.*)$', 'node-kind.sighup.io/\\1=') | join(',') }}'

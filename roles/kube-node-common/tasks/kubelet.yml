@@ -11,7 +11,7 @@
     name: swap
     fstype: swap
     state: absent
-    
+
 - name: Disable swap
   command: swapoff -a
   when: ansible_swaptotal_mb > 0
@@ -22,7 +22,14 @@
     value: '1'
     state: present
 
-- name: Ensuring IPVS kernel modules are enabled
+# required since k8s 1.15
+- name: Installing ipset dependency
+  apt:
+    name: ipset
+    state: latest
+    update_cache: yes
+
+- name: Ensuring IPVS kernel modules are loaded
   modprobe:
     name: "{{ item }}"
     state: present
@@ -32,6 +39,24 @@
     - ip_vs_wrr
     - ip_vs_sh
 
+- name: Ensuring IPVS kernel modules are loaded at boot
+  lineinfile:
+    state: present
+    path: /etc/modules-load.d/ipvs.conf
+    line: "{{ item }}"
+    create: yes
+  with_items:
+    - ip_vs
+    - ip_vs_rr
+    - ip_vs_wrr
+    - ip_vs_sh
+
+- name: Enabling systemd-modules-load service
+  systemd:
+    name: systemd-modules-load
+    enabled: yes
+    state: started
+
 - name: Adding kubernetes apt-key
   apt_key:
     url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
@@ -39,24 +64,30 @@
 
 - name: Adding kubernetes repository
   apt_repository:
-    repo: deb http://apt.kubernetes.io/ kubernetes-xenial main
+    repo: "deb https://apt.kubernetes.io/ kubernetes-{{ kubernetes_repo_distribution }} main"
     state: present
 
 - name: Making sure kubelet, kubectl, kubeadm, cri-tools are installed
   apt:
-    name: "{{ item }}"
+    name:
+      - openssl
+      - kubelet={{ kubelet_version }}-00
+      - kubeadm={{ kubeadm_version }}-00
+      - kubectl={{ kubectl_version }}-00
+      - cri-tools={{ critools_version }}-00
+      - kubernetes-cni={{ kubernetescni_version }}-00
     state: present
     update_cache: yes
-  with_items:
-    - openssl
-    - kubelet={{ kubelet_version }}-00
-    - kubeadm={{ kubeadm_version }}-00
-    - kubectl={{ kubectl_version }}-00
-    - cri-tools={{ critools_version }}-00
+
+- name: Ensuring kubelet extra-args are present on machine
+  template:
+    src: kubelet_default.j2
+    dest: /etc/default/kubelet
+  notify: restart kubelet
 
 - name: starting and enabling kubelet
   systemd:
     name: kubelet
     state: started
     enabled: yes
-    # daemon_reload: yes
+    daemon_reload: yes
