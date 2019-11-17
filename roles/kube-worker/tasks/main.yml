@@ -1,10 +1,16 @@
 ---
+
+- name: Ensuring kubeadm.yml config file is present on machine
+  template:
+    src: kubeadm.yml.j2
+    dest: "{{ kubeadm_config_file }}"
+
 - name: Check that the /etc/kubernetes/kubelet.conf exists on nodes
   stat:
     path: /etc/kubernetes/kubelet.conf
   register: node_kubelet_conf
 
 - name: Running kubeadm on the nodes
-  command: "{{ hostvars[groups.master[0]].kubeadm_join_command.stdout  }} --node-name={{ ansible_hostname }}"
-  when: 
+  command: "kubeadm join --config {{ kubeadm_config_file }}"
+  when:
     - not node_kubelet_conf.stat.exists
