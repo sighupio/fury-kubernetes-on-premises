@@ -1,20 +1,17 @@
 ---
 
-kubernetes_hostname: "{{ ansible_hostname }}"
-
-# CRI
+# Container Runtime Interface
 container_runtime: docker
-docker_version: 18.06.2~ce~3-0~ubuntu
 
-# Kurnetes Components Versions
+# Kurnetes components versions
 kubernetes_repo_distribution: 'xenial'
-kubelet_version: '1.15.4'
-kubectl_version: '1.15.4'
-kubeadm_version: '1.15.4'
+kubelet_version: '1.15.5'
+kubectl_version: '1.15.5'
+kubeadm_version: '1.15.5'
 critools_version: '1.13.0'
 kubernetescni_version: '0.7.5'
-# Docker Configurations
-# registry_mirrors:
-# - ""
-# docker_dns:
-# - ""
+
+# Docker configurations
+docker_dns: []
+docker_proxy: ""
+docker_registry_mirrors: []

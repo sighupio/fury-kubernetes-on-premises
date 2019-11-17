@@ -1,12 +1,12 @@
 ---
 
-- name: Ensuring /var/log/journal is present
+- name: Ensure /var/log/journal exists
   file:
     name: /var/log/journal
     state: directory
-  notify: restart journald
+  notify: Restart journald
 
-- name: Remove swapfile from /etc/fstab
+- name: Remove swap from /etc/fstab
   mount:
     name: swap
     fstype: swap
@@ -16,76 +16,68 @@
   command: swapoff -a
   when: ansible_swaptotal_mb > 0
 
-- name: Configuring network
-  sysctl:
-    name: net.bridge.bridge-nf-call-iptables
-    value: '1'
-    state: present
+- name: Put SELinux in permissive mode
+  selinux:
+    policy: targeted
+    state: permissive
+  when: ansible_os_family == "RedHat"
 
-# required since k8s 1.15
-- name: Installing ipset dependency
-  apt:
-    name: ipset
-    state: latest
-    update_cache: yes
-
-- name: Ensuring IPVS kernel modules are loaded
+- name: Ensure IPVS kernel modules are loaded
   modprobe:
     name: "{{ item }}"
     state: present
   with_items:
+    - br_netfilter
     - ip_vs
     - ip_vs_rr
     - ip_vs_wrr
     - ip_vs_sh
+    - nf_conntrack_ipv4
 
-- name: Ensuring IPVS kernel modules are loaded at boot
+- name: Ensure IPVS kernel modules are loaded at boot
   lineinfile:
     state: present
-    path: /etc/modules-load.d/ipvs.conf
+    path: /etc/modules-load.d/kubernetes.conf
     line: "{{ item }}"
     create: yes
   with_items:
+    - br_netfilter
     - ip_vs
     - ip_vs_rr
     - ip_vs_wrr
     - ip_vs_sh
+    - nf_conntrack_ipv4
 
-- name: Enabling systemd-modules-load service
+- name: Start and enable systemd-modules-load service
   systemd:
     name: systemd-modules-load
     enabled: yes
     state: started
 
-- name: Adding kubernetes apt-key
-  apt_key:
-    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+- name: Configure network
+  sysctl:
+    name: "{{ item }}"
+    value: "1"
     state: present
+  with_items:
+    - net.bridge.bridge-nf-call-ip6tables
+    - net.bridge.bridge-nf-call-iptables
 
-- name: Adding kubernetes repository
-  apt_repository:
-    repo: "deb https://apt.kubernetes.io/ kubernetes-{{ kubernetes_repo_distribution }} main"
-    state: present
-
-- name: Making sure kubelet, kubectl, kubeadm, cri-tools are installed
-  apt:
+- name: Install Kubernetes dependencies
+  package:
     name:
+      - ca-certificates
+      - ipset
+      - ipvsadm
       - openssl
-      - kubelet={{ kubelet_version }}-00
-      - kubeadm={{ kubeadm_version }}-00
-      - kubectl={{ kubectl_version }}-00
-      - cri-tools={{ critools_version }}-00
-      - kubernetes-cni={{ kubernetescni_version }}-00
+    state: latest
+
+- name: Install Kubernetes packages
+  package:
+    name: "{{ _kubernetes_packages }}"
     state: present
-    update_cache: yes
 
-- name: Ensuring kubelet extra-args are present on machine
-  template:
-    src: kubelet_default.j2
-    dest: /etc/default/kubelet
-  notify: restart kubelet
-
-- name: starting and enabling kubelet
+- name: Start and enable Kubelet service
   systemd:
     name: kubelet
     state: started

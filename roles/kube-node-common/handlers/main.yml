@@ -1,21 +1,19 @@
 ---
 
-- name: restart docker
+- name: Clean yum cache
+  command: /usr/bin/yum clean all
+  args:
+    warn: false
+
+- name: Restart Docker
   systemd:
     name: docker
     state: restarted
     daemon_reload: yes
-  listen: restart docker
+  listen: Restart docker
 
-- name: restart journald
+- name: Restart journald
   systemd:
     name: systemd-journald
     state: restarted
-  listen: restart journald
-
-- name: restart kubelet
-  systemd:
-    name: kubelet
-    state: restarted
-    daemon_reload: yes
-  listen: restart kubelet
+  listen: Restart journald
