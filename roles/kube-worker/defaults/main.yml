@@ -5,6 +5,6 @@ kubernetes_control_plane_address: "{{ ansible_fqdn }}"
 kubernetes_bootstrap_token: ""
 kubernetes_ca_hash: ""
 kubernetes_cloud_provider: ""
-kubernetes_hostname: "{{ ansible_hostname }}"
+kubernetes_hostname: "{{ ansible_fqdn }}"
 kubernetes_role: "worker"
 kubernetes_taints: []

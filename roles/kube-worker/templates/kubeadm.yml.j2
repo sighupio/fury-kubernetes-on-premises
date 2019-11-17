@@ -7,9 +7,7 @@ discovery:
     caCertHashes:
       - {{ kubernetes_ca_hash }}
 nodeRegistration:
-{% if kubernetes_cloud_provider == "" %}
   name: {{ kubernetes_hostname }}
-{%- endif -%}
   kubeletExtraArgs:
     cloud-provider: {{ kubernetes_cloud_provider }}
     node-labels: "node-role.kubernetes.io/{{ kubernetes_role}}="
