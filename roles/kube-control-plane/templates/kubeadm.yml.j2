@@ -2,6 +2,8 @@ apiVersion: kubeadm.k8s.io/v1beta1
 kind: InitConfiguration
 nodeRegistration:
   name: {{ kubernetes_hostname }}
+  kubeletExtraArgs:
+    cloud-provider: {{ kubernetes_cloud_provider }}
   taints:
   - effect: NoSchedule
     key: node-role.kubernetes.io/master
