@@ -9,6 +9,7 @@ kubernetes_pod_cidr: "10.32.0.0/16"
 kubernetes_svc_cidr: "10.96.0.0/16"
 kubernetes_cluster_name: "sighup-prod"
 kubernetes_cloud_provider: ""
+kubernetes_cloud_config: ""
 kubernetes_api_SAN:
   - localhost
   - kubernetes.local

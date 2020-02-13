@@ -31,6 +31,9 @@ apiServer:
   extraArgs:
     enable-admission-plugins: "NamespaceLifecycle,LimitRanger,PodNodeSelector,ServiceAccount,DefaultStorageClass,DefaultTolerationSeconds,MutatingAdmissionWebhook,ValidatingAdmissionWebhook,ResourceQuota"
     cloud-provider: {{ kubernetes_cloud_provider }}
+{% if kubernetes_cloud_config != "" %}
+    cloud-config: {{ kubernetes_cloud_config }}
+{% endif %}
     audit-log-maxage: "{{ audit_policy_max_age }}"
     audit-log-path: "{{ audit_log_dir }}/kube-apiserver-audit.log"
     audit-policy-file: {{ audit_policy_config_path }}
@@ -56,6 +59,13 @@ apiServer:
     mountPath: {{ audit_policy_config_path }}
     readonly: true
     pathType: File
+{% if kubernetes_cloud_config != "" %}
+  - name: cloud
+    hostPath: {{ kubernetes_cloud_config }}
+    mountPath: {{ kubernetes_cloud_config }}
+    readonly: true
+    pathType: File
+{% endif %}
 scheduler:
   extraArgs:
     bind-address: {{ ansible_default_ipv4.address }}
@@ -65,7 +75,17 @@ controllerManager:
     bind-address: {{ ansible_default_ipv4.address }}
     address: {{ ansible_default_ipv4.address }}
     cloud-provider: {{ kubernetes_cloud_provider }}
-    configure-cloud-routes: "false"
+{% if kubernetes_cloud_config != "" %}
+    cloud-config: {{ kubernetes_cloud_config }}
+{% endif %}
+{% if kubernetes_cloud_config != "" %}
+  extraVolumes:
+  - name: cloud
+    hostPath: {{ kubernetes_cloud_config }}
+    mountPath: {{ kubernetes_cloud_config }}
+    readonly: true
+    pathType: File
+{% endif %}
 networking:
   podSubnet: {{ kubernetes_pod_cidr }}
   serviceSubnet: {{ kubernetes_svc_cidr }}
