@@ -1,0 +1,5 @@
+resources:
+  - csi-vsphere-secret.yml
+  - vsphere-csi-controller-rbac.yaml
+  - vsphere-csi-controller-ss.yaml
+  - vsphere-csi-node-ds.yaml

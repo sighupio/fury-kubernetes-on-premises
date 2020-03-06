@@ -1,0 +1,5 @@
+resources:
+  - cloud-controller-manager-role-bindings.yml
+  - cloud-controller-manager-roles.yml
+  - configmap-cloud-config.yml
+  - vsphere-cloud-controller-manager-ds.yml
