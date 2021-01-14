@@ -78,6 +78,9 @@ controllerManager:
 {% if kubernetes_cloud_config != "" %}
     cloud-config: {{ kubernetes_cloud_config }}
 {% endif %}
+{% if kubernetes_node_cidr_mask_size_ipv4 != "" %}
+    node-cidr-mask-size-ipv4: {{ kubernetes_node_cidr_mask_size_ipv4 }}
+{% endif %}
 {% if kubernetes_cloud_config != "" %}
   extraVolumes:
   - name: cloud
