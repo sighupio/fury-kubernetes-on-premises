@@ -7,7 +7,7 @@
 
 - name: installing haproxy repo
   apt_repository:
-    repo: 'ppa:vbernat/haproxy-1.8'
+    repo: 'ppa:vbernat/haproxy-{{ haproxy_version }}'
     state: present
 
 - name: actually installing haproxy

@@ -35,7 +35,7 @@ This module has the following packages:
 
 - **etcd**: role to deploy etcd in the master nodes stand-alone and not as a Kubernetes deployment. Version **3.4.7**.
 - **furyagent**: role to deploy furyagent on the nodes. Version **0.2.2**.
-- **haproxy**: role to install haproxy as load balancer. Version **latest**.
+- **haproxy**: role to install haproxy as load balancer. Version **2.2**.
 - **kube-control-plane**: role to configure the master nodes. Version **1.19.7**.
 - **kube-node-common**: role with common tasks to install kubernetes nodes. Version **1.19.7**.
 - **kube-worker**: role with specific configuration for worker nodes. Version **1.19.7**.
