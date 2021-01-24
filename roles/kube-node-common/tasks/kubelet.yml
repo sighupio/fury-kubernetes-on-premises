@@ -32,7 +32,7 @@
     - ip_vs_rr
     - ip_vs_wrr
     - ip_vs_sh
-    - nf_conntrack_ipv4
+    - "{{ _conntrack_module_name }}"
 
 - name: Ensure IPVS kernel modules are loaded at boot
   lineinfile:
@@ -46,7 +46,7 @@
     - ip_vs_rr
     - ip_vs_wrr
     - ip_vs_sh
-    - nf_conntrack_ipv4
+    - "{{ _conntrack_module_name }}"
 
 - name: Start and enable systemd-modules-load service
   systemd:
