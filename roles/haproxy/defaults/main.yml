@@ -2,3 +2,5 @@
 
 haproxy_configuration_file: "haproxy.cfg"
 haproxy_version: "2.2"
+keepalived_cluster: false
+keepalived_interface: "ens192"
