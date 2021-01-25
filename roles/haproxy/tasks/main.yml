@@ -16,7 +16,7 @@
     state: present
     update_cache: yes
 
-- name: copying configurations
+- name: copying configuration file
   copy:
     src: "{{playbook_dir}}/{{ haproxy_configuration_file }}"
     dest: /etc/haproxy/haproxy.cfg
