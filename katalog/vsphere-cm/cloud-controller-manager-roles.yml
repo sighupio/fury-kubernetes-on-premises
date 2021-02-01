@@ -1,72 +1,91 @@
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  name: system:cloud-controller-manager
-rules:
+apiVersion: v1
+items:
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: ClusterRole
+  metadata:
+    name: system:cloud-controller-manager
+  rules:
   - apiGroups:
-      - ""
+    - ""
     resources:
-      - events
+    - events
     verbs:
-      - create
-      - patch
-      - update
+    - create
+    - patch
+    - update
   - apiGroups:
-      - ""
+    - ""
     resources:
-      - nodes
+    - nodes
     verbs:
-      - '*'
+    - '*'
   - apiGroups:
-      - ""
+    - ""
     resources:
-      - nodes/status
+    - nodes/status
     verbs:
-      - patch
+    - patch
   - apiGroups:
-      - ""
+    - ""
     resources:
-      - services
+    - services
     verbs:
-      - list
-      - patch
-      - update
-      - watch
+    - list
+    - patch
+    - update
+    - watch
   - apiGroups:
-      - ""
+    - ""
     resources:
-      - serviceaccounts
+    - services/status
     verbs:
-      - create
-      - get
-      - list
-      - watch
-      - update
+    - patch
   - apiGroups:
-      - ""
+    - ""
     resources:
-      - persistentvolumes
+    - serviceaccounts
     verbs:
-      - get
-      - list
-      - update
-      - watch
+    - create
+    - get
+    - list
+    - watch
+    - update
   - apiGroups:
-      - ""
+    - ""
     resources:
-      - endpoints
+    - persistentvolumes
     verbs:
-      - create
-      - get
-      - list
-      - watch
-      - update
+    - get
+    - list
+    - update
+    - watch
   - apiGroups:
-      - ""
+    - ""
     resources:
-      - secrets
+    - endpoints
     verbs:
-      - get
-      - list
-      - watch
-
+    - create
+    - get
+    - list
+    - watch
+    - update
+  - apiGroups:
+    - ""
+    resources:
+    - secrets
+    verbs:
+    - get
+    - list
+    - watch
+  - apiGroups:
+    - "coordination.k8s.io"
+    resources:
+    - leases
+    verbs:
+    - get
+    - list
+    - watch
+    - create
+    - update
+kind: List
+metadata: {}
