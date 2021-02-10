@@ -6,6 +6,8 @@ global_defs {
     enable_script_security
     script_user {{ ansible_user }}
 }
+
+{% if control_plane_endpoint is defined %}
 vrrp_script check_apiserver {
   script "/etc/keepalived/check_apiserver.sh"
   interval 3
@@ -13,6 +15,7 @@ vrrp_script check_apiserver {
   fall 10
   rise 2
 }
+{% endif %}
 
 vrrp_script check_haproxy {
     script "killall -0 haproxy"   # verify the pid existance
@@ -21,21 +24,24 @@ vrrp_script check_haproxy {
 }
 
 vrrp_instance VI_1 {
-    state {% if template_host.endswith('-1') %}MASTER{% else %}BACKUP{% endif %}
+    state {% if ansible_hostname.endswith('-1') %}MASTER{% else %}BACKUP{% endif %}
     interface {{ keepalived_interface }}
     virtual_router_id 51
-    priority {% if template_host.endswith('-1') %}101{% else %}100{% endif %}
+    priority {% if ansible_hostname.endswith('-1') %}101{% else %}100{% endif %}
     authentication {
         auth_type PASS
-        auth_pass {{ kubernetes_cluster_name|truncate(8) }}
+        auth_pass {% if keepalived_passphrase is defined %}{{ keepalived_passphrase|truncate(8)}}{% elif kubernetes_cluster_name is defined %}{{ kubernetes_cluster_name|truncate(8) }}{% else %}12345678{% endif %}
     }
     virtual_ipaddress {
         {{ keepalived_ip }}
     }
     track_script {
+        {% if control_plane_endpoint is not defined %}
         # Use this when haproxy&keepalived is running on different machines than the k8s masters:
         check_haproxy
+        {% else %}
         # Use this when haproxy&keepalived is running on k8s masters:
-        # check_apiserver
+        check_apiserver
+        {% endif %}
     }
 }
