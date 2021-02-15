@@ -7,7 +7,7 @@ global_defs {
     script_user {{ ansible_user }}
 }
 
-{% if control_plane_endpoint is defined %}
+{% if keepalived_on_k8s_master %}
 vrrp_script check_apiserver {
   script "/etc/keepalived/check_apiserver.sh"
   interval 3
@@ -36,12 +36,10 @@ vrrp_instance VI_1 {
         {{ keepalived_ip }}
     }
     track_script {
-        {% if control_plane_endpoint is not defined %}
-        # Use this when haproxy&keepalived is running on different machines than the k8s masters:
-        check_haproxy
-        {% else %}
-        # Use this when haproxy&keepalived is running on k8s masters:
+        {% if keepalived_on_k8s_master %}
         check_apiserver
+        {% else %}
+        check_haproxy
         {% endif %}
     }
 }

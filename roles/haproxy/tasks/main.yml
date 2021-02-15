@@ -53,9 +53,9 @@
     owner: "{{ ansible_user }}"
     mode: u=rwx
   notify: reload keepalived
-  when: keepalived_cluster|bool and control_plane_endpoint is defined
+  when: keepalived_cluster|bool and keepalived_on_k8s_master|bool
 
-- name: check keepalived configuration file for obvious errors
+- name: check keepalived configuration file for errors
   command: "keepalived --config-test"
   when: keepalived_cluster|bool
 
