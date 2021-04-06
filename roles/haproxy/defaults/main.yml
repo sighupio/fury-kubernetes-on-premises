@@ -5,3 +5,5 @@ haproxy_version: "2.2"
 keepalived_cluster: false
 keepalived_interface: "ens192"
 keepalived_on_k8s_master: false
+keepalived_passphrase: "12345678"
+keepalived_virtual_router_id: "51"

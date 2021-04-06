@@ -26,11 +26,11 @@ vrrp_script check_haproxy {
 vrrp_instance VI_1 {
     state {% if ansible_hostname.endswith('-1') %}MASTER{% else %}BACKUP{% endif %}
     interface {{ keepalived_interface }}
-    virtual_router_id 51
+    virtual_router_id {{ keepalived_virtual_router_id }}
     priority {% if ansible_hostname.endswith('-1') %}101{% else %}100{% endif %}
     authentication {
         auth_type PASS
-        auth_pass {% if keepalived_passphrase is defined %}{{ keepalived_passphrase|truncate(8)}}{% elif kubernetes_cluster_name is defined %}{{ kubernetes_cluster_name|truncate(8) }}{% else %}12345678{% endif %}
+        auth_pass {{ keepalived_passphrase }}
     }
     virtual_ipaddress {
         {{ keepalived_ip }}
