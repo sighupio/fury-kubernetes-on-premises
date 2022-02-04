@@ -1,0 +1,5 @@
+namespace: nexus
+
+resources:
+- deploy.yml
+- ns.yml

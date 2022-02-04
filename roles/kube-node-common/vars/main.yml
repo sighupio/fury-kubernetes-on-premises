@@ -1,0 +1,21 @@
+---
+
+docker_repo:
+  name: "docker_ce"
+  apt_repo: "deb [arch=amd64] https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} stable"
+  apt_gpg_key: "https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg"
+  apt_gpg_key_id: "9DC858229FC7DD38854AE2D88D81803C0EBFCD88"
+  yum_repo: "https://download.docker.com/linux/centos/7/$basearch/stable"
+  yum_gpg_key: "https://download.docker.com/linux/centos/gpg"
+  yum_gpg_key_check: "yes"
+
+kubernetes_repo:
+  name: "kubernetes"
+  apt_repo: "deb https://apt.kubernetes.io/ kubernetes-{{ kubernetes_repo_distribution }} main"
+  apt_gpg_key: "https://packages.cloud.google.com/apt/doc/apt-key.gpg"
+  apt_gpg_key_id: "54A647F9048D5688D7DA2ABE6A030B21BA07F4FB"
+  yum_repo: "https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64"
+  yum_gpg_key:
+    - "https://packages.cloud.google.com/yum/doc/yum-key.gpg"
+    - "https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg"
+  yum_gpg_key_check: "yes"

@@ -1,7 +1,39 @@
 ---
 
-- name: Installing container runtime
-  include_tasks: "{{ container_runtime }}.yml"
+- name: Include OS-specific variables
+  include_vars: "{{ ansible_os_family }}.yml"
 
-- name: Installing Kubelet Kubeadm Kubectl Critools
-  include_tasks: "kubelet.yml"
+- name: Set package version separator on RedHat
+  set_fact:
+    _pkg_sep: "-"
+  when: ansible_os_family == 'RedHat'
+
+- name: Set package version separator on Debian/Ubuntu
+  set_fact:
+    _pkg_sep: "="
+  when: ansible_os_family == 'Debian'
+
+- name: Set Kubernetes package version suffix on RedHat
+  set_fact:
+    _pkg_suffix: ""
+  when: ansible_os_family == 'RedHat'
+
+- name: Set Kubernetes package version suffix on Debian/Ubuntu
+  set_fact:
+    _pkg_suffix: "-00"
+  when: ansible_os_family == 'Debian'
+
+- name: Set Kubernetes packages list
+  set_fact:
+    _kubernetes_packages:
+      - "cri-tools{{ _pkg_sep }}{{ critools_version }}{{ _pkg_suffix }}"
+      - "kubeadm{{ _pkg_sep }}{{ kubeadm_version }}{{ _pkg_suffix }}"
+      - "kubectl{{ _pkg_sep }}{{ kubectl_version }}{{ _pkg_suffix }}"
+      - "kubelet{{ _pkg_sep }}{{ kubelet_version}}{{ _pkg_suffix }}"
+      - "kubernetes-cni{{ _pkg_sep }}{{ kubernetescni_version }}{{ _pkg_suffix }}"
+
+- include_tasks: "repo-{{ ansible_os_family }}.yml"
+
+- include_tasks: "{{ container_runtime }}.yml"
+
+- include_tasks: kubelet.yml

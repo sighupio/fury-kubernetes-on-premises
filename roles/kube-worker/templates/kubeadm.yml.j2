@@ -1,0 +1,17 @@
+apiVersion: kubeadm.k8s.io/v1beta1
+kind: JoinConfiguration
+discovery:
+  bootstrapToken:
+    apiServerEndpoint: {{ kubernetes_control_plane_address }}
+    token: {{ kubernetes_bootstrap_token }}
+    caCertHashes:
+      - {{ kubernetes_ca_hash }}
+nodeRegistration:
+  name: {{ kubernetes_hostname }}
+  kubeletExtraArgs:
+    cloud-provider: {{ kubernetes_cloud_provider }}
+    node-labels: "node-role.kubernetes.io/{{ kubernetes_role}}="
+{% if kubernetes_taints | length > 0 %}
+  taints:
+{{ kubernetes_taints | to_nice_yaml | indent(4, true) }}
+{%- endif -%}

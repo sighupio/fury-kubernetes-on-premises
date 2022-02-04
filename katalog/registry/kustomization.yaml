@@ -1,0 +1,5 @@
+namespace: registry
+
+resources:
+- deploy.yml
+- ns.yml
