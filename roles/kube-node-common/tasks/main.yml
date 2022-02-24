@@ -32,6 +32,16 @@
       - "kubelet{{ _pkg_sep }}{{ kubelet_version}}{{ _pkg_suffix }}"
       - "kubernetes-cni{{ _pkg_sep }}{{ kubernetescni_version }}{{ _pkg_suffix }}"
 
+- name: Set conntrack kernel module name on Ubuntu 18
+  set_fact:
+    _conntrack_module_name: "nf_conntrack_ipv4"
+  when: ansible_facts['distribution_major_version'] <= "18"
+
+- name: Set conntrack kernel module name on Ubuntu 20
+  set_fact:
+    _conntrack_module_name: "nf_conntrack"
+  when: ansible_facts['distribution_major_version'] > "18"
+
 - include_tasks: "repo-{{ ansible_os_family }}.yml"
 
 - include_tasks: "{{ container_runtime }}.yml"

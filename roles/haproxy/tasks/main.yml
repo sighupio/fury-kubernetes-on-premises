@@ -7,7 +7,7 @@
 
 - name: installing haproxy repo
   apt_repository:
-    repo: 'ppa:vbernat/haproxy-1.8'
+    repo: 'ppa:vbernat/haproxy-{{ haproxy_version }}'
     state: present
 
 - name: actually installing haproxy
@@ -16,7 +16,7 @@
     state: present
     update_cache: yes
 
-- name: copying configurations
+- name: copying configuration file
   copy:
     src: "{{playbook_dir}}/{{ haproxy_configuration_file }}"
     dest: /etc/haproxy/haproxy.cfg
@@ -31,3 +31,38 @@
     name: haproxy
     enabled: yes
     state: started
+
+- name: install keepalived for clustering
+  apt:
+    name: keepalived
+    state: present
+    update_cache: yes
+  when: keepalived_cluster|bool
+
+- name: copying configuration file
+  template:
+    src: "keepalived.conf.j2"
+    dest: /etc/keepalived/keepalived.conf
+  notify: reload keepalived
+  when: keepalived_cluster|bool
+
+- name: copying check api server script
+  template:
+    src: "check_apiserver.sh.j2"
+    dest: /etc/keepalived/check_apiserver.sh
+    owner: "{{ ansible_user }}"
+    mode: u=rwx
+  notify: reload keepalived
+  when: keepalived_cluster|bool and keepalived_on_k8s_master|bool
+
+- name: check keepalived configuration file for errors
+  command: "keepalived --config-test"
+  when: keepalived_cluster|bool
+
+- name: starting keepalived service
+  systemd:
+    daemon_reload: yes
+    name: keepalived
+    enabled: yes
+    state: started
+  when: keepalived_cluster|bool

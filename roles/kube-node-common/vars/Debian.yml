@@ -2,4 +2,4 @@
 
 docker_dependencies: []
 
-docker_version: "18.06.2~ce~3-0~ubuntu"
+docker_version: "5:19.03.11~3-0~ubuntu-{{ ansible_distribution_release }}"

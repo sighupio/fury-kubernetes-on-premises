@@ -4,12 +4,13 @@ global
 
 defaults
     mode tcp
-    timeout connect 5000ms
-    timeout client 50000ms
-    timeout server 50000ms
+    timeout connect 5s
+    timeout client 50s
+    timeout server 50s
 
 frontend http-in
     bind *:6443
+    balance roundrobin
     default_backend masters
 
 backend masters

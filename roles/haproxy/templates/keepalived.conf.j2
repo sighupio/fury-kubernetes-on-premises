@@ -1,0 +1,45 @@
+#jinja2: trim_blocks:False
+! /etc/keepalived/keepalived.conf
+! Configuration File for keepalived
+global_defs {
+    router_id LVS_DEVEL
+    enable_script_security
+    script_user {{ ansible_user }}
+}
+
+{% if keepalived_on_k8s_master %}
+vrrp_script check_apiserver {
+  script "/etc/keepalived/check_apiserver.sh"
+  interval 3
+  weight -2
+  fall 10
+  rise 2
+}
+{% endif %}
+
+vrrp_script check_haproxy {
+    script "killall -0 haproxy"   # verify the pid existance
+    interval 2                    # check every 2 seconds
+    weight 2                      # add 2 points of prio if OK
+}
+
+vrrp_instance VI_1 {
+    state {% if ansible_hostname.endswith('-1') %}MASTER{% else %}BACKUP{% endif %}
+    interface {{ keepalived_interface }}
+    virtual_router_id {{ keepalived_virtual_router_id }}
+    priority {% if ansible_hostname.endswith('-1') %}101{% else %}100{% endif %}
+    authentication {
+        auth_type PASS
+        auth_pass {{ keepalived_passphrase }}
+    }
+    virtual_ipaddress {
+        {{ keepalived_ip }}
+    }
+    track_script {
+        {% if keepalived_on_k8s_master %}
+        check_apiserver
+        {% else %}
+        check_haproxy
+        {% endif %}
+    }
+}

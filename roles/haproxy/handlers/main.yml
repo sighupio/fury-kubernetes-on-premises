@@ -5,3 +5,9 @@
     name: haproxy
     state: reloaded
   listen: reload haproxy
+
+- name: reload keepalived
+  systemd:
+    name: keepalived
+    state: reloaded
+  listen: reload keepalived
