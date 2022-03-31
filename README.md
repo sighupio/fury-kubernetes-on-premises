@@ -21,13 +21,7 @@ This module has the following packages:
 
 - dashboard
 - dex
-- dex-k8s-authenticator
 - gangway
-- kube-janitor
-- metrics-server
-- nexus
-- node-problem-detector
-- registry
 - vmware-cm: VMware vSphere Cloud Provider.
 - vmware-csi: VMware vSphere Cloud Storage Interface driver.
 

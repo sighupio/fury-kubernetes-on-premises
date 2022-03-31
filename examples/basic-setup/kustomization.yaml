@@ -1,8 +1,0 @@
-
-bases:
-- network/weave-net
-- ingress/nginx
-# - aws/ebs-sc
-- addons/metric-server
-- addons/dashboard
-- addons/event-router

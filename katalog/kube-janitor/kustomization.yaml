@@ -1,5 +1,0 @@
-namespace: utilities
-
-resources:
-- cronjob.yml
-- rbac.yml
