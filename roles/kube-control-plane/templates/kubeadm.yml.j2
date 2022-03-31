@@ -1,6 +1,7 @@
-apiVersion: kubeadm.k8s.io/v1beta1
+apiVersion: kubeadm.k8s.io/v1beta2
 kind: InitConfiguration
 nodeRegistration:
+  criSocket: /var/run/dockershim.sock
   name: {{ kubernetes_hostname }}
   kubeletExtraArgs:
     cloud-provider: {{ kubernetes_cloud_provider }}
@@ -11,7 +12,7 @@ localAPIEndpoint:
   advertiseAddress: {{ ansible_default_ipv4.address }}
   bindPort: 6443
 ---
-apiVersion: kubeadm.k8s.io/v1beta1
+apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration
 etcd:
   external:
@@ -23,10 +24,10 @@ etcd:
 clusterName: {{ kubernetes_cluster_name }}
 kubernetesVersion: {{ kubernetes_version }}
 imageRepository: "k8s.gcr.io"
-useHyperKubeImage: false
 controlPlaneEndpoint: {{ kubernetes_control_plane_address }}
-DNS:
-  type: "CoreDNS"
+dns:
+  type: CoreDNS
+certificatesDir: /etc/kubernetes/pki
 apiServer:
   extraArgs:
     enable-admission-plugins: "NamespaceLifecycle,LimitRanger,PodNodeSelector,ServiceAccount,DefaultStorageClass,DefaultTolerationSeconds,MutatingAdmissionWebhook,ValidatingAdmissionWebhook,ResourceQuota"
@@ -66,6 +67,7 @@ apiServer:
     readonly: true
     pathType: File
 {% endif %}
+  timeoutForControlPlane: 4m0s
 scheduler:
   extraArgs:
     bind-address: {{ ansible_default_ipv4.address }}
