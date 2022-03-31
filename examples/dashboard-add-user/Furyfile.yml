@@ -1,4 +1,0 @@
-bases:
-  - name: addons/dashboard
-    version: master
-

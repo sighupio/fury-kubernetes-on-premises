@@ -1,3 +1,0 @@
-bases:
-  - name: network/weave-net #FIXME
-    version: master
