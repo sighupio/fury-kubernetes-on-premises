@@ -19,7 +19,6 @@ This module has the following packages:
 
 ### Kubernetes Manifests
 
-- dashboard
 - dex
 - gangway
 - vmware-cm: VMware vSphere Cloud Provider.
