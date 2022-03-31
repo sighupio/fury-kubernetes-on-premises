@@ -1,6 +1,6 @@
 {
 {% if docker_registry_mirrors | length > 0 %}
-  "registry-mirrors": {{ registry_mirrors | to_json }},
+  "registry-mirrors": {{ docker_registry_mirrors | to_json }},
 {%- endif -%}
 {% if docker_dns | length > 0 %}
   "dns": {{ docker_dns | to_json }},

@@ -8,7 +8,6 @@ This role also supports having >1 `haproxy` in a failover scheme using a shared 
 
 Variable | Description | Default Value
 ---------|-------------|--------------
-`haproxy_version`| HAproxy version to install | `2.2`
 `haproxy_configuration_file`| Name of the local haproxy config file to copy to the VM | `haproxy.cfg`
 `keepalived_cluster` | If keepalived should be installed and configured besides haproxy | `false`
 `keepalived_ip` | The virtual IP that will be used as VRRP address. Ex. `10.2.0.10/16` | -

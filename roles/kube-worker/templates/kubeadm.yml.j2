@@ -10,7 +10,8 @@ nodeRegistration:
   name: {{ kubernetes_hostname }}
   kubeletExtraArgs:
     cloud-provider: {{ kubernetes_cloud_provider }}
-    node-labels: "node.kubernetes.io/role={{ kubernetes_role}}"
+    node-labels: "node.kubernetes.io/role={{ kubernetes_role}},{{ kubernetes_node_labels }}"
+    resolv-conf: {{ resolv_conf_path }}
 {% if kubernetes_taints | length > 0 %}
   taints:
 {{ kubernetes_taints | to_nice_yaml | indent(4, true) }}

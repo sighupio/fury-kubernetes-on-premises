@@ -4,9 +4,14 @@ nodeRegistration:
   name: {{ kubernetes_hostname }}
   kubeletExtraArgs:
     cloud-provider: {{ kubernetes_cloud_provider }}
+    node-labels: "node.kubernetes.io/role={{ kubernetes_role}},{{ kubernetes_node_labels }}"
+    resolv-conf: {{ resolv_conf_path }}
   taints:
   - effect: NoSchedule
     key: node-role.kubernetes.io/master
+{% if kubernetes_taints | length > 0 %}
+{{ kubernetes_taints | to_nice_yaml | indent(2, true) }}
+{%- endif -%}
 localAPIEndpoint:
   advertiseAddress: {{ ansible_default_ipv4.address }}
   bindPort: 6443

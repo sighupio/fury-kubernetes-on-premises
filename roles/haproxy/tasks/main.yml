@@ -1,20 +1,28 @@
 ---
+# I don't want to trust third parties. I prefer to install stable version of haproxy from
+# the oficial repositories
 
-- name: installing dependencies
+# - name: installing dependencies
+#   apt:
+#     name: software-properties-common
+#     state: latest
+#   when: ansible_os_family == 'Debian'
+
+# - name: installing haproxy repo
+#   apt_repository:
+#     repo: 'ppa:vbernat/haproxy-{{ haproxy_version }}'
+#     state: present
+#   when: ansible_os_family == 'Debian'
+
+- name: Update cache
   apt:
-    name: software-properties-common
-    state: latest
-
-- name: installing haproxy repo
-  apt_repository:
-    repo: 'ppa:vbernat/haproxy-{{ haproxy_version }}'
-    state: present
+    update_cache: yes
+  when: ansible_os_family == 'Debian'
 
 - name: actually installing haproxy
-  apt:
+  package:
     name: haproxy
     state: present
-    update_cache: yes
 
 - name: copying configuration file
   copy:
@@ -24,6 +32,11 @@
 
 - name: validating configuration
   command: "haproxy -c -- /etc/haproxy/haproxy.cfg"
+  when: ansible_os_family == 'Debian'
+
+- name: validating configuration
+  command: "haproxy -f /etc/haproxy/haproxy.cfg -c"
+  when: ansible_os_family == 'RedHat'
 
 - name: starting haproxy service
   systemd:
@@ -33,10 +46,9 @@
     state: started
 
 - name: install keepalived for clustering
-  apt:
+  package:
     name: keepalived
     state: present
-    update_cache: yes
   when: keepalived_cluster|bool
 
 - name: copying configuration file

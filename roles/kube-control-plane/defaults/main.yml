@@ -3,6 +3,10 @@ kubeadm_config_file: /etc/kubernetes/kubeadm.yml
 audit_log_dir: /var/log/kubernetes
 audit_policy_max_age: 3
 audit_policy_config_path: /etc/kubernetes/audit.yaml
+resolv_conf_path: "/etc/resolv.conf"
+kubernetes_node_labels: ""
+kubernetes_role: "master"
+kubernetes_taints: []
 
 ## MasterConfig paramethers
 kubernetes_pod_cidr: "10.32.0.0/16"

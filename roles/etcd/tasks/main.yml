@@ -10,6 +10,7 @@
   file:
     path: "{{item}}"
     state: directory
+    mode: "0700"
   with_items:
     - "{{ etcd_config_dir }}"
     - "{{ etcd_data_dir }}"
