@@ -38,7 +38,7 @@ oidc_group_prefix: "oidc:"
 
 container_runtime: docker
 cri_socket: >-
-  {%- if container_manager == 'containerd' -%}
+  {%- if container_runtime == 'containerd' -%}
   /var/run/containerd/containerd.sock
   {%- else -%}
   /var/run/dockershim.sock
