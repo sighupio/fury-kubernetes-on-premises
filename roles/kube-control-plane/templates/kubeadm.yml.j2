@@ -1,6 +1,7 @@
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: InitConfiguration
 nodeRegistration:
+  criSocket: {{ cri_socket }}
   name: {{ kubernetes_hostname }}
   kubeletExtraArgs:
     cloud-provider: {{ kubernetes_cloud_provider }}

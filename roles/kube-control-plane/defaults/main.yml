@@ -14,7 +14,7 @@ kubernetes_api_SAN:
   - localhost
   - kubernetes.local
 kubernetes_control_plane_address: "{{ ansible_hostname }}"
-kubernetes_version: "1.19.7"
+kubernetes_version: "1.20.15"
 kubernetes_hostname: "{{ ansible_fqdn }}"
 kubernetes_kubeconfig_path: "."
 kubernetes_users_names: []
@@ -35,3 +35,11 @@ oidc_username_claim: email
 oidc_username_prefix: "oidc:"
 oidc_groups_claim: groups
 oidc_group_prefix: "oidc:"
+
+container_runtime: docker
+cri_socket: >-
+  {%- if container_manager == 'containerd' -%}
+  /var/run/containerd/containerd.sock
+  {%- else -%}
+  /var/run/dockershim.sock
+  {%- endif -%}
