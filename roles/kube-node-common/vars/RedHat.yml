@@ -1,8 +1,0 @@
----
-
-docker_dependencies:
-  - device-mapper-persistent-data
-  - iproute-tc
-  - lvm2
-
-docker_version: "18.06.2.ce"

@@ -5,11 +5,11 @@ container_runtime: docker
 
 # Kurnetes components versions
 kubernetes_repo_distribution: 'xenial'
-kubelet_version: '1.19.7'
-kubectl_version: '1.19.7'
-kubeadm_version: '1.19.7'
-critools_version: '1.13.0'
-kubernetescni_version: '0.8.7'
+kubelet_version: '1.20.15'
+kubectl_version: '1.20.15'
+kubeadm_version: '1.20.15'
+critools_version: '1.19.0'
+kubernetescni_version: "0.8.7"
 
 # Docker configurations
 docker_dns: []

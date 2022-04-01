@@ -1,8 +1,5 @@
 ---
 
-- name: Include OS-specific variables
-  include_vars: "{{ ansible_os_family }}.yml"
-
 - name: Set package version separator on RedHat
   set_fact:
     _pkg_sep: "-"
@@ -43,7 +40,5 @@
   when: ansible_facts['distribution_major_version'] > "18"
 
 - include_tasks: "repo-{{ ansible_os_family }}.yml"
-
-- include_tasks: "{{ container_runtime }}.yml"
 
 - include_tasks: kubelet.yml

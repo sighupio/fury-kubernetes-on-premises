@@ -27,7 +27,6 @@
     name: "{{ item }}"
     state: present
   with_items:
-    - br_netfilter
     - ip_vs
     - ip_vs_rr
     - ip_vs_wrr
@@ -41,7 +40,6 @@
     line: "{{ item }}"
     create: yes
   with_items:
-    - br_netfilter
     - ip_vs
     - ip_vs_rr
     - ip_vs_wrr
@@ -53,15 +51,6 @@
     name: systemd-modules-load
     enabled: yes
     state: started
-
-- name: Configure network
-  sysctl:
-    name: "{{ item }}"
-    value: "1"
-    state: present
-  with_items:
-    - net.bridge.bridge-nf-call-ip6tables
-    - net.bridge.bridge-nf-call-iptables
 
 - name: Install Kubernetes dependencies
   package:

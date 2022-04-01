@@ -5,17 +5,6 @@
     name: yum-utils
     state: latest
 
-- name: Add Docker YUM repository
-  yum_repository:
-    name: "{{ docker_repo['name'] }}"
-    file: "{{ docker_repo['name'] }}"
-    description: "{{ docker_repo['name'] }}"
-    baseurl: "{{ docker_repo['yum_repo'] }}"
-    gpgkey: "{{ docker_repo['yum_gpg_key'] }}"
-    gpgcheck: "{{ docker_repo['yum_gpg_key_check'] }}"
-    state: present
-  notify: Clean yum cache
-
 - name: Add Kubernetes YUM repository
   yum_repository:
     name: "{{ kubernetes_repo['name'] }}"
