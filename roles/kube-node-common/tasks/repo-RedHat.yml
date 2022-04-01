@@ -16,7 +16,7 @@
     state: present
   notify: Clean yum cache
 
-- name: Add Docker YUM repository
+- name: Add Kubernetes YUM repository
   yum_repository:
     name: "{{ kubernetes_repo['name'] }}"
     file: "{{ kubernetes_repo['name'] }}"
