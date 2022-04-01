@@ -1,0 +1,16 @@
+---
+
+docker_dns: []
+docker_proxy: ""
+docker_registry_mirrors: []
+
+# Kernel modules.
+docker_modprobe:
+  - { state: "present", option: "br_netfilter" }
+  - { state: "present", option: "overlay" }
+
+# Entries for sysctl.
+docker_sysctl:
+  - { state: "present", name: "net.bridge.bridge-nf-call-ip6tables", value: "1" }
+  - { state: "present", name: "net.bridge.bridge-nf-call-iptables", value: "1" }
+  - { state: "present", name: "net.ipv4.ip_forward", value: "1" }
