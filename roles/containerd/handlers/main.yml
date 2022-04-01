@@ -1,0 +1,34 @@
+---
+
+
+- name: Systemctl restart # systemd loads service
+  service:
+    name: "systemd-modules-load.service"
+    state: "restarted"
+  changed_when: false
+  failed_when: false
+
+- name: Sysctl reload  # no reboot
+  command: sysctl --system
+  changed_when: false
+  failed_when: false
+
+- name: restart containerd
+  command: /bin/true
+  notify:
+    - Containerd | restart containerd
+    - Containerd | wait for containerd
+
+- name: Containerd | restart containerd
+  systemd:
+    name: containerd
+    state: restarted
+    enabled: yes
+    daemon-reload: yes
+
+- name: Containerd | wait for containerd
+  command: "/usr/local/bin/ctr images ls -q"  #containerd cli check
+  register: containerd_ready
+  retries: 8
+  delay: 4
+  until: containerd_ready.rc == 0
