@@ -1,28 +1,43 @@
-# Fury Kubernetes on-premises
+<h1>
+    <img src="https://github.com/sighupio/fury-distribution/blob/master/docs/assets/fury-epta-white.png?raw=true" align="left" width="90" style="margin-right: 15px"/>
+    Kubernetes Fury on-premises
+</h1>
 
-This module contains all the needed ansible roles and kuberenetes manifests to install Fury Kubernetes on-premises using IaC.
+![Release](https://img.shields.io/badge/Latest%20Release-v1.19.7-blue)
+![License](https://img.shields.io/github/license/sighupio/fury-kubernetes-on-premises?label=License)
+![Slack](https://img.shields.io/badge/slack-@kubernetes/fury-yellow.svg?logo=slack&label=Slack)
 
-## Compatibility
+<!-- <KFD-DOCS> -->
 
-| Distribution Version / Kubernetes Version | 1.15.X             | 1.16.X             | 1.17.X             | 1.18.X             | 1.19.X             |
-|-------------------------------------------|:------------------:|:------------------:|:------------------:|:------------------:|:------------------:|
-| v1.15.4                                   | :white_check_mark: |                    |                    |                    |                    |
-| v1.19.7                                   |                    |                    |                    |                    | :white_check_mark: |
+**Kubernetes Fury on-premises** is an add-on module for the [Kubernetes Fury Distribution (KFD)][kfd-repo] that provides
+packages to install Kubernetes to on-premises VMs.
 
-- :white_check_mark: Compatible
-- :warning: Has issues
-- :x: Incompatible
+If you are new to KFD please refer to the [official documentation][kfd-docs] on how to get started with KFD.
+
+## Overview
+
+**Kubernetes Fury on-premises** uses a collection of open source tools to install Kubernetes in a on-premises environment.
 
 ## Packages
 
-This module has the following packages:
+The following packages are included in the Fury Kubernetes on-premises katalog:
 
-### Kubernetes Manifests
+| Package                                              | Version  | Description                                                                                              |
+|------------------------------------------------------|----------|----------------------------------------------------------------------------------------------------------|
+| [dex](katalog/dex)                                   | `2.20.0` | OpenID Connect (OIDC) identity and OAuth 2.0 provider with pluggable connectors                          |
+| [gangway](katalog/gangway)                           | `3.2.0`  | An application that can be used to easily enable authentication flows via OIDC for a kubernetes cluster. |
+| [vmware-cm](katalog/vmware-cm)                       | `1.2.1`  | Kubernetes Cloud Provider for vSphere                                                                    |
+| [vmware-csi](katalog/vmware-csi)                     | `2.1.0`  | vSphere storage Container Storage Interface (CSI) plugin                                                 |
+| [etcd](roles/etcd)                                   | `3.4.7`  | Ansible role to install ETCD as systemd service |
+| [furyagent](roles/furyagent)                         | `0.2.2`  | Ansible role to install [Furyagent](https://github.com/sighupio/furyagent) |
+| [haproxy](roles/haproxy)                             | `2.2`    | Ansible role to install HAProxy |
 
-- dex
-- gangway
-- vmware-cm: VMware vSphere Cloud Provider.
-- vmware-csi: VMware vSphere Cloud Storage Interface driver.
+Click on each package to see its full documentation.
+
+## Compatibility
+
+Check the [compatibility matrix][compatibility-matrix] for additional informations about previous releases of the modules.
+
 
 ### Ansible Roles
 
