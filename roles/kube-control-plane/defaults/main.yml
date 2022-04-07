@@ -35,11 +35,3 @@ oidc_username_claim: email
 oidc_username_prefix: "oidc:"
 oidc_groups_claim: groups
 oidc_group_prefix: "oidc:"
-
-container_runtime: docker
-cri_socket: >-
-  {%- if container_runtime == 'containerd' -%}
-  /var/run/containerd/containerd.sock
-  {%- else -%}
-  /var/run/dockershim.sock
-  {%- endif -%}
