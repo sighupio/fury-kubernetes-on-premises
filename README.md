@@ -32,19 +32,10 @@ The following packages are included in the Fury Kubernetes on-premises katalog:
 | [furyagent](roles/furyagent)                         | `0.2.2`  | Ansible role to install [Furyagent](https://github.com/sighupio/furyagent) |
 | [haproxy](roles/haproxy)                             | `2.2`    | Ansible role to install HAProxy |
 
+TODO add roles
+
 Click on each package to see its full documentation.
 
 ## Compatibility
 
 Check the [compatibility matrix][compatibility-matrix] for additional informations about previous releases of the modules.
-
-
-### Ansible Roles
-
-- **etcd**: role to deploy etcd in the master nodes stand-alone and not as a Kubernetes deployment. Version **3.4.7**.
-- **furyagent**: role to deploy furyagent on the nodes. Version **0.2.2**.
-- **haproxy**: role to install haproxy as load balancer. Version **2.2**.
-- **kube-control-plane**: role to configure the master nodes. Version **1.19.7**.
-- **kube-node-common**: role with common tasks to install kubernetes nodes. Version **1.19.7**.
-- **kube-worker**: role with specific configuration for worker nodes. Version **1.19.7**.
-- **node_exporter**: prometheus node exporter to expose node metrics. Version **1.0.1**.
