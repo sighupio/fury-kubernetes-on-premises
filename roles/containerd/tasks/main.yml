@@ -1,4 +1,15 @@
 ---
+- name: Check packages facts
+  package_facts:
+    manager: auto
+
+- name: print
+  debug:
+    msg: "Version of docker-ce is {{ ansible_facts.packages['docker-ce'][0]['version'] }}"
+  when: "'docker-ce' in ansible_facts.packages"
+
+- include_tasks: "docker-remove.yml"
+  when: "'docker-ce' in ansible_facts.packages"
 
 - name: Fail containerd setup if distribution is not supported
   fail:
