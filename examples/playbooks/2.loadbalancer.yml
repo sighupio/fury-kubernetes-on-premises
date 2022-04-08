@@ -1,0 +1,27 @@
+# Copyright (c) 2022 SIGHUP s.r.l All rights reserved.
+# Use of this source code is governed by a BSD-style
+# license that can be found in the LICENSE file.
+
+- name: Copy CA certificates to HAProxy
+  hosts: haproxy
+  become: true
+  vars:
+    pki_dir: ./pki
+  tasks:
+    - name: Copy Kubernetes CA
+      copy:
+        src: "{{ pki_dir }}/master/ca.crt"
+        dest: /etc/ssl/certs/kubernetes.crt
+        owner: root
+        group: root
+        mode: 0644
+  tags:
+    - pki
+
+- name: Load balancer installation
+  hosts: haproxy
+  become: true
+  roles:
+    - haproxy
+  tags:
+    - haproxy
