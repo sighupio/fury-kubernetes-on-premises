@@ -20,17 +20,24 @@
   copy:
     src: "{{playbook_dir}}/{{ haproxy_configuration_file }}"
     dest: /etc/haproxy/haproxy.cfg
-  notify: reload haproxy
 
 - name: validating configuration
   command: "haproxy -c -- /etc/haproxy/haproxy.cfg"
 
-- name: starting haproxy service
+- name: restarting haproxy service
   systemd:
     daemon_reload: yes
     name: haproxy
     enabled: yes
+    state: restarted
+
+- name: Check if port 6443 is open
+  wait_for:
+    host: "localhost"
+    port: "6443"
     state: started
+    delay: 0
+    timeout: 30
 
 - name: install keepalived for clustering
   apt:
