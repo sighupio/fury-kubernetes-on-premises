@@ -1,0 +1,18 @@
+---
+
+- name: Install yum-utils
+  yum:
+    name: yum-utils
+    state: latest
+
+- name: Add Kubernetes YUM repository
+  yum_repository:
+    name: "{{ kubernetes_repo['name'] }}"
+    file: "{{ kubernetes_repo['name'] }}"
+    description: "{{ kubernetes_repo['name'] }}"
+    baseurl: "{{ kubernetes_repo['yum_repo'] }}"
+    gpgkey: "{{ kubernetes_repo['yum_gpg_key'] }}"
+    gpgcheck: "{{ kubernetes_repo['yum_gpg_key_check'] }}"
+    repo_gpgcheck: "yes"
+    state: present
+  notify: Clean yum cache
