@@ -49,6 +49,13 @@
   tags:
     - pki
 
+- name: Kubernetes node preparation
+  hosts: master,nodes
+  roles:
+    - kube-node-common
+  tags:
+    - kube-node-common
+
 - name: Etcd cluster preparation
   hosts: master
   vars:
@@ -57,13 +64,6 @@
     - etcd
   tags:
     - etcd
-
-- name: Kubernetes node preparation
-  hosts: master,nodes
-  roles:
-    - kube-node-common
-  tags:
-    - kube-node-common
 
 - name: Control plane configuration
   hosts: master
