@@ -1,20 +1,36 @@
 ---
 
+
 - name: installing dependencies
   apt:
     name: software-properties-common
     state: latest
+  when: ansible_os_family == 'Debian'
+
+- name: Disabling SELinux state
+  selinux:
+    state: disabled
+  when: ansible_os_family in ['RedHat', 'Rocky']
+
+- name: disable firewalld
+  systemd: name=firewalld enabled=no
+  when: ansible_os_family in ['RedHat', 'Rocky']
+
+- name: stop firewalld
+  systemd: name=firewalld state=stopped
+  ignore_errors: yes
+  when: ansible_os_family in ['RedHat', 'Rocky']
 
 - name: installing haproxy repo
   apt_repository:
     repo: 'ppa:vbernat/haproxy-{{ haproxy_version }}'
     state: present
+  when: ansible_os_family == 'Debian'
 
 - name: actually installing haproxy
-  apt:
+  package:
     name: haproxy
     state: present
-    update_cache: yes
 
 - name: copying configuration file
   copy:
@@ -23,6 +39,11 @@
 
 - name: validating configuration
   command: "haproxy -c -- /etc/haproxy/haproxy.cfg"
+  when: ansible_os_family == 'Debian'
+
+- name: validating configuration
+  command: "haproxy -f /etc/haproxy/haproxy.cfg -c"
+  when: ansible_os_family in ['RedHat', 'Rocky']
 
 - name: restarting haproxy service
   systemd:
@@ -40,10 +61,9 @@
     timeout: 30
 
 - name: install keepalived for clustering
-  apt:
+  package:
     name: keepalived
     state: present
-    update_cache: yes
   when: keepalived_cluster|bool
 
 - name: copying configuration file
