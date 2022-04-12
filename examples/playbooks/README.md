@@ -107,7 +107,7 @@ ansible-playbook 2.load-balancer.yml
 
 Now that all the prerequisites are installed, we can provision the master and worker nodes.
 
-The `3.cluster.yml` playbook needs some variables to be set in the `Control plane configuration` step:
+The `3.cluster.yml` playbook needs some variables to be set in the `Control plane configuration` step and in the `Kubernetes join nodes` step.
 
 ```yaml
 - name: Control plane configuration
@@ -122,6 +122,17 @@ The `3.cluster.yml` playbook needs some variables to be set in the `Control plan
     - kube-control-plane
   tags:
     - kube-control-plane
+  
+- name: Kubernetes join nodes
+  hosts: nodes
+  vars:
+    kubernetes_control_plane_address: 'control-plane.example.com:6443'
+    kubernetes_bootstrap_token: "{{ hostvars[groups.master[0]].kubernetes_bootstrap_token.stdout }}"
+    kubernetes_ca_hash: "{{ hostvars[groups.master[0]].kubernetes_ca_hash.stdout }}"
+  roles:
+    - kube-worker
+  tags:
+    - kube-worker
 ```
 
 Run the playbook with:
