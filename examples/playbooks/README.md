@@ -23,6 +23,7 @@ To be able to run the examples, you need to have the following software installe
 OS on the target machine:
 - Ubuntu 20.04 LTS
 - RHEL 8
+- Rocky 8
 
 # Cluster Architecture
 
@@ -38,6 +39,8 @@ Check the following files for a complete example:
 
 - `hosts.ini`
 - `haproxy.cfg`
+
+> NOTE: all the cluster configuration is managed by hosts.ini and haproxy.cfg files.
 
 # Install phases
 
@@ -107,33 +110,7 @@ ansible-playbook 2.load-balancer.yml
 
 Now that all the prerequisites are installed, we can provision the master and worker nodes.
 
-The `3.cluster.yml` playbook needs some variables to be set in the `Control plane configuration` step and in the `Kubernetes join nodes` step.
-
-```yaml
-- name: Control plane configuration
-  hosts: master
-  vars:
-    kubernetes_pod_cidr: "172.16.128.0/17"
-    kubernetes_svc_cidr: "172.16.0.0/17"
-    kubernetes_cluster_name: 'sighup'
-    kubernetes_control_plane_address: 'control-plane.example.com:6443'
-    kubernetes_kubeconfig_path: "./"
-  roles:
-    - kube-control-plane
-  tags:
-    - kube-control-plane
-  
-- name: Kubernetes join nodes
-  hosts: nodes
-  vars:
-    kubernetes_control_plane_address: 'control-plane.example.com:6443'
-    kubernetes_bootstrap_token: "{{ hostvars[groups.master[0]].kubernetes_bootstrap_token.stdout }}"
-    kubernetes_ca_hash: "{{ hostvars[groups.master[0]].kubernetes_ca_hash.stdout }}"
-  roles:
-    - kube-worker
-  tags:
-    - kube-worker
-```
+The `3.cluster.yml` playbook needs some variables to be set in the `hosts.ini` file, double-check that everything is ok.
 
 Run the playbook with:
 
