@@ -3,7 +3,7 @@
     Kubernetes Fury on-premises
 </h1>
 
-![Release](https://img.shields.io/badge/Latest%20Release-v1.19.7-blue)
+![Release](https://img.shields.io/badge/Latest%20Release-v1.20.15-blue)
 ![License](https://img.shields.io/github/license/sighupio/fury-kubernetes-on-premises?label=License)
 ![Slack](https://img.shields.io/badge/slack-@kubernetes/fury-yellow.svg?logo=slack&label=Slack)
 
