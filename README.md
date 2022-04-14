@@ -43,6 +43,9 @@ Click on each package to see its full documentation.
 
 Check the [compatibility matrix][compatibility-matrix] for additional informations about previous releases of the modules.
 
+## Examples
+
+- [Install Kubernetes cluster with Ansible roles](examples/playbooks)
 
 <!-- Links -->
 
