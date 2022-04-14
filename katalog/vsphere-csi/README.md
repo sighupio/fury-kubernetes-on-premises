@@ -13,7 +13,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: vsphere-config-secret
-  namespace: kube-system
+  namespace: vmware-system-csi
 stringData:
   csi-vsphere.conf: |
     [Global]

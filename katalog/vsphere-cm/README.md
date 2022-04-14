@@ -7,7 +7,7 @@ Docs:
 - <https://cloud-provider-vsphere.sigs.k8s.io/tutorials/kubernetes-on-vsphere-with-kubeadm.html>
 - <https://vmware.github.io/vsphere-storage-for-kubernetes>
 
-You need to set on the control plane and the nodes the cloud-provider `external` on `kubeadm.yaml`
+You need to set on the control plane and the nodes the cloud-provider `external` on `kubeadm.yaml`.
 
 Prerequisites:
 
@@ -24,30 +24,28 @@ Credential are set via configmap, patch it via Kustomize:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: cloud-config
+  name: vsphere-cloud-config
   namespace: kube-system
 data:
   vsphere.conf: |-
-    [Global]
-    insecure-flag = "true"
+    # Global properties in this section will be used for all specified vCenters unless overriden in VirtualCenter section.
+    global:
+      port: 443
+      insecureFlag: true
 
-    [VirtualCenter "XX.XX.XX.XX"]
-    datacenters = "datacenter"
-    port = "443"
-    user = "user"
-    password = "password"
+    # vcenter section
+    vcenter:
+      10.20.30.40:
+        server: 10.20.30.40
+        user: k8s@vsphere.local
+        password: "REDACTED"
+        datacenters:
+          - Datacenter
 ```
 
 The user to be able to interact with VCenter and to be able to provision volumes dynamically needs these permissions:
 
-### Dynamic Provisioning
-
-| Roles | Privileges | Entities | Propagate to Children |
-|---|---|---|---|
-|manage-k8s-node-vms | Resource.AssignVMToPool, VirtualMachine.Config.AddExistingDisk, VirtualMachine.Config.AddNewDisk, VirtualMachine.Config.AddRemoveDevice, VirtualMachine.Config.RemoveDisk, VirtualMachine.Inventory.Create, VirtualMachine.Inventory.Delete, VirtualMachine.Config.Settings | Cluster, Hosts, VM Folder | Yes
-|manage-k8s-volumes | Datastore.AllocateSpace, Datastore.FileManagement (Low level file operations) | Datastore | No
-|k8s-system-read-and-spbm-profile-view | StorageProfile.View (Profile-driven storage view) | vCenter | No
-|Read-only (pre-existing default role) | System.Anonymous, System.Read, System.View | Datacenter, Datastore Cluster, Datastore Storage Folder | No
+https://docs.vmware.com/en/VMware-vSphere-Container-Storage-Plug-in/2.0/vmware-vsphere-csp-getting-started/GUID-0AB6E692-AA47-4B6A-8CEA-38B754E16567.html
 
 ## Install
 
@@ -66,4 +64,4 @@ ProviderID: vsphere://4204eaf5-883c-23c7-50a8-868988cc0ae0
 ProviderID: vsphere://42049175-beac-93eb-b6cb-5a827184f1e3
 ```
 
-Now you cluster is ready run Kubernetes stuff!
+Now you cluster is ready run workloads.
