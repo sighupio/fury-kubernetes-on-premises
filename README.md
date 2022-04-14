@@ -50,6 +50,8 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 <!-- Links -->
 
 [compatibility-matrix]: https://github.com/sighupio/fury-kubernetes-on-premises/blob/master/docs/COMPATIBILITY_MATRIX.md
+[kfd-repo]: https://github.com/sighupio/fury-distribution
+[kfd-docs]: https://docs.kubernetesfury.com/docs/distribution/
 
 <!-- </KFD-DOCS> -->
 
