@@ -7,7 +7,7 @@
   tasks:
     - name: Get node name
       set_fact:
-        node_name: "{{ ansible_fqdn }}"
+        node_name: "{{ kubernetes_hostname }}"
     - name: Drain node
       delegate_to: localhost
       shell: "kubectl drain --grace-period=60 --timeout=360s --force --ignore-daemonsets --delete-local-data {{ node_name }} --kubeconfig=./admin.conf"
@@ -29,7 +29,7 @@
   tasks:
     - name: Get node name
       set_fact:
-        node_name: "{{ ansible_fqdn }}"
+        node_name: "{{ kubernetes_hostname }}"
     - name: Annotate node with containerd socket
       delegate_to: localhost
       shell: "kubectl annotate node {{ node_name }} --overwrite kubeadm.alpha.kubernetes.io/cri-socket=unix:///run/containerd/containerd.sock --kubeconfig=./admin.conf"
