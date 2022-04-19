@@ -1,20 +1,21 @@
 # vSphere controller manager
 
-This katalog deploy the vSphere controller manager on a VMware Kubernetes cluster backed by VCenter >= v67u3.
+This katalog deploy the vSphere controller manager on a VMware Kubernetes cluster backed by VCenter.
 
-Docs:
+## Requirements
 
-- <https://cloud-provider-vsphere.sigs.k8s.io/tutorials/kubernetes-on-vsphere-with-kubeadm.html>
-- <https://vmware.github.io/vsphere-storage-for-kubernetes>
-
-You need to set on the control plane and the nodes the cloud-provider `external` on `kubeadm.yaml`.
-
-Prerequisites:
-
+- Kubernetes = `1.20.x`
+- Kustomize >= `v3.5.3`
+- control plane and the nodes must be provisioned with cloud-provider `external` on `kubeadm.yaml`
 - `disk.EnableUUID=1` on all nodes.
 - VM Hardware should be at version 15 or higher.
 - VMware tools installed on all nodes.
 - `/etc/hostname` must match the name of the nodes, so in our case the fqdn.
+- VCenter >= `v67u3`.
+
+## Image repository and tag
+
+* vsphere cloud controller manager image: `gcr.io/cloud-provider-vsphere/cpi/release/manager:v1.20.0`
 
 ## Setting credentials
 
