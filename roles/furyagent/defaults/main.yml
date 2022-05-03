@@ -1,6 +1,6 @@
 ---
 
-furyagent_version: v0.2.2
+furyagent_version: v0.2.4
 furyagent_uri: https://github.com/sighupio/furyagent/releases/download/{{ furyagent_version }}/furyagent-linux-amd64
 furyagent_configure_master: false
 furyagent_configure_etcd: false
