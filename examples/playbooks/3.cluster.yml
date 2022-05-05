@@ -8,7 +8,7 @@
   vars:
     pki_dir: ./pki
   tasks:
-    - name: Create Etcd PKI directory
+    - name: Create etcd PKI directory
       file:
         path: /etc/etcd/pki/etcd
         owner: root
