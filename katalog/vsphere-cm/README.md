@@ -65,4 +65,4 @@ ProviderID: vsphere://4204eaf5-883c-23c7-50a8-868988cc0ae0
 ProviderID: vsphere://42049175-beac-93eb-b6cb-5a827184f1e3
 ```
 
-Now you cluster is ready run workloads.
+Now your cluster is ready to run workloads.
