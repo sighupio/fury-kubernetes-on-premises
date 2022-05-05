@@ -16,7 +16,7 @@ If you are new to KFD please refer to the [official documentation][kfd-docs] on 
 
 ## Overview
 
-**Kubernetes Fury on-premises** uses a collection of open source tools to install Kubernetes in a on-premises environment.
+**Kubernetes Fury on-premises** uses a collection of open source tools to install Kubernetes in an on-premises environment.
 
 ## Packages
 
