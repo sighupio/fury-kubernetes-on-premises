@@ -1,6 +1,6 @@
 # vSphere Container Storage Interface Driver
 
-This katalog deploy the vSphere container storage interface driver on a VMware Kubernetes cluster backed by VCenter.
+This katalog deploys the [vSphere container storage interface driver](https://github.com/kubernetes-sigs/vsphere-csi-driver) on a VMware Kubernetes cluster backed by vCenter.
 
 ## Requirements
 
