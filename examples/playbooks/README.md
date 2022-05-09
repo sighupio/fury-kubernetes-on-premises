@@ -7,7 +7,7 @@ to on-premises virtual machines.
 - [Cluster Architecture](#cluster-architecture)
 - [Install phases](#install-phases)
     - [Initialize PKI](#initialize-pki)
-    - [Install Container Runtime](#install-container-runtime)
+    - [Install Container Runtime](#install-the-container-runtime)
     - [Install Load Balancer](#install-load-balancer)
     - [Provision Master and Worker Nodes](#provision-master-and-worker-nodes)
 - [Utilities](#utilities)
