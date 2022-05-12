@@ -1,6 +1,6 @@
 # vSphere controller manager
 
-This katalog deploy the vSphere controller manager on a VMware Kubernetes cluster backed by VCenter.
+This katalog deploys the [vSphere controller manager](https://github.com/kubernetes/cloud-provider-vsphere) on a VMware Kubernetes cluster backed by vCenter.
 
 ## Requirements
 
