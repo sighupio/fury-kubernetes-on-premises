@@ -82,7 +82,7 @@ In this step you can choose which container runtime you want to use:
 
 We strongly recommend `containerd` as docker is deprecated and will be removed starting from Kubernetes version 1.24.
 
-### Docker
+#### Docker
 
 Run the `1.docker.yml` playbook with:
 
