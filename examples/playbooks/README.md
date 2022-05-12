@@ -106,7 +106,7 @@ To install the load balancer run the `2.load-balancer.yml` playbook with:
 ansible-playbook 2.load-balancer.yml
 ```
 
-## Provision Master and Worker Nodes
+### Provision Master and Worker Nodes
 
 Now that all the prerequisites are installed, we can provision the Kubernetes master and worker nodes.
 
