@@ -73,7 +73,7 @@ pki
    └── sa.pub
 ```
 
-## Install Container Runtime
+### Install the Container Runtime
 
 In this step you can choose which container runtime you want to use:
 
