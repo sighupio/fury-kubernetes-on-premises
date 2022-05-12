@@ -46,7 +46,7 @@ Check the following files for a complete example:
 
 The install phases are ordered, and each playbook has the order in which it should be run in the file name.
 
-## Initialize PKI
+### Initialize PKI
 
 First of all, we need to initialize CAs certificates for the etcd cluster and the Kubernetes components.
 The initialization of the PKI is done locally, using `furyagent`. The playbook is `0.pki.yml`.
