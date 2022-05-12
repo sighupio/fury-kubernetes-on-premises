@@ -118,7 +118,7 @@ Run the playbook with:
 ansible-playbook 3.cluster.yml
 ```
 
-# Utilities
+## Utilities
 
 ## How to migrate from Docker to Containerd
 
