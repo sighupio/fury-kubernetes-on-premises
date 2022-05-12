@@ -108,7 +108,7 @@ ansible-playbook 2.load-balancer.yml
 
 ## Provision Master and Worker Nodes
 
-Now that all the prerequisites are installed, we can provision the master and worker nodes.
+Now that all the prerequisites are installed, we can provision the Kubernetes master and worker nodes.
 
 The `3.cluster.yml` playbook needs some variables to be set in the `hosts.ini` file, double-check that everything is ok.
 
