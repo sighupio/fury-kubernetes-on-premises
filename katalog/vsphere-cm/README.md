@@ -44,7 +44,7 @@ data:
           - Datacenter
 ```
 
-The user to be able to interact with VCenter and to be able to provision volumes dynamically needs these permissions:
+The user to be able to interact with vCenter and to be able to provision volumes dynamically needs these permissions:
 
 https://docs.vmware.com/en/VMware-vSphere-Container-Storage-Plug-in/2.0/vmware-vsphere-csp-getting-started/GUID-0AB6E692-AA47-4B6A-8CEA-38B754E16567.html
 
