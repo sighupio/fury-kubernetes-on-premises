@@ -56,7 +56,7 @@
   tags:
     - kube-node-common
 
-- name: Etcd cluster preparation
+- name: etcd cluster preparation
   hosts: master
   vars:
     etcd_address: "{{ ansible_host }}"
