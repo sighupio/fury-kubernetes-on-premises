@@ -11,7 +11,7 @@ This katalog deploys the [vSphere controller manager](https://github.com/kuberne
 - VM Hardware should be at version 15 or higher.
 - VMware tools installed on all nodes.
 - `/etc/hostname` must match the name of the nodes, so in our case the FQDN.
-- VCenter >= `v67u3`.
+- vCenter >= `v67u3`.
 
 ## Image repository and tag
 
