@@ -1,0 +1,42 @@
+---
+
+- name: Include OS-specific variables
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Set package version separator on RedHat
+  set_fact:
+    _pkg_sep: "-"
+  when: ansible_os_family in ['RedHat', 'Rocky']
+
+- name: Set package version separator on Debian/Ubuntu
+  set_fact:
+    _pkg_sep: "="
+  when: ansible_os_family == 'Debian'
+
+- name: Update modprobe entries
+  ini_file:
+    option: "{{ item.option }}"
+    state: "{{ item.state }}"
+    path: "/usr/lib/modules-load.d/docker.conf"
+    section: ""
+    mode: "0644"
+    allow_no_value: true
+  loop: "{{ docker_modprobe }}"
+  notify:
+    - Systemctl restart
+
+- name: Update sysctl entries
+  sysctl:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+    state: "{{ item.state }}"
+    sysctl_file: "/etc/sysctl.conf"
+    reload: false
+  loop: "{{ docker_sysctl }}"
+  notify:
+    - Sysctl reload
+
+- include_tasks: "repo-{{ ansible_os_family }}.yml"
+
+- include_tasks: "docker.yml"
+

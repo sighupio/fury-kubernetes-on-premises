@@ -1,0 +1,31 @@
+- name: Kill all running containers
+  shell: "docker kill $(docker ps -q) || true"
+
+- name: Delete all stopped containers
+  shell: "docker rm $(docker ps -a -q)"
+
+- name: Delete all images
+  shell: "docker rmi $(docker images -q)"
+
+- name: Docker service stop # systemd loads service
+  service:
+    name: "docker.service"
+    state: "stopped"
+  changed_when: false
+  failed_when: false
+
+- name: Remove Docker
+  package:
+    name: "docker-ce"
+    state: absent
+
+- name: Remove Docker
+  package:
+    name: "docker-ce-cli"
+    state: absent
+
+- name: Delete docker folder
+  file:
+    state: absent
+    path: "/var/lib/docker"
+

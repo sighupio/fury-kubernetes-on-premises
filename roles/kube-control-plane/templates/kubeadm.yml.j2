@@ -1,7 +1,6 @@
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: InitConfiguration
 nodeRegistration:
-  criSocket: /var/run/dockershim.sock
   name: {{ kubernetes_hostname }}
   kubeletExtraArgs:
     cloud-provider: {{ kubernetes_cloud_provider }}
@@ -27,7 +26,6 @@ imageRepository: "k8s.gcr.io"
 controlPlaneEndpoint: {{ kubernetes_control_plane_address }}
 dns:
   type: CoreDNS
-certificatesDir: /etc/kubernetes/pki
 apiServer:
   extraArgs:
     enable-admission-plugins: "NamespaceLifecycle,LimitRanger,PodNodeSelector,ServiceAccount,DefaultStorageClass,DefaultTolerationSeconds,MutatingAdmissionWebhook,ValidatingAdmissionWebhook,ResourceQuota"
@@ -104,3 +102,7 @@ ipvs:
   syncPeriod: 30s
 metricsBindAddress: 0.0.0.0:10249
 mode: ipvs
+---
+apiVersion: kubelet.config.k8s.io/v1beta1
+kind: KubeletConfiguration
+cgroupDriver: systemd

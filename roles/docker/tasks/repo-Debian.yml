@@ -10,16 +10,16 @@
     name: apt-transport-https
     state: latest
 
-- name: Import Kubernetes APT public key
+- name: Import Docker APT public key
   apt_key:
-    id: "{{ kubernetes_repo['apt_gpg_key_id'] }}"
-    url: "{{ kubernetes_repo['apt_gpg_key'] }}"
+    id: "{{ docker_repo['apt_gpg_key_id'] }}"
+    url: "{{ docker_repo['apt_gpg_key'] }}"
     state: present
 
-- name: Add Kubernetes APT repository
+- name: Add Docker APT repository
   apt_repository:
-    filename: "{{ kubernetes_repo['name'] }}"
-    repo: "{{ kubernetes_repo['apt_repo'] }}"
+    filename: "{{ docker_repo['name'] }}"
+    repo: "{{ docker_repo['apt_repo'] }}"
     state: present
 
 - name: Update APT cache

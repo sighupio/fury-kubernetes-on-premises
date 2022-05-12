@@ -1,5 +1,5 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
 resources:
-  - cloud-controller-manager-role-bindings.yml
-  - cloud-controller-manager-roles.yml
-  - configmap-cloud-config.yml
-  - vsphere-cloud-controller-manager-ds.yml
+  - vsphere-cloud-controller-manager.yaml

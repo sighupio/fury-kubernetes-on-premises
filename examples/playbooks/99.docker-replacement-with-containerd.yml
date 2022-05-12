@@ -1,0 +1,44 @@
+# Copyright (c) 2022 SIGHUP s.r.l All rights reserved.
+# Use of this source code is governed by a BSD-style
+# license that can be found in the LICENSE file.
+
+- name: Docker removal preparation
+  hosts: master,nodes
+  tasks:
+    - name: Get node name
+      set_fact:
+        node_name: "{{ kubernetes_hostname }}"
+    - name: Drain node
+      delegate_to: localhost
+      shell: "kubectl drain --grace-period=60 --timeout=360s --force --ignore-daemonsets --delete-local-data {{ node_name }} --kubeconfig=./admin.conf"
+    - name: Stop kubelet.service
+      shell: "systemctl stop kubelet.service"
+  tags:
+    - docker-remove
+
+- name: Containerd install
+  hosts: master,nodes
+  roles:
+    - containerd
+  tags:
+    - containerd
+    - docker-remove
+
+- name: Docker removal post-actions
+  hosts: master,nodes
+  tasks:
+    - name: Get node name
+      set_fact:
+        node_name: "{{ kubernetes_hostname }}"
+    - name: Annotate node with containerd socket
+      delegate_to: localhost
+      shell: "kubectl annotate node {{ node_name }} --overwrite kubeadm.alpha.kubernetes.io/cri-socket=unix:///run/containerd/containerd.sock --kubeconfig=./admin.conf"
+    - name: Add --container-runtime and --container-runtime-endpoint to kubeadm-flags.env
+      shell: 'echo $(cat /var/lib/kubelet/kubeadm-flags.env | rev | cut -c 2- | rev)" --container-runtime=remote --container-runtime-endpoint=unix:///run/containerd/containerd.sock\"" > /var/lib/kubelet/kubeadm-flags.env'
+    - name: Stop kubelet.service
+      shell: "systemctl start kubelet.service"
+    - name: Uncordon node
+      delegate_to: localhost
+      shell: "kubectl uncordon {{ node_name }} --kubeconfig=./admin.conf"
+  tags:
+    - docker-remove

@@ -1,0 +1,46 @@
+---
+# Package options.
+
+containerd_version: 1.5.8
+containerd_download_url: "https://github.com/containerd/containerd/releases/download/v{{ containerd_version }}/containerd-{{ containerd_version }}-linux-{{ image_arch }}.tar.gz"
+containerd_bin_dir: "/usr/local/bin"
+runc_version: v1.0.3
+runc_bin_dir: "/usr/local/bin"
+runc_download_url: "https://github.com/opencontainers/runc/releases/download/{{ runc_version }}/runc.{{ image_arch }}"
+image_arch: "{{host_architecture | default('amd64')}}"
+
+# Service options.
+containerd_service_state: started
+containerd_service_enabled: true
+
+# Write a default containerd config.toml file.
+containerd_default_config: false
+containerd_config_default_write: true
+containerd_cfg_dir: /etc/containerd
+
+## CONTAINERD TOML SETTINGS
+
+containerd_storage_dir: "/var/lib/containerd"
+containerd_state_dir: "/run/containerd"
+containerd_systemd_dir: "/etc/systemd/system/containerd.service.d"
+containerd_oom_score: 0
+
+containerd_grpc_max_recv_message_size: 16777216
+containerd_grpc_max_send_message_size: 16777216
+containerd_debug_level: "info"
+
+containerd_metrics_address: ""
+containerd_metrics_grpc_histogram: false
+
+containerd_max_container_log_line_size: 16384
+
+# Kernel modules.
+containerd_modprobe:
+  - { state: "present", option: "br_netfilter" }
+  - { state: "present", option: "overlay" }
+
+# Entries for sysctl.
+containerd_sysctl:
+  - { state: "present", name: "net.bridge.bridge-nf-call-ip6tables", value: "1" }
+  - { state: "present", name: "net.bridge.bridge-nf-call-iptables", value: "1" }
+  - { state: "present", name: "net.ipv4.ip_forward", value: "1" }
