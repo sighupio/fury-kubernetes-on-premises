@@ -120,7 +120,7 @@ ansible-playbook 3.cluster.yml
 
 ## Utilities
 
-## How to migrate from Docker to Containerd
+### How to migrate from Docker to Containerd
 
 To migrate from docker to containerd , there is an example playbook in this directory `99.migrate-docker-to-containerd.yml`.
 
