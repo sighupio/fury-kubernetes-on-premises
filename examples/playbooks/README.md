@@ -33,7 +33,7 @@ The cluster is composed of:
 - 3 Master nodes
 - 3 Worker nodes
 
-In the master nodes we also deploy ETCD as a standalone systemd service.
+In the master nodes we also deploy etcd as a standalone systemd service.
 
 Check the following files for a complete example:
 
