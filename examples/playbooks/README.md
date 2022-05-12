@@ -98,7 +98,7 @@ Run the `1.containerd.yml` playbook with:
 ansible-playbook 1.containerd.yml
 ```
 
-## Install Load Balancer
+### Install the Load Balancer
 
 To install the load balancer run the `2.load-balancer.yml` playbook with:
 
