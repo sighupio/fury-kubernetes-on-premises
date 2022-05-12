@@ -13,7 +13,7 @@ to on-premises virtual machines.
 - [Utilities](#utilities)
   - [How to migrate from Docker to Containerd](#how-to-migrate-from-docker-to-containerd)
     
-# Requirements
+## Requirements
 
 To be able to run the examples, you need to have the following software installed:
 - ansible >= 2.8.0
