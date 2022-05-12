@@ -80,7 +80,7 @@ In this step you can choose which container runtime you want to use:
 - docker
 - containerd
 
-We recommend containerd as docker is deprecated and will be removed starting from Kubernetes version 1.24.
+We strongly recommend `containerd` as docker is deprecated and will be removed starting from Kubernetes version 1.24.
 
 ### Docker
 
