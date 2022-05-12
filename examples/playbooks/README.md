@@ -25,7 +25,7 @@ One of the following supported Operating Systems on the target machines:
 - RHEL 8
 - Rocky 8
 
-# Cluster Architecture
+## Cluster Architecture
 
 The cluster is composed of:
 
