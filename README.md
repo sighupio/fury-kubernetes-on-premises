@@ -24,12 +24,9 @@ The following packages are included in the Fury Kubernetes on-premises module:
 
 | Package                                              | Version  | Description                                                                                              |
 |------------------------------------------------------|----------|----------------------------------------------------------------------------------------------------------|
-| [dex](katalog/dex)                                   | `2.20.0` | OpenID Connect (OIDC) identity and OAuth 2.0 provider with pluggable connectors                          |
-| [gangway](katalog/gangway)                           | `3.2.0`  | An application that can be used to easily enable authentication flows via OIDC for a kubernetes cluster. |
 | [vmware-cm](katalog/vmware-cm)                       | `1.2.1`  | Kubernetes Cloud Provider for vSphere                                                                    |
 | [vmware-csi](katalog/vmware-csi)                     | `2.1.0`  | vSphere storage Container Storage Interface (CSI) plugin                                                 |
 | [etcd](roles/etcd)                                   | `3.4.7`  | Ansible role to install ETCD as systemd service                                                          |
-| [furyagent](roles/furyagent)                         | `0.2.2`  | Ansible role to install [Furyagent](https://github.com/sighupio/furyagent)                               |
 | [haproxy](roles/haproxy)                             | `2.2`    | Ansible role to install HAProxy as Kubernetes load balancer for the APIServer                            |
 | [containerd](roles/containerd)                       | `1.5.8`  | Ansible role to install containerd as container runtime                                                  |
 | [docker](roles/docker)                               | `19.X`   | Ansible role to install docker as container runtime                                                      |
