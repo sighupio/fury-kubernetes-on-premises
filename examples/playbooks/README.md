@@ -20,7 +20,7 @@ To be able to run the examples, you need to have the following software installe
 - furyagent
 - kubectl
 
-OS on the target machine:
+One of the following supported Operating Systems on the target machines:
 - Ubuntu 20.04 LTS
 - RHEL 8
 - Rocky 8
