@@ -8,7 +8,7 @@ to on-premises virtual machines.
 - [Install phases](#install-phases)
     - [Initialize PKI](#initialize-pki)
     - [Install Container Runtime](#install-the-container-runtime)
-    - [Install Load Balancer](#install-load-balancer)
+    - [Install Load Balancer](#install-the-load-balancer)
     - [Provision Master and Worker Nodes](#provision-master-and-worker-nodes)
 - [Utilities](#utilities)
   - [How to migrate from Docker to Containerd](#how-to-migrate-from-docker-to-containerd)
