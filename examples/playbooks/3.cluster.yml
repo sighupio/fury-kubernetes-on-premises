@@ -22,7 +22,7 @@
         group: root
         mode: 0750
         state: directory
-    - name: Copy Etcd CA
+    - name: Copy etcd CA
       copy:
         src: "{{ pki_dir }}/etcd/{{ item }}"
         dest: "/etc/etcd/pki/etcd/{{ item }}"
