@@ -44,7 +44,7 @@ Check the following files for a complete example:
 
 # Install phases
 
-The install phases are ordered, and each playbook has the order of the phases in the file name.
+The install phases are ordered, and each playbook has the order in which it should be run in the file name.
 
 ## Initialize PKI
 
