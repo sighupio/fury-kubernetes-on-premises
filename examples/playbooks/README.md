@@ -42,7 +42,7 @@ Check the following files for a complete example:
 
 > NOTE: all the cluster configuration is managed by hosts.ini and haproxy.cfg files.
 
-# Install phases
+## Install phases
 
 The install phases are ordered, and each playbook has the order in which it should be run in the file name.
 
