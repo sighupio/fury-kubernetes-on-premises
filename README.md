@@ -1,7 +1,9 @@
+<!-- markdownlint-disable MD033 -->
 <h1>
     <img src="https://github.com/sighupio/fury-distribution/blob/master/docs/assets/fury-epta-white.png?raw=true" align="left" width="90" style="margin-right: 15px"/>
     Kubernetes Fury on-premises
 </h1>
+<!-- markdownlint-enable MD033 -->
 
 ![Release](https://img.shields.io/badge/Latest%20Release-v1.20.15-blue)
 ![License](https://img.shields.io/github/license/sighupio/fury-kubernetes-on-premises?label=License)
@@ -22,23 +24,25 @@ If you are new to KFD please refer to the [official documentation][kfd-docs] on 
 
 The following packages are included in the Fury Kubernetes on-premises module:
 
-| Package                                              | Version  | Description                                                                                              |
-|------------------------------------------------------|----------|----------------------------------------------------------------------------------------------------------|
-| [vmware-cm](katalog/vmware-cm)                       | `1.2.1`  | Kubernetes Cloud Provider for vSphere                                                                    |
-| [vmware-csi](katalog/vmware-csi)                     | `2.1.0`  | vSphere storage Container Storage Interface (CSI) plugin                                                 |
-| [etcd](roles/etcd)                                   | `3.4.7`  | Ansible role to install ETCD as systemd service                                                          |
-| [haproxy](roles/haproxy)                             | `2.2`    | Ansible role to install HAProxy as Kubernetes load balancer for the APIServer                            |
-| [containerd](roles/containerd)                       | `1.5.8`  | Ansible role to install containerd as container runtime                                                  |
-| [docker](roles/docker)                               | `19.X`   | Ansible role to install docker as container runtime                                                      |
-| [kube-node-common](roles/kube-node-common)           | `-`      | Ansible role to install prerequisites for Kubernetes setup                                               |
-| [kube-control-plane](roles/kube-control-plane)       | `-`      | Ansible role to install master nodes                                                                     |
-| [kube-worker](roles/kube-worker)                     | `-`      | Ansible role to install worker nodes and join them to the cluster                                        |
+| Package                                              | Version  | Description                                                                    |
+|------------------------------------------------------|----------|--------------------------------------------------------------------------------|
+| [vsphere-cm](katalog/vsphere-cm)                     | `1.20.1` | Kubernetes Cloud Provider for vSphere                                          |
+| [vsphere-csi](katalog/vsphere-csi)                   | `2.3.1`  | vSphere storage Container Storage Interface (CSI) plugin                       |
+| [etcd](roles/etcd)                                   | `3.4.7`  | Ansible role to install ETCD as systemd service                                |
+| [haproxy](roles/haproxy)                             | `2.2`    | Ansible role to install HAProxy as Kubernetes load balancer for the APIServer  |
+| [containerd](roles/containerd)                       | `1.5.8`  | Ansible role to install containerd as container runtime                        |
+| [docker](roles/docker)                               | `19.X`   | Ansible role to install docker as container runtime                            |
+| [kube-node-common](roles/kube-node-common)           | `-`      | Ansible role to install prerequisites for Kubernetes setup                     |
+| [kube-control-plane](roles/kube-control-plane)       | `-`      | Ansible role to install master nodes                                           |
+| [kube-worker](roles/kube-worker)                     | `-`      | Ansible role to install worker nodes and join them to the cluster              |
 
 Click on each package to see its full documentation.
 
 ## Compatibility
 
-Check the [compatibility matrix][compatibility-matrix] for additional informations about previous releases of the modules.
+This version is compatible with Kubernetes 1.20.15
+
+Check the [compatibility matrix][compatibility-matrix] for additional information about previous releases of the modules.
 
 ## Examples
 
