@@ -4,7 +4,7 @@ This katalog deploys the [vSphere container storage interface driver](https://gi
 
 ## Requirements
 
-Follow all the prerequisites from `vsphere-cm` modules.
+Follow all the [prerequisites from `vsphere-cm` modules](../vsphere-cm/).
 
 ## Image repository and tag
 
@@ -41,7 +41,7 @@ stringData:
 type: Opaque
 ```
 
-`cluster-id` represents the unique cluster identifier. Each kubernetes cluster should have it's own unique cluster-id set in the csi-vsphere.conf file.
+⚠️ `cluster-id` represents the unique cluster identifier. Each kubernetes cluster should have it's own unique cluster-id set in the csi-vsphere.conf file.
 
 ## Install
 
