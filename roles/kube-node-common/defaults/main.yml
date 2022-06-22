@@ -1,11 +1,17 @@
 ---
-
 # Kubernetes components versions
-kubernetes_repo_distribution: 'xenial'
-kubelet_version: '1.20.15'
-kubectl_version: '1.20.15'
-kubeadm_version: '1.20.15'
-critools_version: '1.19.0'
+kubernetes_repo_distribution: "xenial"
+kubelet_version: "1.21.14"
+kubectl_version: "1.21.14"
+kubeadm_version: "1.21.14"
+# critools should be aligned with Kubernetes version:
+# https://kubernetes.io/docs/tasks/debug/debug-cluster/crictl/#installing-crictl
+# but 1.21 is not in the APT repos :'( and installing 1.19 doesn't wokr with kubeadm 1.21
+critools_version: "1.24.0"
+# Kubernetes CNI comes from here:
+# https://github.com/containernetworking/plugins
+# FIXME: there are newer version, but they are not available in the APT repos
+# also note that 1.0 has breaking changes
 kubernetescni_version: "0.8.7"
 
 # Docker configurations
