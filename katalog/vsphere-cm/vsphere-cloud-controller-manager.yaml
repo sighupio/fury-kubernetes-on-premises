@@ -42,6 +42,7 @@ data:
       # settings for using k8s secret
       secretName: vsphere-cloud-secret
       secretNamespace: kube-system
+
     # vcenter section
     vcenter:
       your-vcenter-name-here:
@@ -57,6 +58,7 @@ data:
           - mytenantdc
         secretName: cpi-engineering-secret
         secretNamespace: kube-system
+
     # labels for regions and zones
     labels:
       region: k8s-region
@@ -200,8 +202,6 @@ metadata:
     component: cloud-controller-manager
     tier: control-plane
   namespace: kube-system
-  annotations:
-    scheduler.alpha.kubernetes.io/critical-pod: ""
 spec:
   selector:
     matchLabels:
@@ -230,9 +230,10 @@ spec:
       securityContext:
         runAsUser: 1001
       serviceAccountName: cloud-controller-manager
+      priorityClassName: system-node-critical
       containers:
         - name: vsphere-cloud-controller-manager
-          image: gcr.io/cloud-provider-vsphere/cpi/release/manager:v1.20.0
+          image: gcr.io/cloud-provider-vsphere/cpi/release/manager:v1.21.1
           args:
             - --cloud-provider=vsphere
             - --v=2
