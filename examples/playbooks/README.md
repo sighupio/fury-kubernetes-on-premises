@@ -1,7 +1,7 @@
 # Example Playbooks for Kubernetes cluster deployment with Fury
 
 In this directory we provide example playbooks for deploying a Kubernetes cluster using Kubernetes Fury Distribution
-to on-premises virtual machines.
+to on-premises virtual machines at version 1.20.15 .
 
 - [Requirements](#requirements)
 - [Cluster Architecture](#cluster-architecture)
@@ -10,6 +10,7 @@ to on-premises virtual machines.
     - [Install Container Runtime](#install-the-container-runtime)
     - [Install Load Balancer](#install-the-load-balancer)
     - [Provision Master and Worker Nodes](#provision-master-and-worker-nodes)
+- [Upgrade cluster](#upgrade-cluster)
 - [Utilities](#utilities)
   - [How to migrate from Docker to Containerd](#how-to-migrate-from-docker-to-containerd)
     
@@ -117,6 +118,37 @@ Run the playbook with:
 ```bash
 ansible-playbook 3.cluster.yml
 ```
+
+## Upgrade cluster
+
+In this folder there are two playbooks to upgrade the cluster to a new kubernetes version.
+
+Change the `hosts.ini` with the version you want to upgrade to:
+
+```ini
+[all:vars]
+...
+kubernetes_version='1.21.14'
+```
+
+> NOTE: the `kubernetes_version` must be one of the versions available in the roles.
+
+First you need to upgrade the control plane with the `55.upgrade-control-plane.yml` playbook with:
+
+```bash
+ansible-playbook 55.upgrade-control-plane.yml
+```
+
+Then you need to upgrade the worker nodes with the `56.upgrade-worker-nodes.yml` playbook with:
+
+```bash
+ansible-playbook 56.upgrade-worker-nodes.yml --limit worker1
+```
+
+Repeat this step foreach worker node in the cluster.
+
+> NOTE: you need to run the playbook with the `--limit` option to limit the nodes to upgrade. Why? Because the upgrade
+> process will drain the node before upgrading it.
 
 ## Utilities
 
