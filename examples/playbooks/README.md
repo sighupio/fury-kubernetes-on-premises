@@ -133,6 +133,8 @@ kubernetes_version='1.21.14'
 
 > NOTE: the `kubernetes_version` must be one of the versions available in the roles.
 
+> IMPORTANT: all the nodes must be in Ready status before running the upgrade.
+
 First you need to upgrade the control plane with the `55.upgrade-control-plane.yml` playbook with:
 
 ```bash
