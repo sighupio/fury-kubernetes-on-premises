@@ -61,9 +61,30 @@
       - openssl
     state: latest
 
-- name: Install Kubernetes packages
+- name: Install cri-tools Kubernetes packages
   package:
-    name: "{{ _kubernetes_packages }}"
+    name: "cri-tools{{ _pkg_sep }}{{ critools_version }}{{ _pkg_suffix }}"
+    state: present
+
+- name: Install kubeadm Kubernetes packages
+  package:
+    name: "kubeadm{{ _pkg_sep }}{{ kubeadm_version }}{{ _pkg_suffix }}"
+    state: present
+
+- name: Install kubectl Kubernetes packages
+  package:
+    name: "kubectl{{ _pkg_sep }}{{ kubectl_version }}{{ _pkg_suffix }}"
+    state: present
+
+- name: Install kubelet Kubernetes packages
+  package:
+    name: "kubelet{{ _pkg_sep }}{{ kubelet_version}}{{ _pkg_suffix }}"
+    state: present
+  when: not skip_kubelet_upgrade
+
+- name: Install kubernetes-cni Kubernetes packages
+  package:
+    name: "kubernetes-cni{{ _pkg_sep }}{{ kubernetescni_version }}{{ _pkg_suffix }}"
     state: present
 
 - name: Start and enable Kubelet service

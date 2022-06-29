@@ -8,6 +8,8 @@ kubeadm_version: '1.20.15'
 critools_version: '1.19.0'
 kubernetescni_version: "0.8.7"
 
+skip_kubelet_upgrade: False
+
 # Docker configurations
 docker_dns: []
 docker_proxy: ""
