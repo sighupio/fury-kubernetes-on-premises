@@ -102,7 +102,7 @@
 - name: Write defaults to config.toml.
   copy:
     dest: /etc/containerd/config.toml
-    content: “{{ containerd_config_default.stdout }}”
+    content: "{{ containerd_config_default.stdout }}"
   notify: restart containerd
   when: containerd_default_config
 

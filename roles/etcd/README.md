@@ -1,7 +1,9 @@
-# Ansible Role: Etcd
-Install, backup and restore Etcd.
+# Ansible Role: etcd
+
+Install, backup and restore etcd.
 
 ## Installation
+
 ```yaml
 name: Install etcd on all hosts
 hosts: etcd
@@ -11,10 +13,11 @@ vars:
   etcd_certs_local_dir: "../secrets/pki/etcd"
 ```
 
-This roles creates the Etcd PKI and saves in `etcd_certs_local_dir` on the local
+This role creates the etcd PKI and saves in `etcd_certs_local_dir` on the local
 machine the client certificate needed by Kubernetes API server.
 
 ## Restore
+
 To perform the restore of an Etcd installation, first retrieve the database
 snapshot and the PKI backup (default location of latest backup is
 `/var/backups/etcd/current-etcd-backup.db.gz`).
@@ -45,7 +48,8 @@ x etc/etcd/pki/ca.pem
 x etc/etcd/pki/peer-key.pem
 ```
 
-Now we can define a playbook like the following.
+Now we can define a playbook like the following:
+
 ```yaml
 name: Install etcd on all hosts
 hosts: etcd
@@ -61,6 +65,7 @@ vars:
 ```
 
 Check that everything is working.
+
 ```sh
 $ ssh root@etcd
 # ETCDCTL_API=3 etcdctl --cacert=/etc/etcd/pki/ca.pem \
