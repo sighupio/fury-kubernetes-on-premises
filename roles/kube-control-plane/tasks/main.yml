@@ -68,3 +68,6 @@
     src: /etc/kubernetes/admin.conf
     dest: "{{ kubernetes_kubeconfig_path }}/admin.conf"
     flat: yes
+
+- include_tasks: upgrade.yml
+  when: upgrade
