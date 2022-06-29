@@ -81,6 +81,7 @@
     name: "kubelet{{ _pkg_sep }}{{ kubelet_version}}{{ _pkg_suffix }}"
     state: present
   when: not skip_kubelet_upgrade
+  notify: Restart kubelet
 
 - name: Install kubernetes-cni Kubernetes packages
   package:
