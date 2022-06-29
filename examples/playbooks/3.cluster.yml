@@ -67,6 +67,7 @@
 
 - name: Control plane configuration
   hosts: master
+  serial: 1
   roles:
     - kube-control-plane
   tags:
