@@ -12,6 +12,13 @@
     fstype: swap
     state: absent
 
+- name: Remove swap from /etc/fstab for LVM-based systems
+  replace:
+    path: /etc/fstab
+    regexp: '^([^#].*\s+swap\s+.*)$'
+    replace: '# \1'
+    backup: yes
+
 - name: Disable swap
   command: swapoff -a
   when: ansible_swaptotal_mb > 0
