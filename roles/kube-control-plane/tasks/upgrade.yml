@@ -1,0 +1,22 @@
+- name: Renew certificates
+  command: "{{ item }}"
+  with_items:
+    - "kubeadm certs renew admin.conf"
+    - "kubeadm certs renew apiserver"
+    - "kubeadm certs renew apiserver-kubelet-client"
+    - "kubeadm certs renew controller-manager.conf"
+    - "kubeadm certs renew front-proxy-client"
+    - "kubeadm certs renew scheduler.conf"
+    - "kubeadm certs renew --cert-dir=/etc/etcd/pki apiserver-etcd-client --config=/etc/etcd/kubeadm-etcd.yml"
+    - "kubeadm certs renew --cert-dir=/etc/etcd/pki etcd-healthcheck-client --config=/etc/etcd/kubeadm-etcd.yml"
+    - "kubeadm certs renew --cert-dir=/etc/etcd/pki etcd-peer --config=/etc/etcd/kubeadm-etcd.yml"
+    - "kubeadm certs renew --cert-dir=/etc/etcd/pki etcd-server --config=/etc/etcd/kubeadm-etcd.yml"
+
+- name: Upgrade kubernetes master with kubeadm
+  command: kubeadm upgrade apply --config /etc/kubernetes/kubeadm.yml -y
+
+- name: Restart etcd service
+  systemd:
+    name: etcd
+    daemon_reload: yes
+    state: restarted

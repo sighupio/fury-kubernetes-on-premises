@@ -1,0 +1,21 @@
+- name: Control plane upgrade
+  hosts: master
+  serial: 1
+  vars:
+    skip_kubelet_upgrade: True
+    upgrade: True
+  roles:
+    - kube-node-common
+    - kube-control-plane
+  tags:
+    - kubeadm-upgrade
+
+- name: Kubelet upgrade
+  hosts: master
+  serial: 1
+  vars:
+    skip_kubelet_upgrade: False
+  roles:
+    - kube-node-common
+  tags:
+    - package-upgrade

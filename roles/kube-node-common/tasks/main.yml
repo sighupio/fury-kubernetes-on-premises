@@ -28,15 +28,6 @@
     _pkg_suffix: "-00"
   when: ansible_os_family == 'Debian'
 
-- name: Set Kubernetes packages list
-  set_fact:
-    _kubernetes_packages:
-      - "cri-tools{{ _pkg_sep }}{{ critools_version }}{{ _pkg_suffix }}"
-      - "kubeadm{{ _pkg_sep }}{{ kubeadm_version }}{{ _pkg_suffix }}"
-      - "kubectl{{ _pkg_sep }}{{ kubectl_version }}{{ _pkg_suffix }}"
-      - "kubelet{{ _pkg_sep }}{{ kubelet_version}}{{ _pkg_suffix }}"
-      - "kubernetes-cni{{ _pkg_sep }}{{ kubernetescni_version }}{{ _pkg_suffix }}"
-
 - name: Set conntrack kernel module name on Ubuntu 18
   set_fact:
     _conntrack_module_name: "nf_conntrack_ipv4"
@@ -49,4 +40,4 @@
 
 - include_tasks: "repo-{{ ansible_os_family }}.yml"
 
-- include_tasks: kubelet.yml
+- include_tasks: node.yml
