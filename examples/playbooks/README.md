@@ -131,7 +131,7 @@ Change the `hosts.ini` with the version you want to upgrade to:
 kubernetes_version='1.21.14'
 ```
 
-> NOTE: the `kubernetes_version` must be one of the versions available in the roles.
+> NOTE: the `kubernetes_version` must be one of the versions available in the roles, i.e. supported by this installer.
 
 > IMPORTANT: all the nodes must be in Ready status before running the upgrade.
 
