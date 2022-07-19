@@ -5,6 +5,11 @@
     name: yum-utils
     state: latest
 
+- name: Install
+  yum:
+    name: yum-plugin-versionlock
+    state: latest
+
 - name: Add Kubernetes YUM repository
   yum_repository:
     name: "{{ kubernetes_repo['name'] }}"
