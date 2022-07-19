@@ -1,5 +1,9 @@
 ---
 
+- name: Check packages facts
+  package_facts:
+    manager: auto
+
 - name: Ensure /var/log/journal exists
   file:
     name: /var/log/journal
@@ -68,20 +72,13 @@
       - openssl
     state: latest
 
-- name: Install cri-tools Kubernetes packages
-  package:
-    name: "cri-tools{{ _pkg_sep }}{{ critools_version }}{{ _pkg_suffix }}"
-    state: present
 
-- name: Install kubeadm Kubernetes packages
-  package:
-    name: "kubeadm{{ _pkg_sep }}{{ kubeadm_version }}{{ _pkg_suffix }}"
-    state: present
 
-- name: Install kubectl Kubernetes packages
-  package:
-    name: "kubectl{{ _pkg_sep }}{{ kubectl_version }}{{ _pkg_suffix }}"
-    state: present
+- name: Un-hold kubelet package
+  dpkg_selections:
+    name: "kubelet"
+    selection: install
+  when: ansible_os_family == 'Debian' and 'kubelet' in ansible_facts.packages
 
 - name: Install kubelet Kubernetes packages
   package:
@@ -90,10 +87,84 @@
   when: not skip_kubelet_upgrade
   notify: Restart kubelet
 
+- name: hold kubelet package
+  dpkg_selections:
+    name: "kubelet"
+    selection: hold
+  when: ansible_os_family == 'Debian'
+
+
+- name: Un-hold kubernetes-cni package
+  dpkg_selections:
+    name: "kubernetes-cni"
+    selection: install
+  when: ansible_os_family == 'Debian' and 'kubernetes-cni' in ansible_facts.packages
+
 - name: Install kubernetes-cni Kubernetes packages
   package:
     name: "kubernetes-cni{{ _pkg_sep }}{{ kubernetescni_version }}{{ _pkg_suffix }}"
     state: present
+
+- name: hold kubernetes-cni package
+  dpkg_selections:
+    name: "kubernetes-cni"
+    selection: hold
+  when: ansible_os_family == 'Debian'
+
+
+- name: Un-hold kubectl package
+  dpkg_selections:
+    name: "kubectl"
+    selection: install
+  when: ansible_os_family == 'Debian' and 'kubectl' in ansible_facts.packages
+
+- name: Install kubectl Kubernetes packages
+  package:
+    name: "kubectl{{ _pkg_sep }}{{ kubectl_version }}{{ _pkg_suffix }}"
+    state: present
+
+- name: hold kubectl package
+  dpkg_selections:
+    name: "kubectl"
+    selection: hold
+  when: ansible_os_family == 'Debian'
+
+
+- name: Un-hold cri-tools package
+  dpkg_selections:
+    name: "cri-tools"
+    selection: install
+  when: ansible_os_family == 'Debian' and 'cri-tools' in ansible_facts.packages
+
+- name: Install cri-tools Kubernetes packages
+  package:
+    name: "cri-tools{{ _pkg_sep }}{{ critools_version }}{{ _pkg_suffix }}"
+    state: present
+
+- name: hold cri-tools package
+  dpkg_selections:
+    name: "cri-tools"
+    selection: hold
+  when: ansible_os_family == 'Debian'
+
+
+- name: Un-hold kubeadm package
+  dpkg_selections:
+    name: "kubeadm"
+    selection: install
+  when: ansible_os_family == 'Debian' and 'kubeadm' in ansible_facts.packages
+
+- name: Install kubeadm Kubernetes packages
+  package:
+    name: "kubeadm{{ _pkg_sep }}{{ kubeadm_version }}{{ _pkg_suffix }}"
+    state: present
+
+- name: hold kubeadm package
+  dpkg_selections:
+    name: "kubeadm"
+    selection: hold
+  when: ansible_os_family == 'Debian'
+
 
 - name: Start and enable Kubelet service
   systemd:
