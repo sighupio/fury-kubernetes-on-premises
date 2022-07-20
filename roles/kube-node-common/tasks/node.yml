@@ -1,0 +1,241 @@
+---
+
+- name: Check packages facts
+  package_facts:
+    manager: auto
+
+- name: Ensure /var/log/journal exists
+  file:
+    name: /var/log/journal
+    state: directory
+  notify: Restart journald
+
+- name: Remove swap from /etc/fstab
+  mount:
+    name: swap
+    fstype: swap
+    state: absent
+
+- name: Remove swap from /etc/fstab for LVM-based systems
+  replace:
+    path: /etc/fstab
+    regexp: '^([^#].*\s+swap\s+.*)$'
+    replace: '# \1'
+    backup: yes
+
+- name: Disable swap
+  command: swapoff -a
+  when: ansible_swaptotal_mb > 0
+
+- name: Put SELinux in permissive mode
+  selinux:
+    policy: targeted
+    state: permissive
+  when: ansible_os_family in ['RedHat', 'Rocky']
+
+- name: Ensure IPVS kernel modules are loaded
+  modprobe:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - ip_vs
+    - ip_vs_rr
+    - ip_vs_wrr
+    - ip_vs_sh
+    - "{{ _conntrack_module_name }}"
+
+- name: Ensure IPVS kernel modules are loaded at boot
+  lineinfile:
+    state: present
+    path: /etc/modules-load.d/kubernetes.conf
+    line: "{{ item }}"
+    create: yes
+  with_items:
+    - ip_vs
+    - ip_vs_rr
+    - ip_vs_wrr
+    - ip_vs_sh
+    - "{{ _conntrack_module_name }}"
+
+- name: Start and enable systemd-modules-load service
+  systemd:
+    name: systemd-modules-load
+    enabled: yes
+    state: started
+
+- name: Install Kubernetes dependencies
+  package:
+    name:
+      - ca-certificates
+      - ipset
+      - ipvsadm
+      - openssl
+    state: latest
+
+# Installing Kubernetes packages
+
+## Installing Kubelet
+
+- name: Un-hold kubelet package
+  dpkg_selections:
+    name: "kubelet"
+    selection: install
+  when: ansible_os_family == 'Debian' and 'kubelet' in ansible_facts.packages
+
+- name: Delete lock for kubelet package
+  shell: "yum versionlock delete kubelet"
+  args:
+    warn: false
+  when: ansible_os_family in ['RedHat', 'Rocky'] and 'kubelet' in ansible_facts.packages
+
+- name: Install kubelet Kubernetes packages
+  package:
+    name: "kubelet{{ _pkg_sep }}{{ kubelet_version}}{{ _pkg_suffix }}"
+    state: present
+  when: not skip_kubelet_upgrade
+  notify: Restart kubelet
+
+- name: hold kubelet package
+  dpkg_selections:
+    name: "kubelet"
+    selection: hold
+  when: ansible_os_family == 'Debian'
+
+- name: Add lock for kubelet package
+  shell: "yum versionlock kubelet"
+  args:
+    warn: false
+  when: ansible_os_family in ['RedHat', 'Rocky']
+
+## Installing kubernetes-cni
+
+- name: Un-hold kubernetes-cni package
+  dpkg_selections:
+    name: "kubernetes-cni"
+    selection: install
+  when: ansible_os_family == 'Debian' and 'kubernetes-cni' in ansible_facts.packages
+
+- name: Delete lock for kubernetes-cni package
+  shell: "yum versionlock delete kubernetes-cni"
+  args:
+    warn: false
+  when: ansible_os_family in ['RedHat', 'Rocky'] and 'kubernetes-cni' in ansible_facts.packages
+
+- name: Install kubernetes-cni Kubernetes packages
+  package:
+    name: "kubernetes-cni{{ _pkg_sep }}{{ kubernetescni_version }}{{ _pkg_suffix }}"
+    state: present
+
+- name: hold kubernetes-cni package
+  dpkg_selections:
+    name: "kubernetes-cni"
+    selection: hold
+  when: ansible_os_family == 'Debian'
+
+- name: Add lock for kubernetes-cni package
+  shell: "yum versionlock kubernetes-cni"
+  args:
+    warn: false
+  when: ansible_os_family in ['RedHat', 'Rocky']
+
+## Installing kubectl
+
+- name: Un-hold kubectl package
+  dpkg_selections:
+    name: "kubectl"
+    selection: install
+  when: ansible_os_family == 'Debian' and 'kubectl' in ansible_facts.packages
+
+- name: Delete lock for kubectl package
+  shell: "yum versionlock delete kubectl"
+  args:
+    warn: false
+  when: ansible_os_family in ['RedHat', 'Rocky'] and 'kubectl' in ansible_facts.packages
+
+- name: Install kubectl Kubernetes packages
+  package:
+    name: "kubectl{{ _pkg_sep }}{{ kubectl_version }}{{ _pkg_suffix }}"
+    state: present
+
+- name: hold kubectl package
+  dpkg_selections:
+    name: "kubectl"
+    selection: hold
+  when: ansible_os_family == 'Debian'
+
+- name: Add lock for kubectl package
+  shell: "yum versionlock kubectl"
+  args:
+    warn: false
+  when: ansible_os_family in ['RedHat', 'Rocky']
+
+## Installing cri-tools
+
+- name: Un-hold cri-tools package
+  dpkg_selections:
+    name: "cri-tools"
+    selection: install
+  when: ansible_os_family == 'Debian' and 'cri-tools' in ansible_facts.packages
+
+- name: Delete lock for cri-tools package
+  shell: "yum versionlock delete cri-tools"
+  args:
+    warn: false
+  when: ansible_os_family in ['RedHat', 'Rocky'] and 'cri-tools' in ansible_facts.packages
+
+- name: Install cri-tools Kubernetes packages
+  package:
+    name: "cri-tools{{ _pkg_sep }}{{ critools_version }}{{ _pkg_suffix }}"
+    state: present
+
+- name: hold cri-tools package
+  dpkg_selections:
+    name: "cri-tools"
+    selection: hold
+  when: ansible_os_family == 'Debian'
+
+- name: Add lock for cri-tools package
+  shell: "yum versionlock cri-tools"
+  args:
+    warn: false
+  when: ansible_os_family in ['RedHat', 'Rocky']
+
+## Installing kubeadm
+
+- name: Un-hold kubeadm package
+  dpkg_selections:
+    name: "kubeadm"
+    selection: install
+  when: ansible_os_family == 'Debian' and 'kubeadm' in ansible_facts.packages
+
+- name: Delete lock for kubeadm package
+  shell: "yum versionlock delete kubeadm"
+  args:
+    warn: false
+  when: ansible_os_family in ['RedHat', 'Rocky'] and 'kubeadm' in ansible_facts.packages
+
+- name: Install kubeadm Kubernetes packages
+  package:
+    name: "kubeadm{{ _pkg_sep }}{{ kubeadm_version }}{{ _pkg_suffix }}"
+    state: present
+
+- name: hold kubeadm package
+  dpkg_selections:
+    name: "kubeadm"
+    selection: hold
+  when: ansible_os_family == 'Debian'
+
+- name: Add lock for kubeadm package
+  shell: "yum versionlock kubeadm"
+  args:
+    warn: false
+  when: ansible_os_family in ['RedHat', 'Rocky']
+
+# Finish install Kubernetes packages
+
+- name: Start and enable Kubelet service
+  systemd:
+    name: kubelet
+    state: started
+    enabled: yes
+    daemon_reload: yes

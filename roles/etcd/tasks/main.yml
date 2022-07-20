@@ -21,7 +21,7 @@
 - name: Installing and configuring etcd
   import_tasks: install.yml
 
-- name: Enabling and starting ETCD
+- name: Enabling and starting etcd
   systemd:
     name: etcd
     daemon_reload: yes

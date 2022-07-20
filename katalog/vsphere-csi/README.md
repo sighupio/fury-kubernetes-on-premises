@@ -41,11 +41,11 @@ stringData:
 type: Opaque
 ```
 
-⚠️ `cluster-id` represents the unique cluster identifier. Each kubernetes cluster should have it's own unique cluster-id set in the csi-vsphere.conf file.
+⚠️ `cluster-id` represents the unique cluster identifier. Each Kubernetes cluster should have its own unique cluster-id set in the `csi-vsphere.conf` file.
 
 ## Install
 
-After setting all prerequisites and password, you can apply all manifests to the cluster.
+After setting all prerequisites and the password, you can apply all manifests to the cluster.
 
 ## Check that everything is working after installation:
 
@@ -66,9 +66,9 @@ Now you will need to set a Storage Policy in VCenter to define which datastore w
 
 ![create storage policy](screen/createstoragepolicy.png)
 
-Follow the wizard to select the storage. Storage is selected using vSAN or using tags on Datastores. After the procedure you will have a storage policy that shows some disk under `Storage Compatibility`.
+Follow the wizard to select the storage. Storage is selected using vSAN or using tags on Datastores. After the procedure, you will have a storage policy that shows some disks under `Storage Compatibility`.
 
-Create your storageclass:
+Create your `storageClass`:
 
 ```yaml
 kind: StorageClass
@@ -82,6 +82,3 @@ parameters:
   storagepolicyname: "your-awesome-storage-policy-in-vcenter"
   fstype: ext4
 ```
-
-
-

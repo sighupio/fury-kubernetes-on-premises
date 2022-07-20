@@ -1,5 +1,5 @@
 ---
-- name: Reload ETCD
+- name: Reload etcd
   systemd:
     name: etcd
     daemon_reload: yes

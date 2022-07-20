@@ -5,15 +5,15 @@
   args:
     warn: false
 
-- name: Restart Docker
-  systemd:
-    name: docker
-    state: restarted
-    daemon_reload: yes
-  listen: Restart docker
-
 - name: Restart journald
   systemd:
     name: systemd-journald
     state: restarted
   listen: Restart journald
+
+- name: Restart Kubelet
+  systemd:
+    name: kubelet
+    state: restarted
+    daemon_reload: yes
+  listen: Restart kubelet

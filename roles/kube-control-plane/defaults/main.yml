@@ -14,7 +14,7 @@ kubernetes_api_SAN:
   - localhost
   - kubernetes.local
 kubernetes_control_plane_address: "{{ ansible_hostname }}"
-kubernetes_version: "1.20.15"
+kubernetes_version: "1.21.14"
 kubernetes_hostname: "{{ ansible_fqdn }}"
 kubernetes_kubeconfig_path: "."
 kubernetes_users_names: []
@@ -23,9 +23,9 @@ kubernetes_users_kubeconfig_dir: /etc/kubernetes/users
 etcd:
   endpoints:
     - "https://127.0.0.1:2379"
-  caFile: '/etc/etcd/pki/etcd/ca.crt'
-  keyFile: '/etc/etcd/pki/apiserver-etcd-client.key'
-  certFile: '/etc/etcd/pki/apiserver-etcd-client.crt'
+  caFile: "/etc/etcd/pki/etcd/ca.crt"
+  keyFile: "/etc/etcd/pki/apiserver-etcd-client.key"
+  certFile: "/etc/etcd/pki/apiserver-etcd-client.crt"
 
 ## OIDC
 oidc_issuer_url: ""
@@ -35,3 +35,5 @@ oidc_username_claim: email
 oidc_username_prefix: "oidc:"
 oidc_groups_claim: groups
 oidc_group_prefix: "oidc:"
+
+upgrade: False
