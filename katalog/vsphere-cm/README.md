@@ -15,7 +15,7 @@ This katalog deploys the [vSphere Cloud Controller Manager](https://github.com/k
 
 ## Image repository and tag
 
-* vSphere cloud controller manager image: `gcr.io/cloud-provider-vsphere/cpi/release/manager:v1.20.0`
+* vSphere cloud controller manager image: `gcr.io/cloud-provider-vsphere/cpi/release/manager:v1.22.6`
 
 ## Setting credentials
 
