@@ -4,6 +4,6 @@ kind: Kustomization
 namespace: vmware-system-csi
 
 resources:
-- namespace.yml
-- csi-vsphere-secret.yml
-- vsphere-csi-driver.yml
+- namespace.yaml
+- csi-vsphere-secret.yaml
+- vsphere-csi-driver.yaml
