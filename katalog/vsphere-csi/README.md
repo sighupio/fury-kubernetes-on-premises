@@ -8,14 +8,14 @@ Follow all the [prerequisites from `vsphere-cm` modules](../vsphere-cm/).
 
 ## Image repository and tag
 
-* csi-attacher: `k8s.gcr.io/sig-storage/csi-attacher:v3.2.0`
-* csi-resizer: `quay.io/k8scsi/csi-resizer:v1.1.0`
-* vsphere-csi-controller: `gcr.io/cloud-provider-vsphere/csi/release/driver:v2.3.1`
-* liveness-probe: `quay.io/k8scsi/livenessprobe:v2.2.0`
-* vsphere-syncer: `gcr.io/cloud-provider-vsphere/csi/release/syncer:v2.3.1`
-* csi-provisioner: `k8s.gcr.io/sig-storage/csi-provisioner:v2.2.0`
-* node-driver-registrar: `quay.io/k8scsi/csi-node-driver-registrar:v2.1.0`
-* vsphere-csi-node: `gcr.io/cloud-provider-vsphere/csi/release/driver:v2.3.1`
+* csi-attacher: `k8s.gcr.io/sig-storage/csi-attacher:v3.4.0`
+* csi-resizer: `quay.io/k8scsi/csi-resizer:v1.4.0`
+* vsphere-csi-controller: `gcr.io/cloud-provider-vsphere/csi/release/driver:v2.5.2`
+* liveness-probe: `quay.io/k8scsi/livenessprobe:v2.6.0`
+* vsphere-syncer: `gcr.io/cloud-provider-vsphere/csi/release/syncer:v2.5.2`
+* csi-provisioner: `k8s.gcr.io/sig-storage/csi-provisioner:v3.1.0`
+* node-driver-registrar: `quay.io/k8scsi/csi-node-driver-registrar:v2.5.0`
+* vsphere-csi-node: `gcr.io/cloud-provider-vsphere/csi/release/driver:v2.5.2`
 
 ## Setting credentials
 

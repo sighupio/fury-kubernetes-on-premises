@@ -107,7 +107,7 @@
     warn: false
   when: ansible_os_family in ['RedHat', 'Rocky']
 
-## Installing kubernetes-cni
+## Removing hold on kubernetes-cni if any
 
 - name: Un-hold kubernetes-cni package
   dpkg_selections:
@@ -120,23 +120,6 @@
   args:
     warn: false
   when: ansible_os_family in ['RedHat', 'Rocky'] and 'kubernetes-cni' in ansible_facts.packages
-
-- name: Install kubernetes-cni Kubernetes packages
-  package:
-    name: "kubernetes-cni{{ _pkg_sep }}{{ kubernetescni_version }}{{ _pkg_suffix }}"
-    state: present
-
-- name: hold kubernetes-cni package
-  dpkg_selections:
-    name: "kubernetes-cni"
-    selection: hold
-  when: ansible_os_family == 'Debian'
-
-- name: Add lock for kubernetes-cni package
-  shell: "yum versionlock kubernetes-cni"
-  args:
-    warn: false
-  when: ansible_os_family in ['RedHat', 'Rocky']
 
 ## Installing kubectl
 
@@ -169,7 +152,7 @@
     warn: false
   when: ansible_os_family in ['RedHat', 'Rocky']
 
-## Installing cri-tools
+## Removing hold on cri-tools if any
 
 - name: Un-hold cri-tools package
   dpkg_selections:
@@ -182,23 +165,6 @@
   args:
     warn: false
   when: ansible_os_family in ['RedHat', 'Rocky'] and 'cri-tools' in ansible_facts.packages
-
-- name: Install cri-tools Kubernetes packages
-  package:
-    name: "cri-tools{{ _pkg_sep }}{{ critools_version }}{{ _pkg_suffix }}"
-    state: present
-
-- name: hold cri-tools package
-  dpkg_selections:
-    name: "cri-tools"
-    selection: hold
-  when: ansible_os_family == 'Debian'
-
-- name: Add lock for cri-tools package
-  shell: "yum versionlock cri-tools"
-  args:
-    warn: false
-  when: ansible_os_family in ['RedHat', 'Rocky']
 
 ## Installing kubeadm
 
