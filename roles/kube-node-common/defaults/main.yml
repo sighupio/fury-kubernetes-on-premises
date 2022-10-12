@@ -32,3 +32,7 @@ versions:
     kubelet_version: "1.22.13"
     kubectl_version: "1.22.13"
     kubeadm_version: "1.22.13"
+  1.23.12:
+    kubelet_version: "1.23.12"
+    kubectl_version: "1.23.12"
+    kubeadm_version: "1.23.12"
