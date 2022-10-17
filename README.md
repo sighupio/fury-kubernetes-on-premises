@@ -5,7 +5,7 @@
 </h1>
 <!-- markdownlint-enable MD033 -->
 
-![Release](https://img.shields.io/badge/Latest%20Release-v1.22.13-blue)
+![Release](https://img.shields.io/badge/Latest%20Release-v1.23.12-blue)
 ![License](https://img.shields.io/github/license/sighupio/fury-kubernetes-on-premises?label=License)
 ![Slack](https://img.shields.io/badge/slack-@kubernetes/fury-yellow.svg?logo=slack&label=Slack)
 
@@ -26,7 +26,7 @@ The following packages are included in the Fury Kubernetes on-premises module:
 
 | Package                                        | Version  | Description                                                                   |
 | ---------------------------------------------- | -------- | ----------------------------------------------------------------------------- |
-| [vsphere-cm](katalog/vsphere-cm)               | `1.22.6` | Kubernetes Cloud Provider for vSphere                                         |
+| [vsphere-cm](katalog/vsphere-cm)               | `1.23.2` | Kubernetes Cloud Provider for vSphere                                         |
 | [vsphere-csi](katalog/vsphere-csi)             | `2.5.2`  | vSphere storage Container Storage Interface (CSI) plugin                      |
 | [etcd](roles/etcd)                             | `3.4.7`  | Ansible role to install etcd as systemd service                               |
 | [haproxy](roles/haproxy)                       | `2.2`    | Ansible role to install HAProxy as Kubernetes load balancer for the APIServer |
@@ -40,7 +40,7 @@ Click on each package to see its full documentation.
 
 ## Compatibility
 
-This version is compatible with Kubernetes 1.22.13
+This version is compatible with Kubernetes 1.23.12
 
 Check the [compatibility matrix][compatibility-matrix] for additional information about previous releases of the modules.
 
