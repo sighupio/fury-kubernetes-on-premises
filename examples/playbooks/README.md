@@ -1,7 +1,7 @@
 # Example Playbooks for Kubernetes cluster deployment with Fury
 
 In this directory we provide example playbooks for deploying a Kubernetes cluster using Kubernetes Fury Distribution
-to on-premises virtual machines at version 1.20.15 and then how to upgrade it to 1.21.14.
+to on-premises virtual machines at version 1.23.12 and then how to upgrade it to 1.24.7.
 
 - [Requirements](#requirements)
 - [Cluster Architecture](#cluster-architecture)
