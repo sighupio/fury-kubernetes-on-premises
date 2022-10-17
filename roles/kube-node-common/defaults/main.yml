@@ -2,7 +2,7 @@
 # Kubernetes components versions
 kubernetes_repo_distribution: "xenial"
 
-kubernetes_version: "1.21.14"
+kubernetes_version: "1.23.12"
 kubelet_version: "{{ versions[kubernetes_version].kubelet_version }}"
 kubectl_version: "{{ versions[kubernetes_version].kubectl_version }}"
 kubeadm_version: "{{ versions[kubernetes_version].kubeadm_version }}"
