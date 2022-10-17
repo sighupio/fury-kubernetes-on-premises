@@ -2,11 +2,11 @@
 # Package options.
 
 # Check supported Kubernetes versions here: https://containerd.io/releases/#kubernetes-support
-containerd_version: 1.5.8
+containerd_version: 1.6.8
 containerd_download_url: "https://github.com/containerd/containerd/releases/download/v{{ containerd_version }}/containerd-{{ containerd_version }}-linux-{{ image_arch }}.tar.gz"
 containerd_bin_dir: "/usr/local/bin"
 # runc version from here: https://github.com/containerd/containerd/blob/main/docs/RUNC.md -> https://github.com/containerd/containerd/blob/main/script/setup/runc-version
-runc_version: v1.0.3
+runc_version: v1.1.4
 runc_bin_dir: "/usr/local/bin"
 runc_download_url: "https://github.com/opencontainers/runc/releases/download/{{ runc_version }}/runc.{{ image_arch }}"
 image_arch: "{{host_architecture | default('amd64')}}"
