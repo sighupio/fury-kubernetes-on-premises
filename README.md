@@ -42,7 +42,7 @@ Click on each package to see its full documentation.
 
 This version is compatible with Kubernetes 1.24.7
 
-Check the [compatibility matrix][compatibility-matrix] for additional information about previous releases of the modules.
+Check the [compatibility matrix][compatibility-matrix] for additional information about previous releases of the module.
 
 ## Examples
 
