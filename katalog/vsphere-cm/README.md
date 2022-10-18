@@ -6,7 +6,7 @@ This katalog deploys the [vSphere Cloud Controller Manager](https://github.com/k
 
 - Kubernetes = `1.24.x`
 - Kustomize >= `v3.5.3`
-- control plane and the nodes must be provisioned with cloud-provider `external` on `kubeadm.yaml`
+- control plane and worker nodes must be provisioned with cloud-provider `external` on `kubeadm.yaml`
 - `disk.EnableUUID=1` on all nodes.
 - VM Hardware should be at version 15 or higher.
 - VMware tools installed on all nodes.
