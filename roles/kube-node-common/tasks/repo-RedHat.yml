@@ -7,7 +7,7 @@
 
 - name: Install
   yum:
-    name: yum-plugin-versionlock
+    name: yum-versionlock
     state: latest
 
 - name: Add Kubernetes YUM repository

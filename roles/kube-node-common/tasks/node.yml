@@ -87,6 +87,7 @@
   args:
     warn: false
   when: ansible_os_family in ['RedHat', 'Rocky'] and 'kubelet' in ansible_facts.packages
+  failed_when: result.rc != 0 and 'no matches' not in result.sterr
 
 - name: Install kubelet Kubernetes packages
   package:
@@ -120,6 +121,7 @@
   args:
     warn: false
   when: ansible_os_family in ['RedHat', 'Rocky'] and 'kubernetes-cni' in ansible_facts.packages
+  failed_when: result.rc != 0 and 'no matches' not in result.sterr
 
 ## Installing kubectl
 
@@ -134,6 +136,7 @@
   args:
     warn: false
   when: ansible_os_family in ['RedHat', 'Rocky'] and 'kubectl' in ansible_facts.packages
+  failed_when: result.rc != 0 and 'no matches' not in result.sterr
 
 - name: Install kubectl Kubernetes packages
   package:
@@ -165,6 +168,7 @@
   args:
     warn: false
   when: ansible_os_family in ['RedHat', 'Rocky'] and 'cri-tools' in ansible_facts.packages
+  failed_when: result.rc != 0 and 'no matches' not in result.sterr
 
 ## Installing kubeadm
 
@@ -179,6 +183,7 @@
   args:
     warn: false
   when: ansible_os_family in ['RedHat', 'Rocky'] and 'kubeadm' in ansible_facts.packages
+  failed_when: result.rc != 0 and 'no matches' not in result.sterr
 
 - name: Install kubeadm Kubernetes packages
   package:
@@ -202,6 +207,6 @@
 - name: Start and enable Kubelet service
   systemd:
     name: kubelet
-    state: started
+    state: restarted
     enabled: yes
     daemon_reload: yes
