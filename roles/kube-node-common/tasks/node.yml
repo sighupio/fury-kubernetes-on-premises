@@ -88,7 +88,7 @@
   args:
     warn: false
   when: ansible_os_family in ['RedHat', 'Rocky'] and 'kubelet' in ansible_facts.packages
-  failed_when: result.rc != 0 and 'no matches' not in result.sterr
+  failed_when: result.rc != 0 and 'no matches' not in result.stderr
 
 - name: Install kubelet Kubernetes packages
   package:
@@ -123,7 +123,7 @@
   args:
     warn: false
   when: ansible_os_family in ['RedHat', 'Rocky'] and 'kubernetes-cni' in ansible_facts.packages
-  failed_when: result.rc != 0 and 'no matches' not in result.sterr
+  failed_when: result.rc != 0 and 'no matches' not in result.stderr
 
 ## Installing kubectl
 
@@ -139,7 +139,7 @@
   args:
     warn: false
   when: ansible_os_family in ['RedHat', 'Rocky'] and 'kubectl' in ansible_facts.packages
-  failed_when: result.rc != 0 and 'no matches' not in result.sterr
+  failed_when: result.rc != 0 and 'no matches' not in result.stderr
 
 - name: Install kubectl Kubernetes packages
   package:
@@ -172,7 +172,7 @@
   args:
     warn: false
   when: ansible_os_family in ['RedHat', 'Rocky'] and 'cri-tools' in ansible_facts.packages
-  failed_when: result.rc != 0 and 'no matches' not in result.sterr
+  failed_when: result.rc != 0 and 'no matches' not in result.stderr
 
 ## Installing kubeadm
 
@@ -188,7 +188,7 @@
   args:
     warn: false
   when: ansible_os_family in ['RedHat', 'Rocky'] and 'kubeadm' in ansible_facts.packages
-  failed_when: result.rc != 0 and 'no matches' not in result.sterr
+  failed_when: result.rc != 0 and 'no matches' not in result.stderr
 
 - name: Install kubeadm Kubernetes packages
   package:
