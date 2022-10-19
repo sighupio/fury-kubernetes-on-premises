@@ -10,7 +10,7 @@
     list: yum-plugin-versionlock
   register: package_list
 
-- name: Install
+- name: Install yum-plugin-versionlock
   yum:
     name: yum-plugin-versionlock
     state: latest
@@ -21,7 +21,7 @@
     list: yum-versionlock
   register: package_list
 
-- name: Install
+- name: Install yum-versionlock
   yum:
     name: yum-versionlock
     state: latest
