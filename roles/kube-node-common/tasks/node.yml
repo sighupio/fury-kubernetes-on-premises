@@ -84,9 +84,11 @@
 
 - name: Delete lock for kubelet package
   shell: "yum versionlock delete kubelet"
+  register: result
   args:
     warn: false
   when: ansible_os_family in ['RedHat', 'Rocky'] and 'kubelet' in ansible_facts.packages
+  failed_when: result.rc != 0 and 'no matches' not in result.stderr
 
 - name: Install kubelet Kubernetes packages
   package:
@@ -117,9 +119,11 @@
 
 - name: Delete lock for kubernetes-cni package
   shell: "yum versionlock delete kubernetes-cni"
+  register: result
   args:
     warn: false
   when: ansible_os_family in ['RedHat', 'Rocky'] and 'kubernetes-cni' in ansible_facts.packages
+  failed_when: result.rc != 0 and 'no matches' not in result.stderr
 
 ## Installing kubectl
 
@@ -131,9 +135,11 @@
 
 - name: Delete lock for kubectl package
   shell: "yum versionlock delete kubectl"
+  register: result
   args:
     warn: false
   when: ansible_os_family in ['RedHat', 'Rocky'] and 'kubectl' in ansible_facts.packages
+  failed_when: result.rc != 0 and 'no matches' not in result.stderr
 
 - name: Install kubectl Kubernetes packages
   package:
@@ -162,9 +168,11 @@
 
 - name: Delete lock for cri-tools package
   shell: "yum versionlock delete cri-tools"
+  register: result
   args:
     warn: false
   when: ansible_os_family in ['RedHat', 'Rocky'] and 'cri-tools' in ansible_facts.packages
+  failed_when: result.rc != 0 and 'no matches' not in result.stderr
 
 ## Installing kubeadm
 
@@ -176,9 +184,11 @@
 
 - name: Delete lock for kubeadm package
   shell: "yum versionlock delete kubeadm"
+  register: result
   args:
     warn: false
   when: ansible_os_family in ['RedHat', 'Rocky'] and 'kubeadm' in ansible_facts.packages
+  failed_when: result.rc != 0 and 'no matches' not in result.stderr
 
 - name: Install kubeadm Kubernetes packages
   package:
@@ -202,6 +212,6 @@
 - name: Start and enable Kubelet service
   systemd:
     name: kubelet
-    state: started
+    state: restarted
     enabled: yes
     daemon_reload: yes
