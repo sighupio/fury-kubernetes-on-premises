@@ -5,10 +5,27 @@
     name: yum-utils
     state: latest
 
-- name: Install
+- name: Search for yum-plugin-versionlock
+  yum:
+    list: yum-plugin-versionlock
+  register: package_list
+
+- name: Install yum-plugin-versionlock
   yum:
     name: yum-plugin-versionlock
     state: latest
+  when: 'package_list.results | length != 0'
+
+- name: Search for yum-versionlock
+  yum:
+    list: yum-versionlock
+  register: package_list
+
+- name: Install yum-versionlock
+  yum:
+    name: yum-versionlock
+    state: latest
+  when: 'package_list.results | length != 0'
 
 - name: Add Kubernetes YUM repository
   yum_repository:
