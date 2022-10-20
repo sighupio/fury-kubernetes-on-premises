@@ -78,18 +78,8 @@ pki
 
 In this step you can choose which container runtime you want to use:
 
-- docker
 - containerd
 
-We strongly recommend `containerd` as docker is deprecated and will be removed starting from Kubernetes version 1.24.
-
-#### Docker
-
-Run the `1.docker.yml` playbook with:
-
-```bash
-ansible-playbook 1.docker.yml
-```
 
 #### Containerd
 
@@ -128,7 +118,7 @@ Change the `hosts.ini` with the version you want to upgrade to:
 ```ini
 [all:vars]
 ...
-kubernetes_version='1.21.14'
+kubernetes_version='1.24.7'
 ```
 
 > NOTE: the `kubernetes_version` must be one of the versions available in the roles, i.e. supported by this installer.
@@ -151,6 +141,7 @@ Repeat this step foreach worker node in the cluster.
 
 > NOTE: you need to run the playbook with the `--limit` option to limit the nodes to upgrade. Why? Because the upgrade
 > process will drain the node before upgrading it.
+> Additionally, during the upgrade containerd will also be upgraded
 
 ## Utilities
 
