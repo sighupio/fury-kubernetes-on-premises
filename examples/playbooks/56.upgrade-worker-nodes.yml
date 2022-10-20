@@ -23,14 +23,16 @@
     - name: Upgrade kubelet config
       shell: "kubeadm upgrade node"
 
-- name: Kubernetes node preparation
+- name: Kubelet and Containerd upgrade
   hosts: nodes
   vars:
     skip_kubelet_upgrade: False
   roles:
     - kube-node-common
+    - containerd
   tags:
     - kube-node-common
+    - containerd
 
 - name: Kubernetes uncordon node
   hosts: nodes
