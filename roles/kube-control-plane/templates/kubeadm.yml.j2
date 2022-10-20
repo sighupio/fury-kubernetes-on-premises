@@ -4,9 +4,6 @@ nodeRegistration:
   name: {{ kubernetes_hostname }}
   kubeletExtraArgs:
     cloud-provider: {{ kubernetes_cloud_provider }}
-  taints:
-  - effect: NoSchedule
-    key: node-role.kubernetes.io/master
 localAPIEndpoint:
   advertiseAddress: {{ ansible_default_ipv4.address }}
   bindPort: 6443
