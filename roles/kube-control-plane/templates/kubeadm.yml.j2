@@ -19,7 +19,7 @@ etcd:
     keyFile: {{ etcd.keyFile }}
 clusterName: {{ kubernetes_cluster_name }}
 kubernetesVersion: {{ kubernetes_version }}
-imageRepository: "k8s.gcr.io"
+imageRepository: "registry.k8s.io"
 controlPlaneEndpoint: {{ kubernetes_control_plane_address }}
 dns:
   type: CoreDNS
