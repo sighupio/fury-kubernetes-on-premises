@@ -6,6 +6,7 @@ kubernetes_version: "1.24.7"
 kubelet_version: "{{ versions[kubernetes_version].kubelet_version }}"
 kubectl_version: "{{ versions[kubernetes_version].kubectl_version }}"
 kubeadm_version: "{{ versions[kubernetes_version].kubeadm_version }}"
+critools_version: "{{ versions[kubernetes_version].critools_version }}"
 
 skip_kubelet_upgrade: False
 
@@ -14,19 +15,24 @@ versions:
     kubelet_version: "1.20.15"
     kubectl_version: "1.20.15"
     kubeadm_version: "1.20.15"
+    critools_version: "1.25.0"
   1.21.14:
     kubelet_version: "1.21.14"
     kubectl_version: "1.21.14"
     kubeadm_version: "1.21.14"
+    critools_version: "1.25.0"
   1.22.13:
     kubelet_version: "1.22.13"
     kubectl_version: "1.22.13"
     kubeadm_version: "1.22.13"
+    critools_version: "1.25.0"
   1.23.12:
     kubelet_version: "1.23.12"
     kubectl_version: "1.23.12"
     kubeadm_version: "1.23.12"
+    critools_version: "1.25.0"
   1.24.7:
     kubelet_version: "1.24.7"
     kubectl_version: "1.24.7"
     kubeadm_version: "1.24.7"
+    critools_version: "1.25.0"
