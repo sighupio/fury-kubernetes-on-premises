@@ -4,7 +4,7 @@ kubernetes_repo:
   name: "kubernetes"
   apt_repo: "deb https://apt.kubernetes.io/ kubernetes-{{ kubernetes_repo_distribution }} main"
   apt_gpg_key: "https://packages.cloud.google.com/apt/doc/apt-key.gpg"
-  apt_gpg_key_id: "7F92E05B31093BEF5A3C2D38FEEA9169307EA071"
+  apt_gpg_key_id: "A362B822F6DEDC652817EA46B53DC80D13EDEF05"
   yum_repo: "https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64"
   yum_gpg_key:
     - "https://packages.cloud.google.com/yum/doc/yum-key.gpg"

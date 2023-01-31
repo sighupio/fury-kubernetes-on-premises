@@ -74,6 +74,39 @@
 
 # Installing Kubernetes packages
 
+## Installing cri-tools
+
+- name: Un-hold cri-tools package
+  dpkg_selections:
+    name: "cri-tools"
+    selection: install
+  when: ansible_os_family == 'Debian' and 'cri-tools' in ansible_facts.packages
+
+- name: Delete lock for cri-tools package
+  shell: "yum versionlock delete cri-tools"
+  register: result
+  args:
+    warn: false
+  when: ansible_os_family in ['RedHat', 'Rocky'] and 'cri-tools' in ansible_facts.packages
+  failed_when: result.rc != 0 and 'no matches' not in result.stderr
+
+- name: Install cri-tools Kubernetes packages
+  package:
+    name: "cri-tools{{ _pkg_sep }}{{ critools_version}}{{ _pkg_suffix }}"
+    state: present
+
+- name: hold cri-tools package
+  dpkg_selections:
+    name: "cri-tools"
+    selection: hold
+  when: ansible_os_family == 'Debian'
+
+- name: Add lock for cri-tools package
+  shell: "yum versionlock cri-tools"
+  args:
+    warn: false
+  when: ansible_os_family in ['RedHat', 'Rocky']
+
 ## Installing Kubelet
 
 - name: Un-hold kubelet package
@@ -157,22 +190,6 @@
   args:
     warn: false
   when: ansible_os_family in ['RedHat', 'Rocky']
-
-## Removing hold on cri-tools if any
-
-- name: Un-hold cri-tools package
-  dpkg_selections:
-    name: "cri-tools"
-    selection: install
-  when: ansible_os_family == 'Debian' and 'cri-tools' in ansible_facts.packages
-
-- name: Delete lock for cri-tools package
-  shell: "yum versionlock delete cri-tools"
-  register: result
-  args:
-    warn: false
-  when: ansible_os_family in ['RedHat', 'Rocky'] and 'cri-tools' in ansible_facts.packages
-  failed_when: result.rc != 0 and 'no matches' not in result.stderr
 
 ## Installing kubeadm
 
