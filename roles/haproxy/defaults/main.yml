@@ -1,7 +1,7 @@
 ---
 
 haproxy_configuration_file: "haproxy.cfg"
-haproxy_version: "2.2"
+haproxy_version: "2.6"
 keepalived_cluster: false
 keepalived_interface: "ens192"
 keepalived_on_k8s_master: false
