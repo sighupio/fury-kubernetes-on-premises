@@ -32,6 +32,8 @@ all:
         kubernetes_control_plane_address: control-plane.example.com:6443
         kubernetes_pod_cidr: "172.16.128.0/17"
         kubernetes_svc_cidr: "172.16.0.0/17"
+        # Uncomment the following when using the vSphere Cloud Provider
+        # kubernetes_cloud_provider: "external"
     nodes:
       children:
         worker:
