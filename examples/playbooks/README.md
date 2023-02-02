@@ -42,7 +42,7 @@ In the master nodes we also deploy etcd as a standalone systemd service.
 
 Check the following files for a complete example:
 
-- `hosts.ini`
+- `hosts.yaml`
 - `haproxy.cfg`
 
 > NOTE: all the cluster configuration is managed by hosts.ini and haproxy.cfg files.
@@ -150,7 +150,7 @@ Repeat this step foreach worker node in the cluster.
 
 ### How to migrate from Docker to Containerd
 
-To migrate from docker to containerd , there is an example playbook in this directory `99.migrate-docker-to-containerd.yml`.
+To migrate from `docker` to `containerd`, there is an example playbook in this directory `99.migrate-docker-to-containerd.yml`.
 
 It must be executed **one node at a time**:
 
