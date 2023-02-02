@@ -5,7 +5,7 @@
 
 - name: be sure firewalld is stopped
   systemd: name=firewalld state=stopped
-  ignore_errors: yes
+  ignore_errors: true
   when: ansible_os_family in ['RedHat', 'Rocky']
 
 - name: Set package version separator on RedHat
