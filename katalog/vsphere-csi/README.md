@@ -8,14 +8,15 @@ Follow all the [prerequisites from `vsphere-cm` modules](../vsphere-cm/).
 
 ## Image repository and tag
 
-* csi-attacher: `k8s.gcr.io/sig-storage/csi-attacher:v3.4.0`
-* csi-resizer: `k8s.gcr.io/sig-storage/csi-resizer:v1.4.0`
-* vsphere-csi-controller: `gcr.io/cloud-provider-vsphere/csi/release/driver:v2.6.2`
-* liveness-probe: `k8s.gcr.io/sig-storage/livenessprobe:v2.7.0`
-* vsphere-syncer: `gcr.io/cloud-provider-vsphere/csi/release/syncer:v2.6.2`
-* csi-provisioner: `k8s.gcr.io/sig-storage/csi-provisioner:v3.2.1`
-* node-driver-registrar: `k8s.gcr.io/sig-storage/csi-node-driver-registrar:v2.5.1`
-* vsphere-csi-node: `gcr.io/cloud-provider-vsphere/csi/release/driver:v2.6.2`
+- csi-attacher: `k8s.gcr.io/sig-storage/csi-attacher:v3.5.0`
+- csi-resizer: `k8s.gcr.io/sig-storage/csi-resizer:v1.5.0`
+- csi-provisioner: `k8s.gcr.io/sig-storage/csi-provisioner:v3.2.1`
+- csi-snapshotter: `k8s.gcr.io/sig-storage/csi-snapshotter:v6.0.1`
+- vsphere-csi-controller: `gcr.io/cloud-provider-vsphere/csi/release/driver:v2.7.0`
+- liveness-probe: `k8s.gcr.io/sig-storage/livenessprobe:v2.7.0`
+- vsphere-syncer: `gcr.io/cloud-provider-vsphere/csi/release/syncer:v2.7.0`
+- node-driver-registrar: `k8s.gcr.io/sig-storage/csi-node-driver-registrar:v2.5.1`
+- vsphere-csi-node: `gcr.io/cloud-provider-vsphere/csi/release/driver:v2.7.0`
 
 ## Setting credentials
 
@@ -47,12 +48,12 @@ type: Opaque
 
 After setting all prerequisites and the password, you can apply all manifests to the cluster.
 
-## Check that everything is working after installation:
+## Check that everything is working after installation
 
 Run these commands, the output should be similar:
 
 ```bash
-# kubectl get CSINode
+$ kubectl get CSINode
 NAME        CREATED AT
 k8s-node1   2019-06-01T00:50:26Z
 k8s-node2   2019-06-01T00:50:38Z
