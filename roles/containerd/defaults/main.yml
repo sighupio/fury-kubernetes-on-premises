@@ -12,7 +12,7 @@ runc_download_url: "https://github.com/opencontainers/runc/releases/download/{{ 
 image_arch: "{{host_architecture | default('amd64')}}"
 
 # Customize versions based on Kubernetes version to maintain compatibility
-kubernetes_version: "1.25.3"
+kubernetes_version: "1.25.6"
 
 versions:
   1.20.15:
@@ -30,7 +30,7 @@ versions:
   1.24.7:
     containerd_version: "1.6.8"
     runc_version: "v1.1.4"
-  1.25.3:
+  1.25.6:
     containerd_version: "1.6.8"
     runc_version: "v1.1.4"
 
