@@ -1,0 +1,63 @@
+all:
+  children:
+    haproxy:
+      hosts:
+        haproxy1:
+          ansible_host: 192.168.1.177
+          kubernetes_hostname: haproxy1.example.com
+        haproxy2:
+          ansible_host: 192.168.1.178
+          kubernetes_hostname: haproxy2.example.com
+      vars:
+        keepalived_cluster: true
+        keepalived_interface: eth1
+        keepalived_ip: "192.168.1.179/24"
+        keepalived_virtual_router_id: "201"
+        keepalived_passphrase: "b16cf069"
+    master:
+      hosts:
+        master1:
+          ansible_host: 192.168.1.181
+          kubernetes_hostname: master1.example.com
+        master2:
+          ansible_host: 192.168.1.182
+          kubernetes_hostname: master2.example.com
+        master3:
+          ansible_host: 192.168.1.183
+          kubernetes_hostname: master3.example.com
+      vars:
+        dns_zone: "example.com"
+        etcd_initial_cluster: "master1=https://master1.example.com:2380,master2=https://master2.example.com:2380,master3=https://master3.example.com:2380"
+        kubernetes_cluster_name: sighup
+        kubernetes_control_plane_address: control-plane.example.com:6443
+        kubernetes_pod_cidr: "172.16.128.0/17"
+        kubernetes_svc_cidr: "172.16.0.0/17"
+        # Uncomment the following when using the vSphere Cloud Provider
+        # kubernetes_cloud_provider: "external"
+    nodes:
+      children:
+        worker:
+          hosts:
+            worker1:
+              ansible_host: 192.168.1.184
+              kubernetes_hostname: worker1.example.com
+            worker2:
+              ansible_host: 192.168.1.185
+              kubernetes_hostname: worker2.example.com
+            worker3:
+              ansible_host: 192.168.1.186
+              kubernetes_hostname: worker3.example.com
+          vars:
+            kubernetes_role: worker
+            kubernetes_control_plane_address: control-plane.example.com:6443
+    ungrouped: {}
+  vars:
+    ansible_python_interpreter: python3
+    ansible_ssh_private_key_file: "../ssh-key"
+    ansible_user: root
+    kubernetes_kubeconfig_path: ./
+    # kubernetes_version: '1.21.14'
+    # kubernetes_version: '1.22.13'
+    kubernetes_version: '1.23.12'
+    # kubernetes_version: '1.24.7'
+    # kubernetes_version: "1.25.6"

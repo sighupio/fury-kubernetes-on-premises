@@ -4,7 +4,7 @@ This katalog deploys the [vSphere Cloud Controller Manager](https://github.com/k
 
 ## Requirements
 
-- Kubernetes = `1.24.x`
+- Kubernetes = `1.25.x`
 - Kustomize >= `v3.5.3`
 - control plane and worker nodes must be provisioned with cloud-provider `external` on `kubeadm.yaml`
 - `disk.EnableUUID=1` on all nodes.
@@ -15,7 +15,7 @@ This katalog deploys the [vSphere Cloud Controller Manager](https://github.com/k
 
 ## Image repository and tag
 
-- vSphere cloud controller manager image: `gcr.io/cloud-provider-vsphere/cpi/release/manager:v1.24.2`
+- vSphere cloud controller manager image: `gcr.io/cloud-provider-vsphere/cpi/release/manager:v1.25.0`
 
 ## Setting credentials
 
@@ -47,6 +47,7 @@ data:
 The user to be able to interact with vCenter and to be able to provision volumes dynamically needs these permissions:
 
 <https://docs.vmware.com/en/VMware-vSphere-Container-Storage-Plug-in/2.0/vmware-vsphere-csp-getting-started/GUID-0AB6E692-AA47-4B6A-8CEA-38B754E16567.html>
+<https://docs.vmware.com/en/VMware-vSphere-Container-Storage-Plug-in/2.0/vmware-vsphere-csp-getting-started/GUID-0AB6E692-AA47-4B6A-8CEA-38B754E16567.html>
 
 ## Install
 
@@ -57,7 +58,7 @@ After setting all prerequisites and password, you can apply all manifests to the
 Run these commands, the output should be similar:
 
 ```bash
-# kubectl describe nodes | grep "ProviderID"
+$ kubectl describe nodes | grep "ProviderID"
 ProviderID: vsphere://4204a018-f286-cf3c-7f2d-c512d9f7d90d
 ProviderID: vsphere://42040e14-690a-af11-0b8e-96b09570d8a3
 ProviderID: vsphere://4204bf92-3a32-5e50-d2c1-74e446f4f741

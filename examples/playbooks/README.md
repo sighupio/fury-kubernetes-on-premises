@@ -42,7 +42,7 @@ In the master nodes we also deploy etcd as a standalone systemd service.
 
 Check the following files for a complete example:
 
-- `hosts.ini`
+- `hosts.yaml`
 - `haproxy.cfg`
 
 > NOTE: all the cluster configuration is managed by hosts.ini and haproxy.cfg files.
@@ -118,10 +118,10 @@ In this folder there are two playbooks to upgrade the cluster to a new kubernete
 
 Change the `hosts.ini` with the version you want to upgrade to:
 
-```ini
-[all:vars]
-...
-kubernetes_version='1.24.7'
+```yaml
+all:
+  vars:
+    kubernetes_version: '1.24.7'
 ```
 
 > NOTE: the `kubernetes_version` must be one of the versions available in the roles, i.e. supported by this installer.
@@ -150,7 +150,7 @@ Repeat this step foreach worker node in the cluster.
 
 ### How to migrate from Docker to Containerd
 
-To migrate from docker to containerd , there is an example playbook in this directory `99.migrate-docker-to-containerd.yml`.
+To migrate from `docker` to `containerd`, there is an example playbook in this directory `99.migrate-docker-to-containerd.yml`.
 
 It must be executed **one node at a time**:
 

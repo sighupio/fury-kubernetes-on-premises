@@ -2,37 +2,22 @@
 # Kubernetes components versions
 kubernetes_repo_distribution: "xenial"
 
-kubernetes_version: "1.24.7"
-kubelet_version: "{{ versions[kubernetes_version].kubelet_version }}"
-kubectl_version: "{{ versions[kubernetes_version].kubectl_version }}"
-kubeadm_version: "{{ versions[kubernetes_version].kubeadm_version }}"
-critools_version: "{{ versions[kubernetes_version].critools_version }}"
+kubernetes_version: "1.25.6"
+kubelet_version: "{{ kubernetes_version }}"
+kubectl_version: "{{ kubernetes_version }}"
+kubeadm_version: "{{ kubernetes_version }}"
+# We need to pin the version of critools because upstream installs always the
+# latest one, instead of the one compatible with Kubernetes.
+# See: https://github.com/sighupio/fury-kubernetes-on-premises/issues/43
+critools_version: "{{ dependencies[kubernetes_version].critools_version }}"
 
 skip_kubelet_upgrade: False
 
-versions:
-  1.20.15:
-    kubelet_version: "1.20.15"
-    kubectl_version: "1.20.15"
-    kubeadm_version: "1.20.15"
+dependencies:
+  # To pin dependencies for each Kubernetes version
+  "1.23.12":
     critools_version: "1.25.0"
-  1.21.14:
-    kubelet_version: "1.21.14"
-    kubectl_version: "1.21.14"
-    kubeadm_version: "1.21.14"
+  "1.24.7":
     critools_version: "1.25.0"
-  1.22.13:
-    kubelet_version: "1.22.13"
-    kubectl_version: "1.22.13"
-    kubeadm_version: "1.22.13"
-    critools_version: "1.25.0"
-  1.23.12:
-    kubelet_version: "1.23.12"
-    kubectl_version: "1.23.12"
-    kubeadm_version: "1.23.12"
-    critools_version: "1.25.0"
-  1.24.7:
-    kubelet_version: "1.24.7"
-    kubectl_version: "1.24.7"
-    kubeadm_version: "1.24.7"
+  "1.25.6":
     critools_version: "1.25.0"

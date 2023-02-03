@@ -215,8 +215,6 @@ spec:
         component: cloud-controller-manager
         tier: control-plane
     spec:
-      nodeSelector:
-        node-role.kubernetes.io/control-plane: ""
       tolerations:
         - key: node.cloudprovider.kubernetes.io/uninitialized
           value: "true"
@@ -236,7 +234,7 @@ spec:
       priorityClassName: system-node-critical
       containers:
         - name: vsphere-cloud-controller-manager
-          image: gcr.io/cloud-provider-vsphere/cpi/release/manager:v1.24.2
+          image: gcr.io/cloud-provider-vsphere/cpi/release/manager:v1.25.0
           args:
             - --cloud-provider=vsphere
             - --v=2
@@ -253,3 +251,13 @@ spec:
         - name: vsphere-config-volume
           configMap:
             name: vsphere-cloud-config
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: node-role.kubernetes.io/control-plane
+                operator: Exists
+            - matchExpressions:
+              - key: node-role.kubernetes.io/master
+                operator: Exists
