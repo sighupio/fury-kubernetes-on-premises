@@ -118,10 +118,10 @@ In this folder there are two playbooks to upgrade the cluster to a new kubernete
 
 Change the `hosts.ini` with the version you want to upgrade to:
 
-```ini
-[all:vars]
-...
-kubernetes_version='1.24.7'
+```yaml
+all:
+  vars:
+    kubernetes_version: '1.24.7'
 ```
 
 > NOTE: the `kubernetes_version` must be one of the versions available in the roles, i.e. supported by this installer.
