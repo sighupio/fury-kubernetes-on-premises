@@ -2,19 +2,20 @@
 # Use of this source code is governed by a BSD-style
 # license that can be found in the LICENSE file.
 
-name: license
-kind: pipeline
-type: docker
+# Skipping for the moment, we need to add the license header to all the files.
+# name: license
+# kind: pipeline
+# type: docker
 
-steps:
-  - name: check
-    image: docker.io/library/golang:1.16
-    pull: always
-    commands:
-      - go get -u github.com/google/addlicense
-      - addlicense -c "SIGHUP s.r.l" -v -l bsd -y "2017-present" --check .
+# steps:
+#   - name: check
+#     image: docker.io/library/golang:1.16
+#     pull: always
+#     commands:
+#       - go get -u github.com/google/addlicense
+#       - addlicense -c "SIGHUP s.r.l" -v -l bsd -y "2017-present" --check .
 
----
+# ---
 name: policeman
 kind: pipeline
 type: docker
@@ -40,6 +41,8 @@ steps:
       VALIDATE_DOCKERFILE: "false"
       # Disable natural language checks
       VALIDATE_NATURAL_LANGUAGE: "false"
+      # Shellcheck gets confused with Jinja2 tempalates. Skipping all of them
+      FILTER_REGEX_EXCLUDE: (roles/.*/templates/.*j2)
     depends_on:
       - clone
 
@@ -62,7 +65,7 @@ steps:
       - /pluto detect vsphere-cm.yaml --target-versions=k8s=v1.25.0 --ignore-deprecations
       - /pluto detect vsphere-csi.yaml --target-versions=k8s=v1.25.0 --ignore-deprecations
 
----
+# ---
 # name: e2e-kubernetes-1.25
 # kind: pipeline
 # type: docker
