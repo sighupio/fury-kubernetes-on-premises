@@ -2,8 +2,6 @@
 
 - name: Clean yum cache
   command: /usr/bin/yum clean all
-  args:
-    warn: false
 
 - name: Restart journald
   systemd:
