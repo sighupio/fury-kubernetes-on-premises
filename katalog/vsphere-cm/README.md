@@ -15,7 +15,7 @@ This katalog deploys the [vSphere Cloud Controller Manager](https://github.com/k
 
 ## Image repository and tag
 
-* vSphere cloud controller manager image: `gcr.io/cloud-provider-vsphere/cpi/release/manager:v1.24.2`
+- vSphere cloud controller manager image: `gcr.io/cloud-provider-vsphere/cpi/release/manager:v1.24.2`
 
 ## Setting credentials
 
@@ -46,7 +46,7 @@ data:
 
 The user to be able to interact with vCenter and to be able to provision volumes dynamically needs these permissions:
 
-https://docs.vmware.com/en/VMware-vSphere-Container-Storage-Plug-in/2.0/vmware-vsphere-csp-getting-started/GUID-0AB6E692-AA47-4B6A-8CEA-38B754E16567.html
+<https://docs.vmware.com/en/VMware-vSphere-Container-Storage-Plug-in/2.0/vmware-vsphere-csp-getting-started/GUID-0AB6E692-AA47-4B6A-8CEA-38B754E16567.html>
 
 ## Install
 

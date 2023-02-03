@@ -3,25 +3,29 @@
 In this directory we provide example playbooks for deploying a Kubernetes cluster using Kubernetes Fury Distribution
 to on-premises virtual machines at version 1.23.12 and then how to upgrade it to 1.24.7.
 
-- [Requirements](#requirements)
-- [Cluster Architecture](#cluster-architecture)
-- [Install phases](#install-phases)
+- [Example Playbooks for Kubernetes cluster deployment with Fury](#example-playbooks-for-kubernetes-cluster-deployment-with-fury)
+  - [Requirements](#requirements)
+  - [Cluster Architecture](#cluster-architecture)
+  - [Install phases](#install-phases)
     - [Initialize PKI](#initialize-pki)
-    - [Install Container Runtime](#install-the-container-runtime)
-    - [Install Load Balancer](#install-the-load-balancer)
+    - [Install the Container Runtime](#install-the-container-runtime)
+      - [Containerd](#containerd)
+    - [Install the Load Balancer](#install-the-load-balancer)
     - [Provision Master and Worker Nodes](#provision-master-and-worker-nodes)
-- [Upgrade cluster](#upgrade-cluster)
-- [Utilities](#utilities)
-  - [How to migrate from Docker to Containerd](#how-to-migrate-from-docker-to-containerd)
-    
+  - [Upgrade cluster](#upgrade-cluster)
+  - [Utilities](#utilities)
+    - [How to migrate from Docker to Containerd](#how-to-migrate-from-docker-to-containerd)
+
 ## Requirements
 
 To be able to run the examples, you need to have the following software installed:
+
 - ansible >= 2.8.0
 - furyagent
 - kubectl
 
 One of the following supported Operating Systems on the target machines:
+
 - Ubuntu 20.04 LTS
 - RHEL 8
 - Rocky 8
@@ -80,7 +84,6 @@ In this step you can choose which container runtime you want to use:
 
 - containerd
 
-
 #### Containerd
 
 Run the `1.containerd.yml` playbook with:
@@ -122,7 +125,7 @@ kubernetes_version='1.24.7'
 ```
 
 > NOTE: the `kubernetes_version` must be one of the versions available in the roles, i.e. supported by this installer.
-
+<!-- spacer -->
 > IMPORTANT: all the nodes must be in Ready status before running the upgrade.
 
 First you need to upgrade the control plane with the `55.upgrade-control-plane.yml` playbook with:
