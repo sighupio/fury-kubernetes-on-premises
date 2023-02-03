@@ -20,10 +20,9 @@ name: policeman
 kind: pipeline
 type: docker
 
-depends_on:
-  # FIXME: enable me when license check gets enabled and remove the dependency on clone.
-  # - license
-  - clone
+# FIXME: enable me when license check gets enabled.
+# depends_on:
+#  - license
 
 platform:
   os: linux
