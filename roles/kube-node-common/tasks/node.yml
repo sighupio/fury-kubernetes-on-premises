@@ -85,8 +85,6 @@
 - name: Delete lock for cri-tools package
   shell: "yum versionlock delete cri-tools"
   register: result
-  args:
-    warn: false
   when: ansible_os_family in ['RedHat', 'Rocky'] and 'cri-tools' in ansible_facts.packages
   failed_when: result.rc != 0 and 'no matches' not in result.stderr
 
@@ -103,8 +101,6 @@
 
 - name: Add lock for cri-tools package
   shell: "yum versionlock cri-tools"
-  args:
-    warn: false
   when: ansible_os_family in ['RedHat', 'Rocky']
 
 ## Installing Kubelet
@@ -118,8 +114,6 @@
 - name: Delete lock for kubelet package
   shell: "yum versionlock delete kubelet"
   register: result
-  args:
-    warn: false
   when: ansible_os_family in ['RedHat', 'Rocky'] and 'kubelet' in ansible_facts.packages
   failed_when: result.rc != 0 and 'no matches' not in result.stderr
 
@@ -138,8 +132,6 @@
 
 - name: Add lock for kubelet package
   shell: "yum versionlock kubelet"
-  args:
-    warn: false
   when: ansible_os_family in ['RedHat', 'Rocky']
 
 ## Removing hold on kubernetes-cni if any
@@ -153,8 +145,6 @@
 - name: Delete lock for kubernetes-cni package
   shell: "yum versionlock delete kubernetes-cni"
   register: result
-  args:
-    warn: false
   when: ansible_os_family in ['RedHat', 'Rocky'] and 'kubernetes-cni' in ansible_facts.packages
   failed_when: result.rc != 0 and 'no matches' not in result.stderr
 
@@ -169,8 +159,6 @@
 - name: Delete lock for kubectl package
   shell: "yum versionlock delete kubectl"
   register: result
-  args:
-    warn: false
   when: ansible_os_family in ['RedHat', 'Rocky'] and 'kubectl' in ansible_facts.packages
   failed_when: result.rc != 0 and 'no matches' not in result.stderr
 
@@ -187,8 +175,6 @@
 
 - name: Add lock for kubectl package
   shell: "yum versionlock kubectl"
-  args:
-    warn: false
   when: ansible_os_family in ['RedHat', 'Rocky']
 
 ## Installing kubeadm
@@ -202,8 +188,6 @@
 - name: Delete lock for kubeadm package
   shell: "yum versionlock delete kubeadm"
   register: result
-  args:
-    warn: false
   when: ansible_os_family in ['RedHat', 'Rocky'] and 'kubeadm' in ansible_facts.packages
   failed_when: result.rc != 0 and 'no matches' not in result.stderr
 
@@ -220,8 +204,6 @@
 
 - name: Add lock for kubeadm package
   shell: "yum versionlock kubeadm"
-  args:
-    warn: false
   when: ansible_os_family in ['RedHat', 'Rocky']
 
 # Finish install Kubernetes packages
