@@ -60,4 +60,4 @@ all:
     # kubernetes_version: '1.22.13'
     kubernetes_version: '1.23.12'
     # kubernetes_version: '1.24.7'
-    # kubernetes_version: "1.25.3"
+    # kubernetes_version: "1.25.6"
