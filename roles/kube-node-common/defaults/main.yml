@@ -20,4 +20,4 @@ dependencies:
   "1.24.7":
     critools_version: "1.25.0"
   "1.25.6":
-    critools_version: "1.25.0"
+    critools_version: "1.26.0"
