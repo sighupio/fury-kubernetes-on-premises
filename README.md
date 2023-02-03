@@ -5,7 +5,7 @@
 </h1>
 <!-- markdownlint-enable MD033 -->
 
-![Release](https://img.shields.io/badge/Latest%20Release-v1.25.3-blue)
+![Release](https://img.shields.io/badge/Latest%20Release-v1.25.6-blue)
 ![License](https://img.shields.io/github/license/sighupio/fury-kubernetes-on-premises?label=License)
 ![Slack](https://img.shields.io/badge/slack-@kubernetes/fury-yellow.svg?logo=slack&label=Slack)
 
@@ -39,7 +39,7 @@ Click on each package to see its full documentation.
 
 ## Compatibility
 
-This version is compatible with Kubernetes 1.25.3
+This version is compatible with Kubernetes 1.25.6
 
 Check the [compatibility matrix][compatibility-matrix] for additional information about previous releases of the module.
 
