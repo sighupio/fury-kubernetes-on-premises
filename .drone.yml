@@ -174,8 +174,9 @@ kind: pipeline
 type: docker
 
 # FIXME: enable when we have e2e working
-# depends_on:
-#   - e2e-kubernetes-1.25
+depends_on:
+  # - e2e-kubernetes-1.25
+  - policeman
 
 platform:
   os: linux
