@@ -43,9 +43,30 @@ This version is compatible with Kubernetes 1.25.6
 
 Check the [compatibility matrix][compatibility-matrix] for additional information about previous releases of the module.
 
-## Examples
+## Usage
 
-- [Install Kubernetes cluster with Ansible roles](examples/playbooks)
+### Prerequisites
+
+| Tool                        | Version   | Description                                                                                                                                                    |
+|-----------------------------|-----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [furyctl][furyctl-repo]     | `>=0.6.0` | The recommended tool to download and manage KFD modules and their packages. To learn more about `furyctl` read the [official documentation][furyctl-repo].     |
+
+### Provision the cluster
+
+1. List the role in a `Furyfile.yml` file
+```yaml
+roles:
+  - name: on-premise
+    version: v1.25.6
+```
+> See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
+
+2. Execute `furyctl vendor -H` to download the roles
+
+3. Inspect the downloaded roles inside `./vendor/roles/on-premise`
+
+4. Install Kubernetes cluster using the downloaded roles. You can use our [playbook examples](examples/playbooks)
+
 
 <!-- Links -->
 
