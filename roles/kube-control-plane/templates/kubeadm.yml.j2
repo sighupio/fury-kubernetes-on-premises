@@ -5,7 +5,7 @@ nodeRegistration:
   kubeletExtraArgs:
     cloud-provider: {{ kubernetes_cloud_provider }}
 localAPIEndpoint:
-  advertiseAddress: {{ ansible_default_ipv4.address }}
+  advertiseAddress: {{ kubernetes_apiserver_advertise_address }}
   bindPort: 6443
 ---
 apiVersion: kubeadm.k8s.io/v1beta2
