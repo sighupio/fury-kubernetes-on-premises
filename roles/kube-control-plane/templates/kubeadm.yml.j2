@@ -48,18 +48,18 @@ apiServer:
   - name: audit-files
     hostPath: {{ audit_log_dir }}
     mountPath: {{ audit_log_dir }}
-    readonly: false
+    readOnly: false
     pathType: Directory
   - name: audit-policy
     hostPath: {{ audit_policy_config_path }}
     mountPath: {{ audit_policy_config_path }}
-    readonly: true
+    readOnly: true
     pathType: File
 {% if kubernetes_cloud_config != "" %}
   - name: cloud
     hostPath: {{ kubernetes_cloud_config }}
     mountPath: {{ kubernetes_cloud_config }}
-    readonly: true
+    readOnly: true
     pathType: File
 {% endif %}
   timeoutForControlPlane: 4m0s
@@ -78,7 +78,7 @@ controllerManager:
   - name: cloud
     hostPath: {{ kubernetes_cloud_config }}
     mountPath: {{ kubernetes_cloud_config }}
-    readonly: true
+    readOnly: true
     pathType: File
 {% endif %}
 networking:
