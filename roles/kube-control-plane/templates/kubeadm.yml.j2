@@ -1,14 +1,14 @@
-apiVersion: kubeadm.k8s.io/v1beta2
+apiVersion: kubeadm.k8s.io/v1beta3
 kind: InitConfiguration
 nodeRegistration:
   name: {{ kubernetes_hostname }}
   kubeletExtraArgs:
     cloud-provider: {{ kubernetes_cloud_provider }}
 localAPIEndpoint:
-  advertiseAddress: {{ ansible_default_ipv4.address }}
+  advertiseAddress: {{ ansible_default_ipv4.address|default(ansible_all_ipv4_addresses[0]) }}
   bindPort: 6443
 ---
-apiVersion: kubeadm.k8s.io/v1beta2
+apiVersion: kubeadm.k8s.io/v1beta3
 kind: ClusterConfiguration
 etcd:
   external:
@@ -21,8 +21,7 @@ clusterName: {{ kubernetes_cluster_name }}
 kubernetesVersion: {{ kubernetes_version }}
 imageRepository: "{{ kubernetes_image_registry }}"
 controlPlaneEndpoint: {{ kubernetes_control_plane_address }}
-dns:
-  type: CoreDNS
+dns: {}
 apiServer:
   extraArgs:
     enable-admission-plugins: "NamespaceLifecycle,LimitRanger,PodNodeSelector,ServiceAccount,DefaultStorageClass,DefaultTolerationSeconds,MutatingAdmissionWebhook,ValidatingAdmissionWebhook,ResourceQuota"
