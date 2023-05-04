@@ -11,7 +11,7 @@
 
 <!-- <KFD-DOCS> -->
 
-**Kubernetes Fury on-premises** is an add-on module for the [Kubernetes Fury Distribution (KFD)][kfd-repo] that provides
+**Kubernetes Fury on-premises** is an installer and add-on module for the [Kubernetes Fury Distribution (KFD)][kfd-repo] that provides
 packages to install Kubernetes to on-premises VMs.
 
 If you are new to KFD please refer to the [official documentation][kfd-docs] on how to get started with KFD.
@@ -47,26 +47,27 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 
 ### Prerequisites
 
-| Tool                        | Version   | Description                                                                                                                                                    |
-|-----------------------------|-----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [furyctl][furyctl-repo]     | `>=0.6.0` | The recommended tool to download and manage KFD modules and their packages. To learn more about `furyctl` read the [official documentation][furyctl-repo].     |
+| Tool                    | Version   | Description                                                                                                                                                |
+| ----------------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [furyctl][furyctl-repo] | `>=0.6.0` | The recommended tool to download and manage KFD modules and their packages. To learn more about `furyctl` read the [official documentation][furyctl-repo]. |
 
 ### Provision the cluster
 
 1. List the role in a `Furyfile.yml` file
+
 ```yaml
 roles:
   - name: on-premise
     version: v1.25.6
 ```
+
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
 
-2. Execute `furyctl vendor -H` to download the roles
+1. Execute `furyctl vendor -H` to download the roles
 
-3. Inspect the downloaded roles inside `./vendor/roles/on-premise`
+2. Inspect the downloaded roles inside `./vendor/roles/on-premise`
 
-4. Install Kubernetes cluster using the downloaded roles. You can use our [playbook examples](examples/playbooks)
-
+3. Install Kubernetes cluster using the downloaded roles. You can use our [playbook examples](examples/playbooks)
 
 <!-- Links -->
 

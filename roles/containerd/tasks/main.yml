@@ -49,7 +49,7 @@
     path: "/usr/bin/{{ item }}"
     state: absent
   when: containerd_bin_dir != "/usr/bin"
-  ignore_errors: true  # noqa ignore-errors
+  ignore_errors: true # noqa ignore-errors
   with_items:
     - containerd
     - containerd-shim
@@ -147,3 +147,10 @@
     name: containerd
     enabled: yes
     state: started
+
+- name: configure crictl to use containerd as default runtime
+  template:
+    src: crictl.yaml.j2
+    dest: "/etc/crictl.yaml"
+    owner: "root"
+    mode: 0640
