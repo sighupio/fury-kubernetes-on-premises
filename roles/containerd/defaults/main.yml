@@ -1,4 +1,7 @@
 ---
+# If true, download the binaries on the local machine and sideload them on the remote hosts
+airgapped_install: false
+
 # Package options.
 
 # Check supported Kubernetes versions here: https://containerd.io/releases/#kubernetes-support

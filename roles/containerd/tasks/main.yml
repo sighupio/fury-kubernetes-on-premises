@@ -17,32 +17,87 @@
   when:
     - ansible_distribution not in ["CentOS", "OracleLinux", "RedHat", "Ubuntu", "Debian", "Rocky"]
 
-- name: containerd | Download containerd
-  get_url:
-    url: "{{ containerd_download_url }}"
-    dest: "/tmp/containerd-{{ containerd_version }}-linux-{{ image_arch }}.tar.gz"
+- name: containerd | Install containerd
+  when: not airgapped_install | bool
+  block:
+    - name: containerd | Download containerd
+      get_url:
+        url: "{{ containerd_download_url }}"
+        dest: "/tmp/containerd-{{ containerd_version }}-linux-{{ image_arch }}.tar.gz"
 
-- name: containerd | Unpack containerd archive
-  unarchive:
-    src: "/tmp/containerd-{{ containerd_version }}-linux-{{ image_arch }}.tar.gz"
-    dest: "{{ containerd_bin_dir }}"
-    mode: 0755
-    remote_src: yes
-    extra_opts:
-      - --strip-components=1
-  notify: restart containerd
+    - name: containerd | Unpack containerd archive
+      unarchive:
+        src: "/tmp/containerd-{{ containerd_version }}-linux-{{ image_arch }}.tar.gz"
+        dest: "{{ containerd_bin_dir }}"
+        mode: 0755
+        remote_src: yes
+        extra_opts:
+          - --strip-components=1
+      notify: restart containerd
 
-- name: runc | Download runc binary
-  get_url:
-    url: "{{ runc_download_url }}"
-    dest: "/tmp/runc"
+- name: containerd | Install containerd on airgapped hosts
+  when: airgapped_install | bool
+  block:
+    - name: containerd | Download containerd locally
+      become: false
+      run_once: true
+      get_url:
+        url: "{{ containerd_download_url }}"
+        dest: "/tmp/containerd-{{ containerd_version }}-linux-{{ image_arch }}.tar.gz"
+      delegate_to: localhost
 
-- name: Copy runc binary from download dir
-  copy:
-    src: "/tmp/runc"
-    dest: "{{ runc_bin_dir }}/runc"
-    mode: 0755
-    remote_src: true
+    - name: containerd | Upload containerd archive
+      copy:
+        src: "/tmp/containerd-{{ containerd_version }}-linux-{{ image_arch }}.tar.gz"
+        dest: "/tmp/containerd-{{ containerd_version }}-linux-{{ image_arch }}.tar.gz"
+
+    - name: containerd | Unpack containerd archive
+      unarchive:
+        src: "/tmp/containerd-{{ containerd_version }}-linux-{{ image_arch }}.tar.gz"
+        dest: "{{ containerd_bin_dir }}"
+        mode: 0755
+        remote_src: yes
+        extra_opts:
+          - --strip-components=1
+      notify: restart containerd
+
+- name: runc | Install runc
+  when: not airgapped_install | bool
+  block:
+    - name: runc | Download runc binary
+      get_url:
+        url: "{{ runc_download_url }}"
+        dest: "/tmp/runc"
+
+    - name: Copy runc binary from download dir
+      copy:
+        src: "/tmp/runc"
+        dest: "{{ runc_bin_dir }}/runc"
+        mode: 0755
+        remote_src: true
+
+- name: runc | Install runc on airgapped hosts
+  when: airgapped_install | bool
+  block:
+    - name: runc | Download runc binary locally
+      become: false
+      run_once: true
+      get_url:
+        url: "{{ runc_download_url }}"
+        dest: "/tmp/runc"
+      delegate_to: localhost
+
+    - name: runc | Upload runc binary
+      copy:
+        src: "/tmp/runc"
+        dest: "/tmp/runc"
+
+    - name: Copy runc binary from download dir
+      copy:
+        src: "/tmp/runc"
+        dest: "{{ runc_bin_dir }}/runc"
+        mode: 0755
+        remote_src: true
 
 - name: containerd | Remove orphaned binary
   file:
