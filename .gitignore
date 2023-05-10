@@ -1,0 +1,4 @@
+examples/kfd*
+examples/vsphere
+examples/playbooks/pki/
+examples/playbooks/admin.conf

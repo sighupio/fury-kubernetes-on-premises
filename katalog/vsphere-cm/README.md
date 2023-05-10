@@ -4,7 +4,7 @@ This katalog deploys the [vSphere Cloud Controller Manager](https://github.com/k
 
 ## Requirements
 
-- Kubernetes = `1.25.x`
+- Kubernetes = `1.26.x`
 - Kustomize >= `v3.5.3`
 - control plane and worker nodes must be provisioned with cloud-provider `external` on `kubeadm.yaml`
 - `disk.EnableUUID=1` on all nodes.
@@ -15,7 +15,7 @@ This katalog deploys the [vSphere Cloud Controller Manager](https://github.com/k
 
 ## Image repository and tag
 
-- vSphere cloud controller manager image: `gcr.io/cloud-provider-vsphere/cpi/release/manager:v1.25.0`
+- vSphere cloud controller manager image: `gcr.io/cloud-provider-vsphere/cpi/release/manager:v1.26.1`
 
 ## Setting credentials
 

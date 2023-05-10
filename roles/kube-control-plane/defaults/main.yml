@@ -14,7 +14,7 @@ kubernetes_api_SAN:
   - localhost
   - kubernetes.local
 kubernetes_control_plane_address: "{{ ansible_hostname }}"
-kubernetes_version: "1.25.6"
+kubernetes_version: "1.26.3"
 kubernetes_image_registry: "{{ dependencies[kubernetes_version].kubernetes_image_registry }}"
 kubernetes_hostname: "{{ ansible_fqdn }}"
 kubernetes_kubeconfig_path: "."
@@ -46,4 +46,6 @@ dependencies:
   "1.24.7":
     kubernetes_image_registry: "k8s.gcr.io"
   "1.25.6":
+    kubernetes_image_registry: "registry.k8s.io"
+  "1.26.3":
     kubernetes_image_registry: "registry.k8s.io"
