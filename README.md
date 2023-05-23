@@ -5,7 +5,7 @@
 </h1>
 <!-- markdownlint-enable MD033 -->
 
-![Release](https://img.shields.io/badge/Latest%20Release-v1.25.6-blue)
+![Release](https://img.shields.io/badge/Latest%20Release-v1.26.3-blue)
 ![License](https://img.shields.io/github/license/sighupio/fury-kubernetes-on-premises?label=License)
 ![Slack](https://img.shields.io/badge/slack-@kubernetes/fury-yellow.svg?logo=slack&label=Slack)
 
@@ -26,11 +26,11 @@ The following packages are included in the Fury Kubernetes on-premises module:
 
 | Package                                        | Version  | Description                                                                   |
 | ---------------------------------------------- | -------- | ----------------------------------------------------------------------------- |
-| [vsphere-cm](katalog/vsphere-cm)               | `1.25.0` | Kubernetes Cloud Provider for vSphere                                         |
-| [vsphere-csi](katalog/vsphere-csi)             | `2.7.0`  | vSphere storage Container Storage Interface (CSI) plugin                      |
-| [etcd](roles/etcd)                             | `3.4.7`  | Ansible role to install etcd as systemd service                               |
+| [vsphere-cm](katalog/vsphere-cm)               | `1.26.3` | Kubernetes Cloud Provider for vSphere                                         |
+| [vsphere-csi](katalog/vsphere-csi)             | `3.0.1`  | vSphere storage Container Storage Interface (CSI) plugin                      |
+| [etcd](roles/etcd)                             | `3.5.8`  | Ansible role to install etcd as systemd service                               |
 | [haproxy](roles/haproxy)                       | `2.6`    | Ansible role to install HAProxy as Kubernetes load balancer for the APIServer |
-| [containerd](roles/containerd)                 | `1.6.8`  | Ansible role to install containerd as container runtime                       |
+| [containerd](roles/containerd)                 | `1.7.0`  | Ansible role to install containerd as container runtime                       |
 | [kube-node-common](roles/kube-node-common)     | `-`      | Ansible role to install prerequisites for Kubernetes setup                    |
 | [kube-control-plane](roles/kube-control-plane) | `-`      | Ansible role to install master nodes                                          |
 | [kube-worker](roles/kube-worker)               | `-`      | Ansible role to install worker nodes and join them to the cluster             |
@@ -39,7 +39,7 @@ Click on each package to see its full documentation.
 
 ## Compatibility
 
-This version is compatible with Kubernetes 1.25.6
+This version is compatible with Kubernetes 1.26.3
 
 Check the [compatibility matrix][compatibility-matrix] for additional information about previous releases of the module.
 
@@ -57,8 +57,8 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 
 ```yaml
 roles:
-  - name: on-premise
-    version: v1.25.6
+  - name: on-premises
+    version: v1.26.3
 ```
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
@@ -86,6 +86,6 @@ In case you experience any problems with the module, please [open a new issue](h
 
 ## License
 
-This module is open-source and it's released under the following [LICENSE](LICENSE)
+This module is open-source and it's released under the following [LICENSE](LICENSE).
 
 <!-- </FOOTER> -->

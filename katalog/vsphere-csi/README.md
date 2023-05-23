@@ -8,15 +8,14 @@ Follow all the [prerequisites from `vsphere-cm` modules](../vsphere-cm/).
 
 ## Image repository and tag
 
-- csi-attacher: `k8s.gcr.io/sig-storage/csi-attacher:v3.5.0`
-- csi-resizer: `k8s.gcr.io/sig-storage/csi-resizer:v1.5.0`
-- csi-provisioner: `k8s.gcr.io/sig-storage/csi-provisioner:v3.2.1`
-- csi-snapshotter: `k8s.gcr.io/sig-storage/csi-snapshotter:v6.0.1`
-- vsphere-csi-controller: `gcr.io/cloud-provider-vsphere/csi/release/driver:v2.7.0`
-- liveness-probe: `k8s.gcr.io/sig-storage/livenessprobe:v2.7.0`
-- vsphere-syncer: `gcr.io/cloud-provider-vsphere/csi/release/syncer:v2.7.0`
-- node-driver-registrar: `k8s.gcr.io/sig-storage/csi-node-driver-registrar:v2.5.1`
-- vsphere-csi-node: `gcr.io/cloud-provider-vsphere/csi/release/driver:v2.7.0`
+- `gcr.io/cloud-provider-vsphere/csi/release/driver:v3.0.1`
+- `gcr.io/cloud-provider-vsphere/csi/release/syncer:v3.0.1`
+- `k8s.gcr.io/sig-storage/csi-attacher:v4.2.0`
+- `k8s.gcr.io/sig-storage/csi-node-driver-registrar:v2.7.0`
+- `k8s.gcr.io/sig-storage/csi-provisioner:v3.4.0`
+- `k8s.gcr.io/sig-storage/csi-resizer:v1.7.0`
+- `k8s.gcr.io/sig-storage/csi-snapshotter:v6.2.1`
+- `k8s.gcr.io/sig-storage/livenessprobe:v2.9.0`
 
 ## Setting credentials
 
