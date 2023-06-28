@@ -1,9 +1,18 @@
+---
+- name: Upgrade etcd
+  hosts: master
+  serial: 1
+  roles:
+    - etcd
+  tags:
+    - kubeadm-upgrade
+
 - name: Control plane upgrade
   hosts: master
   serial: 1
   vars:
-    skip_kubelet_upgrade: True
-    upgrade: True
+    skip_kubelet_upgrade: true
+    upgrade: true
   roles:
     - kube-node-common
     - kube-control-plane
@@ -14,7 +23,7 @@
   hosts: master
   serial: 1
   vars:
-    skip_kubelet_upgrade: False
+    skip_kubelet_upgrade: false
   roles:
     - kube-node-common
     - containerd
