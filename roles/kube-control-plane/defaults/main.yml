@@ -16,7 +16,7 @@ kubernetes_api_SAN:
 kubernetes_control_plane_address: "{{ ansible_hostname }}"
 kubernetes_version: "1.26.3"
 kubernetes_image_registry: "{{ dependencies[kubernetes_version].kubernetes_image_registry }}"
-coredns_image_prefix: "{{ dependencies[kubernetes_version].coredns_image_prefix }}"
+coredns_image_prefix: "{{ dependencies[kubernetes_version].coredns_image_prefix | default('') }}"
 kubernetes_hostname: "{{ ansible_fqdn }}"
 kubernetes_kubeconfig_path: "."
 kubernetes_users_names: []
