@@ -47,6 +47,12 @@ apiServer:
     oidc-groups-claim: "{{ oidc_groups_claim }}"
     oidc-groups-prefix: "{{ oidc_group_prefix }}"
 {% endif %}
+{% if service_account_issuer is defined %}
+    service-account-issuer: "{{ service_account_issuer }}"
+{% endif %}
+{% if api_audiences is defined %}
+    api-audiences: "{{ api_audiences }}"
+{% endif %}
   extraVolumes:
   - name: audit-files
     hostPath: {{ audit_log_dir }}
