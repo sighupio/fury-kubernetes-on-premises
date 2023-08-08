@@ -38,6 +38,11 @@
     _conntrack_module_name: "nf_conntrack"
   when: ansible_facts['distribution_major_version'] > "18"
 
+- name: Set conntrack kernel module name on Ubuntu 20
+  set_fact:
+    _conntrack_module_name: "nf_conntrack"
+  when: ansible_facts['distribution'] == "Debian"
+
 - include_tasks: "repo-{{ ansible_os_family }}.yml"
 
 - include_tasks: node.yml

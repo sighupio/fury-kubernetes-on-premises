@@ -1,9 +1,15 @@
 ---
 
-
-- name: installing dependencies
+- name: Update Package Cache 
   apt:
-    name: software-properties-common
+    update_cache: yes
+  when: ansible_os_family == "Debian"
+
+- name: Install dependencies
+  package:
+    name:
+      - software-properties-common
+      - psmisc
     state: latest
   when: ansible_os_family == 'Debian'
 
@@ -21,15 +27,29 @@
   ignore_errors: yes
   when: ansible_os_family in ['RedHat', 'Rocky']
 
-- name: installing haproxy repo
+- name: installing haproxy repo (Ubuntu)
   apt_repository:
     repo: 'ppa:vbernat/haproxy-{{ haproxy_version }}'
     state: present
-  when: ansible_os_family == 'Debian'
+  when: ansible_facts['distribution'] == "Ubuntu"
+
+- name: installing haproxy repo (Debian)
+  block:
+    - name: Custom apt key
+      get_url:
+        url: https://haproxy.debian.net/bernat.debian.org.gpg
+        dest: /usr/share/keyrings/haproxy.debian.net.gpg
+
+    - name: Add source
+      apt_repository:
+        repo: 'deb "[signed-by=/usr/share/keyrings/haproxy.debian.net.gpg]" http://haproxy.debian.net {{ ansible_distribution_release }}-backports-{{ haproxy_version }} main'
+        state: present
+  when: ansible_facts['distribution'] == "Debian"
+
 
 - name: actually installing haproxy
   package:
-    name: haproxy
+    name: 'haproxy'
     state: present
 
 - name: copying configuration file
