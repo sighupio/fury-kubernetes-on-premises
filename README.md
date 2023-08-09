@@ -47,7 +47,7 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 
 | Tool                    | Version   | Description                                                                                                                                                |
 | ----------------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [furyctl][furyctl-repo] | `>=0.6.0` | The recommended tool to download and manage KFD modules and their packages. To learn more about `furyctl` read the [official documentation][furyctl-repo]. |
+| [furyctl][furyctl-repo] | `>=0.25.0` | The recommended tool to download and manage KFD modules and their packages. To learn more about `furyctl` read the [official documentation][furyctl-repo]. |
 
 ### Provision the cluster
 
@@ -61,7 +61,7 @@ roles:
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
 
-1. Execute `furyctl vendor -H` to download the roles
+1. Execute `furyctl legacy vendor -H` to download the roles
 
 2. Inspect the downloaded roles inside `./vendor/roles/on-premise`
 
