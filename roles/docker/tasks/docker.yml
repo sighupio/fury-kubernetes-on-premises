@@ -1,0 +1,52 @@
+---
+
+- name: Install Docker dependencies
+  package:
+    name: "{{ docker_dependencies }}"
+    state: present
+
+- name: Install Docker
+  package:
+    name: "docker-ce{{ _pkg_sep}}{{ docker_version }}"
+    state: present
+
+- name: Make sure that Docker service override directory exists
+  file:
+    name: /etc/systemd/system/docker.service.d
+    owner: root
+    group: root
+    mode: 0755
+    state: directory
+
+- name: Configure Docker proxy
+  template:
+    src: proxy.conf.j2
+    dest: /etc/systemd/system/docker.service.d/proxy.conf
+    owner: root
+    group: root
+    mode: 0640
+  notify: Restart Docker
+  when: docker_proxy | length > 0
+
+- name: Make sure Docker configuration directory exists
+  file:
+    name: /etc/docker
+    owner: root
+    group: root
+    mode: 0750
+    state: directory
+
+- name: Configure Docker
+  template:
+    src: daemon.json.j2
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: 0640
+  notify: Restart Docker
+
+- name: Start and enable Docker
+  systemd:
+    name: docker
+    state: started
+    enabled: yes

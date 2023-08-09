@@ -1,0 +1,21 @@
+{
+{% if docker_registry_mirrors | length > 0 %}
+  "registry-mirrors": {{ registry_mirrors | to_json }},
+{%- endif -%}
+{% if docker_dns | length > 0 %}
+  "dns": {{ docker_dns | to_json }},
+{%- endif -%}
+  "exec-opts": ["native.cgroupdriver=systemd"],
+  "log-driver": "json-file",
+  "live-restore": true,
+  "log-opts": {
+    "max-size": "10m",
+    "max-file": "5"
+  },
+{% if ansible_os_family == "RedHat" %}
+  "storage-opts": [
+    "overlay2.override_kernel_check=true"
+  ],
+{% endif %}
+  "storage-driver": "overlay2"
+}

@@ -1,0 +1,25 @@
+---
+
+docker_dns: []
+docker_proxy: ""
+docker_registry_mirrors: []
+
+# Kernel modules.
+docker_modprobe:
+  - { state: "present", option: "br_netfilter" }
+  - { state: "present", option: "overlay" }
+
+# Entries for sysctl.
+docker_sysctl:
+  - { state: "present", name: "net.bridge.bridge-nf-call-ip6tables", value: "1" }
+  - { state: "present", name: "net.bridge.bridge-nf-call-iptables", value: "1" }
+  - { state: "present", name: "net.ipv4.ip_forward", value: "1" }
+
+docker_repo:
+  name: "docker_ce"
+  apt_repo: "deb [arch=amd64] https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} stable"
+  apt_gpg_key: "https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg"
+  apt_gpg_key_id: "9DC858229FC7DD38854AE2D88D81803C0EBFCD88"
+  yum_repo: "https://download.docker.com/linux/centos/8/$basearch/stable"
+  yum_gpg_key: "https://download.docker.com/linux/centos/gpg"
+  yum_gpg_key_check: "yes"
