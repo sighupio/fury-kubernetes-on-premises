@@ -70,7 +70,7 @@ steps:
     pull: always
     depends_on: [clone]
     commands:
-      - tar -zcvf fury-kubernetes-on-premises-${DRONE_TAG}.tar.gz katalog/ roles/ LICENSE README.md
+      - tar -zcvf fury-kubernetes-on-premises-${DRONE_TAG}.tar.gz roles/ LICENSE README.md
     when:
       ref:
         include:
