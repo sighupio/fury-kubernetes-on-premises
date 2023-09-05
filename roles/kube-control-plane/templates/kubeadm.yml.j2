@@ -23,6 +23,9 @@ imageRepository: "{{ kubernetes_image_registry }}"
 controlPlaneEndpoint: {{ kubernetes_control_plane_address }}
 dns:
   type: CoreDNS
+{% if coredns_image_prefix != "" %}
+  imageRepository: {{ kubernetes_image_registry }}{{ coredns_image_prefix }}
+{% endif %}
 apiServer:
   extraArgs:
     enable-admission-plugins: "NamespaceLifecycle,LimitRanger,PodNodeSelector,ServiceAccount,DefaultStorageClass,DefaultTolerationSeconds,MutatingAdmissionWebhook,ValidatingAdmissionWebhook,ResourceQuota"
@@ -43,6 +46,12 @@ apiServer:
     oidc-username-prefix: "{{ oidc_group_prefix }}"
     oidc-groups-claim: "{{ oidc_groups_claim }}"
     oidc-groups-prefix: "{{ oidc_group_prefix }}"
+{% endif %}
+{% if service_account_issuer is defined %}
+    service-account-issuer: "{{ service_account_issuer }}"
+{% endif %}
+{% if api_audiences is defined %}
+    api-audiences: "{{ api_audiences }}"
 {% endif %}
   extraVolumes:
   - name: audit-files
