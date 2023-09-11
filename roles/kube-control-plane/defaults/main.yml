@@ -5,6 +5,7 @@ audit_policy_max_age: 3
 audit_policy_config_path: /etc/kubernetes/audit.yaml
 
 ## MasterConfig paramethers
+kubernetes_apiserver_advertise_address: "{{ ansible_default_ipv4.address }}"
 kubernetes_pod_cidr: "10.32.0.0/16"
 kubernetes_svc_cidr: "10.96.0.0/16"
 kubernetes_cluster_name: "sighup-prod"
@@ -60,4 +61,3 @@ dependencies:
     kubernetes_image_registry: "registry.sighup.io/fury/on-premises"
   "1.26.7":
     kubernetes_image_registry: "registry.sighup.io/fury/on-premises"
-
