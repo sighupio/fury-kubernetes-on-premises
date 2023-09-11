@@ -20,6 +20,7 @@
 - name: containerd | Download containerd
   get_url:
     url: "{{ containerd_download_url }}"
+    checksum: "sha256:{{ containerd_download_url }}.sha256sum"
     dest: "/tmp/containerd-{{ containerd_version }}-linux-{{ image_arch }}.tar.gz"
 
 - name: containerd | Unpack containerd archive
@@ -35,6 +36,7 @@
 - name: runc | Download runc binary
   get_url:
     url: "{{ runc_download_url }}"
+    checksum: "{{ runc_checksum }}"
     dest: "/tmp/runc"
 
 - name: Copy runc binary from download dir
@@ -49,7 +51,7 @@
     path: "/usr/bin/{{ item }}"
     state: absent
   when: containerd_bin_dir != "/usr/bin"
-  ignore_errors: true  # noqa ignore-errors
+  ignore_errors: true # noqa ignore-errors
   with_items:
     - containerd
     - containerd-shim
@@ -63,14 +65,6 @@
     dest: /etc/systemd/system/containerd.service
     mode: 0644
   notify: restart containerd
-
-- name: containerd | Write containerd proxy drop-in
-  template:
-    src: http-proxy.conf.j2
-    dest: "{{ containerd_systemd_dir }}/http-proxy.conf"
-    mode: 0644
-  notify: restart containerd
-  when: http_proxy is defined or https_proxy is defined
 
 - name: containerd | Ensure containerd directories exist
   file:
@@ -147,3 +141,10 @@
     name: containerd
     enabled: yes
     state: started
+
+- name: configure crictl to use containerd as default runtime
+  template:
+    src: crictl.yaml.j2
+    dest: "/etc/crictl.yaml"
+    owner: "root"
+    mode: 0640
