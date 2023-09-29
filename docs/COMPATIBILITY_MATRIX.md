@@ -10,6 +10,8 @@
 | v1.25.6                             |                    | :white_check_mark: |                    | :white_check_mark: |                    | :white_check_mark: | :white_check_mark: |                    |                    |                    |           |
 | v1.26.3                             |                    | :white_check_mark: |                    | :white_check_mark: |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :warning: |
 | v1.26.7                             | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |                    |           |
+| v1.26.7-rev.1                       | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |                    |           |
+
 
 |        Icon        | Legend       |
 | :----------------: | ------------ |
