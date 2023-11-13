@@ -15,7 +15,7 @@ kubernetes_api_SAN:
   - localhost
   - kubernetes.local
 kubernetes_control_plane_address: "{{ ansible_hostname }}"
-kubernetes_version: "1.26.7"
+kubernetes_version: "1.27.7"
 kubernetes_image_registry: "{{ dependencies[kubernetes_version].kubernetes_image_registry }}"
 coredns_image_prefix: "{{ dependencies[kubernetes_version].coredns_image_prefix | default('/coredns') }}"
 kubernetes_hostname: "{{ ansible_fqdn }}"
@@ -60,4 +60,6 @@ dependencies:
   "1.26.3":
     kubernetes_image_registry: "registry.sighup.io/fury/on-premises"
   "1.26.7":
+    kubernetes_image_registry: "registry.sighup.io/fury/on-premises"
+  "1.27.7":
     kubernetes_image_registry: "registry.sighup.io/fury/on-premises"
