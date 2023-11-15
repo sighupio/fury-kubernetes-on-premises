@@ -5,7 +5,7 @@
 </h1>
 <!-- markdownlint-enable MD033 -->
 
-![Release](https://img.shields.io/badge/Latest%20Release-v1.27.7-blue)
+![Release](https://img.shields.io/badge/Latest%20Release-v1.27.6-blue)
 ![License](https://img.shields.io/github/license/sighupio/fury-kubernetes-on-premises?label=License)
 ![Slack](https://img.shields.io/badge/slack-@kubernetes/fury-yellow.svg?logo=slack&label=Slack)
 
@@ -37,7 +37,7 @@ Click on each package to see its full documentation.
 
 ## Compatibility
 
-This version is compatible with Kubernetes 1.27.7
+This version is compatible with Kubernetes 1.27.6
 
 Check the [compatibility matrix][compatibility-matrix] for additional information about previous releases of the module.
 
@@ -56,7 +56,7 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 ```yaml
 roles:
   - name: on-premises
-    version: v1.27.7
+    version: v1.27.6
 ```
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
