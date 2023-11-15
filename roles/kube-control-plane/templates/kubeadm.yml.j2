@@ -22,7 +22,6 @@ kubernetesVersion: {{ kubernetes_version }}
 imageRepository: "{{ kubernetes_image_registry }}"
 controlPlaneEndpoint: {{ kubernetes_control_plane_address }}
 dns:
-  type: CoreDNS
 {% if coredns_image_prefix != "" %}
   imageRepository: {{ kubernetes_image_registry }}{{ coredns_image_prefix }}
 {% endif %}
