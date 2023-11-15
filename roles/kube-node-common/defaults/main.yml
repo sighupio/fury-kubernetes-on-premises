@@ -2,7 +2,7 @@
 # Kubernetes components versions
 kubernetes_repo_distribution: "xenial"
 
-kubernetes_version: "1.27.7"
+kubernetes_version: "1.27.6"
 kubelet_version: "{{ kubernetes_version }}"
 kubectl_version: "{{ kubernetes_version }}"
 kubeadm_version: "{{ kubernetes_version }}"
@@ -37,5 +37,5 @@ dependencies:
     critools_version: "1.26.0"
   "1.26.7":
     critools_version: "1.26.0"
-  "1.27.7":
+  "1.27.6":
     critools_version: "1.26.0"
