@@ -21,6 +21,8 @@
 - name: Load balancer installation
   hosts: haproxy
   become: true
+  become_method: sudo
+  become_user: root
   roles:
     - haproxy
   tags:

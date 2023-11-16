@@ -4,6 +4,7 @@
 
 - name: Docker removal preparation
   hosts: master,nodes
+  become: true
   tasks:
     - name: Get node name
       set_fact:
@@ -18,6 +19,7 @@
 
 - name: Containerd install
   hosts: master,nodes
+  become: true
   roles:
     - containerd
   tags:
@@ -26,6 +28,7 @@
 
 - name: Docker removal post-actions
   hosts: master,nodes
+  become: true
   tasks:
     - name: Get node name
       set_fact:

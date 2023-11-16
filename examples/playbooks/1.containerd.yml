@@ -4,6 +4,7 @@
 
 - name: Containerd install
   hosts: master,nodes
+  become: true
   roles:
     - containerd
   tags:

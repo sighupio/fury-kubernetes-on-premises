@@ -1,5 +1,6 @@
 - name: Kubernetes node preparation
   hosts: nodes
+  become: true
   vars:
     skip_kubelet_upgrade: True
   roles:
@@ -9,6 +10,7 @@
 
 - name: Kubernetes drain
   hosts: nodes
+  become: true
   tasks:
     - name: Get node name
       set_fact:
@@ -19,12 +21,14 @@
 
 - name: Kubernetes kubeadm upgrade node
   hosts: nodes
+  become: true
   tasks:
     - name: Upgrade kubelet config
       shell: "kubeadm upgrade node"
 
 - name: Kubelet and Containerd upgrade
   hosts: nodes
+  become: true
   vars:
     skip_kubelet_upgrade: False
   roles:
@@ -36,6 +40,7 @@
 
 - name: Kubernetes uncordon node
   hosts: nodes
+  become: true
   tasks:
     - name: Get node name
       set_fact:

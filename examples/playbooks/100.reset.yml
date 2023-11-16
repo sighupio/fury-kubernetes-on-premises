@@ -1,5 +1,6 @@
 - name: Reset Kubernetes cluster
   hosts: master,nodes
+  become: true
   tasks:
     - name: Reset kubeadm
       shell: "kubeadm reset -f"
