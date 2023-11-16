@@ -1,0 +1,4 @@
+name = "yourname"
+
+public_key = "ssh-rsa yourpubkey name@domain.tld"
+dns_zone   = "beta.fury-demo.sighup.io"

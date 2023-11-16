@@ -1,0 +1,7 @@
+terraform {
+  backend "s3" {
+    bucket = "bucket"
+    key    = "prefix/state.json"
+    region = "eu-west-1"
+  }
+}
