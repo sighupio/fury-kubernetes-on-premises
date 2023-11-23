@@ -13,15 +13,9 @@ runc_checksum: "sha256:https://github.com/opencontainers/runc/releases/download/
 image_arch: "{{host_architecture | default('amd64')}}"
 
 # Customize versions based on Kubernetes version to maintain compatibility
-kubernetes_version: "1.25.6"
+kubernetes_version: "1.27.6"
 
 versions:
-  1.20.15:
-    containerd_version: "1.5.8"
-    runc_version: "v1.0.3"
-  1.21.14:
-    containerd_version: "1.5.8"
-    runc_version: "v1.0.3"
   1.22.13:
     containerd_version: "1.5.8"
     runc_version: "v1.0.3"
@@ -44,6 +38,9 @@ versions:
     containerd_version: "1.7.0"
     runc_version: "v1.1.7"
   1.26.7:
+    containerd_version: "1.7.0"
+    runc_version: "v1.1.7"
+  1.27.6:
     containerd_version: "1.7.0"
     runc_version: "v1.1.7"
 
