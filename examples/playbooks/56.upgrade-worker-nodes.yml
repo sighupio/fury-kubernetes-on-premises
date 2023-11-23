@@ -10,7 +10,6 @@
 
 - name: Kubernetes drain
   hosts: nodes
-  become: true
   tasks:
     - name: Get node name
       set_fact:
@@ -40,7 +39,6 @@
 
 - name: Kubernetes uncordon node
   hosts: nodes
-  become: true
   tasks:
     - name: Get node name
       set_fact:
