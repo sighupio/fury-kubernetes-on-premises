@@ -4,7 +4,7 @@
 global_defs {
     router_id LVS_DEVEL
     enable_script_security
-    script_user {{ ansible_user }}
+    script_user root
 }
 
 {% if keepalived_on_k8s_master %}
