@@ -46,6 +46,10 @@
     mode: 0755
     remote_src: true
 
+- name: Install and configure Nvidia Container Toolkit
+  include_tasks: nvidia.yml
+  when: containerd_nvidia_enabled
+
 - name: containerd | Remove orphaned binary
   file:
     path: "/usr/bin/{{ item }}"
