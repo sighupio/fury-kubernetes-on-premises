@@ -32,3 +32,6 @@
   retries: 8
   delay: 4
   until: containerd_ready.rc == 0
+
+- name: Clean yum cache
+  command: /usr/bin/yum clean all

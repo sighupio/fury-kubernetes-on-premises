@@ -1,0 +1,76 @@
+- block:
+  - name: Update APT cache
+    apt:
+      update_cache: true
+    changed_when: false
+
+  - name: Install apt-transport-https
+    apt:
+      name: apt-transport-https
+      state: latest
+
+  - name: Import Nvidia public key
+    apt_key:
+      id: "{{ nvidia_repo['apt_gpg_key_id'] }}"
+      url: "{{ nvidia_repo['apt_gpg_key'] }}"
+      state: present
+
+  - name: Add Nvidia APT repository
+    apt_repository:
+      filename: "{{ nvidia_repo['name'] }}"
+      repo: "{{ nvidia_repo['apt_repo'] }}"
+      state: present
+
+  - name: Update APT cache
+    apt:
+      update_cache: true
+    changed_when: false
+
+  when: ansible_os_family == 'Debian'
+
+- block:
+  - name: Install yum-utils
+    yum:
+      name: yum-utils
+      state: latest
+
+  - name: Search for yum-plugin-versionlock
+    yum:
+      list: yum-plugin-versionlock
+    register: package_list
+
+  - name: Install yum-plugin-versionlock
+    yum:
+      name: yum-plugin-versionlock
+      state: latest
+    when: 'package_list.results | length != 0'
+
+  - name: Search for yum-versionlock
+    yum:
+      list: yum-versionlock
+    register: package_list
+
+  - name: Install yum-versionlock
+    yum:
+      name: yum-versionlock
+      state: latest
+    when: 'package_list.results | length != 0'
+
+  - name: Add Nvidia YUM repository
+    yum_repository:
+      name: "{{ nvidia_repo['name'] }}"
+      file: "{{ nvidia_repo['name'] }}"
+      description: "{{ nvidia_repo['name'] }}"
+      baseurl: "{{ nvidia_repo['yum_repo'] }}"
+      gpgkey: "{{ nvidia_repo['yum_gpg_key'] }}"
+      gpgcheck: "{{ nvidia_repo['yum_gpg_key_check'] }}"
+      repo_gpgcheck: "yes"
+      state: present
+    notify: Clean yum cache
+  when: ansible_os_family in ['RedHat', 'Rocky']
+
+- name: Install Nvidia Container Toolkit
+  package:
+    name:
+      - nvidia-container-toolkit
+    state: present

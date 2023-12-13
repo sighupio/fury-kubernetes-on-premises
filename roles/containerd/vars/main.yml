@@ -1,0 +1,11 @@
+---
+
+nvidia_repo:
+  name: "nvidia-container-toolkit"
+  apt_repo: "deb https://nvidia.github.io/libnvidia-container/stable/deb/$(ARCH) /"
+  apt_gpg_key: "https://nvidia.github.io/libnvidia-container/gpgkey"
+  apt_gpg_key_id: "C95B321B61E88C1809C4F759DDCAE044F796ECB0"
+  yum_repo: "https://nvidia.github.io/libnvidia-container/stable/rpm/$basearch"
+  yum_gpg_key:
+    - "https://nvidia.github.io/libnvidia-container/gpgkey"
+  yum_gpg_key_check: "yes"
