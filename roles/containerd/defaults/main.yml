@@ -92,4 +92,4 @@ containerd_nvidia_enabled: false
 # https://github.com/containerd/containerd/blob/v1.7.0/docs/cri/registry.md#configure-registry-credentials
 containerd_registry_configs:
 # configuration should use the following format:
-#   - {registry: "myregistry:8080", username: "admin", password: "password"}
+#   - {registry: "myregistry:8080", username: "admin", password: "password", insecure_skip_verify=false, mirror_endpoint: ["http://myregistry:8080"]}
