@@ -42,7 +42,26 @@ oom_score = {{ containerd_oom_score }}
             SystemdCgroup = true
 {% endif %}
     [plugins."io.containerd.grpc.v1.cri".registry]
+    {% if containerd_registry_configs -%}
+      [plugins."io.containerd.grpc.v1.cri".registry.configs]
+      {% for registry_config in containerd_registry_configs -%}
+        [plugins."io.containerd.grpc.v1.cri".registry.configs."{{registry_config.registry}}".auth]
+          auth = "{{(registry_config.username + ":" + registry_config.password) | b64encode}}"
+        {% if registry_config.insecure_skip_verify -%}
+        [plugins."io.containerd.grpc.v1.cri".registry.configs."{{registry_config.registry}}".tls]
+          insecure_skip_verify = true
+        {% endif -%}
+      {% endfor -%}
+    {% endif -%}
       [plugins."io.containerd.grpc.v1.cri".registry.mirrors]
         [plugins."io.containerd.grpc.v1.cri".registry.mirrors."docker.io"]
           endpoint = ["https://registry-1.docker.io"]
+        {% if containerd_registry_configs -%}
+        {% for registry_config in containerd_registry_configs -%}
+        {% if registry_config.mirror_endpoint -%}
+        [plugins."io.containerd.grpc.v1.cri".registry.mirrors."{{registry_config.registry}}"]
+          endpoint = {{registry_config.mirror_endpoint}}
+        {% endif -%}
+        {% endfor -%}
+        {% endif -%}
 

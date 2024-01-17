@@ -71,15 +71,25 @@ containerd_max_container_log_line_size: 16384
 
 # Kernel modules.
 containerd_modprobe:
-  - { state: "present", option: "br_netfilter" }
-  - { state: "present", option: "overlay" }
+  - {state: "present", option: "br_netfilter"}
+  - {state: "present", option: "overlay"}
 
 # Entries for sysctl.
 containerd_sysctl:
-  - { state: "present", name: "net.bridge.bridge-nf-call-ip6tables", value: "1" }
-  - { state: "present", name: "net.bridge.bridge-nf-call-iptables", value: "1" }
-  - { state: "present", name: "net.ipv4.ip_forward", value: "1" }
+  - {state: "present", name: "net.bridge.bridge-nf-call-ip6tables", value: "1"}
+  - {state: "present", name: "net.bridge.bridge-nf-call-iptables", value: "1"}
+  - {state: "present", name: "net.ipv4.ip_forward", value: "1"}
 
 # Enable nvidia container toolkit
 
 containerd_nvidia_enabled: false
+
+
+# Registry Auth Configuration
+# You can add authentication details for registries and containerd will
+# authenticate against them when pulling the images automatically.
+# Notice that this will be deprecated in containerd v2:
+# https://github.com/containerd/containerd/blob/v1.7.0/docs/cri/registry.md#configure-registry-credentials
+containerd_registry_configs:
+# configuration should use the following format:
+#   - {registry: "myregistry:8080", username: "admin", password: "password", insecure_skip_verify=false, mirror_endpoint: ["http://myregistry:8080"]}
