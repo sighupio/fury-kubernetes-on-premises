@@ -5,7 +5,7 @@
 </h1>
 <!-- markdownlint-enable MD033 -->
 
-![Release](https://img.shields.io/badge/Latest%20Release-v1.27.6-blue)
+![Release](https://img.shields.io/badge/Latest%20Release-v1.27.6--rev.1-blue)
 ![License](https://img.shields.io/github/license/sighupio/fury-kubernetes-on-premises?label=License)
 ![Slack](https://img.shields.io/badge/slack-@kubernetes/fury-yellow.svg?logo=slack&label=Slack)
 
@@ -45,9 +45,9 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 
 ### Prerequisites
 
-| Tool                    | Version   | Description                                                                                                                                                |
-| ----------------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [furyctl][furyctl-repo] | `>=0.25.0` | The recommended tool to download and manage KFD modules and their packages. To learn more about `furyctl` read the [official documentation][furyctl-repo]. |
+| Tool                    | Version    | Description                                                                                                                                                |
+| ----------------------- |------------| ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [furyctl][furyctl-repo] | `>=0.27.0` | The recommended tool to download and manage KFD modules and their packages. To learn more about `furyctl` read the [official documentation][furyctl-repo]. |
 
 ### Provision the cluster
 
@@ -56,7 +56,7 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 ```yaml
 roles:
   - name: on-premises
-    version: v1.27.6
+    version: v1.27.6-rev.1
 ```
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
