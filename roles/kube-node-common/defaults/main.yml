@@ -15,10 +15,6 @@ skip_kubelet_upgrade: False
 
 dependencies:
   # To pin dependencies for each Kubernetes version
-  "1.22.13":
-    critools_version: "1.25.0"
-  "1.23.12":
-    critools_version: "1.25.0"
   "1.24.7":
     critools_version: "1.25.0"
   "1.24.16":

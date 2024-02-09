@@ -43,10 +43,6 @@ upgrade: False
 
 dependencies:
   # To pin dependencies for each Kubernetes version
-  "1.22.13":
-    kubernetes_image_registry: "registry.sighup.io/fury/on-premises"
-  "1.23.12":
-    kubernetes_image_registry: "registry.sighup.io/fury/on-premises"
   "1.24.7":
     kubernetes_image_registry: "registry.sighup.io/fury/on-premises"
   "1.24.16":
