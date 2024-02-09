@@ -30,7 +30,7 @@ vrrp_instance VI_1 {
     priority {% if ansible_hostname.endswith('1') %}101{% else %}100{% endif %}
 
     unicast_peer {
-        {% for host in groups['all'] %}
+        {% for host in play_hosts %}
         {{ hostvars[host]['ansible_host'] }}
         {% endfor %}
     }
@@ -43,7 +43,7 @@ vrrp_instance VI_1 {
     virtual_ipaddress {
         {{ keepalived_ip }}
     }
-    
+
     track_script {
         {% if keepalived_on_k8s_master %}
         check_apiserver
