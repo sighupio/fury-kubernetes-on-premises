@@ -24,17 +24,26 @@ vrrp_script check_haproxy {
 }
 
 vrrp_instance VI_1 {
-    state {% if ansible_hostname.endswith('-1') %}MASTER{% else %}BACKUP{% endif %}
+    state {% if ansible_hostname.endswith('1') %}MASTER{% else %}BACKUP{% endif %}
     interface {{ keepalived_interface }}
     virtual_router_id {{ keepalived_virtual_router_id }}
-    priority {% if ansible_hostname.endswith('-1') %}101{% else %}100{% endif %}
+    priority {% if ansible_hostname.endswith('1') %}101{% else %}100{% endif %}
+
+    unicast_peer {
+        {% for host in groups['all'] %}
+        {{ hostvars[host]['ansible_host'] }}
+        {% endfor %}
+    }
+
     authentication {
         auth_type PASS
         auth_pass {{ keepalived_passphrase }}
     }
+
     virtual_ipaddress {
         {{ keepalived_ip }}
     }
+    
     track_script {
         {% if keepalived_on_k8s_master %}
         check_apiserver
