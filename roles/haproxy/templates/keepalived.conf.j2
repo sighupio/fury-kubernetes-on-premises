@@ -30,7 +30,7 @@ vrrp_instance VI_1 {
     priority {% if ansible_hostname.endswith('1') %}101{% else %}100{% endif %}
 
     unicast_peer {
-        {% for host in play_hosts %}
+        {% for host in ansible_play_batch %}
         {{ hostvars[host]['ansible_host'] }}
         {% endfor %}
     }
