@@ -1,7 +1,7 @@
 # Compatibility Matrix
 
 | Module Version / Kubernetes Version |       1.27.6       |       1.26.7       |       1.26.3       |      1.25.12       |       1.25.6       |      1.24.16       |       1.24.7       |      1.23.12       |      1.22.13       |      1.21.14       |      1.20.15       |  1.19.X   |
-|-------------------------------------| :----------------: | :----------------: | :----------------: | :----------------: | :----------------: | :----------------: | :----------------: | :----------------: | :----------------: | :----------------: | :----------------: | :-------: |
+| ----------------------------------- | :----------------: | :----------------: | :----------------: | :----------------: | :----------------: | :----------------: | :----------------: | :----------------: | :----------------: | :----------------: | :----------------: | :-------: |
 | v1.21.14                            |                    |                    |                    |                    |                    |                    |                    |                    |                    | :white_check_mark: | :white_check_mark: |           |
 | v1.22.13                            |                    |                    |                    |                    |                    |                    |                    |                    |     :warning:      |     :warning:      |                    |           |
 | v1.23.12                            |                    |                    |                    |                    |                    |                    |                    |     :warning:      |     :warning:      |     :warning:      |                    |           |
@@ -13,6 +13,7 @@
 | v1.26.7-rev.1                       | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |                    |           |
 | v1.27.6                             | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |                    |                    |           |
 | v1.27.6-rev.1                       | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |                    |                    |           |
+| v1.27.6-rev.2                       | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |                    |                    |                    |                    |           |
 
 |        Icon        | Legend       |
 | :----------------: | ------------ |

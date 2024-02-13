@@ -16,33 +16,27 @@ image_arch: "{{host_architecture | default('amd64')}}"
 kubernetes_version: "1.27.6"
 
 versions:
-  1.22.13:
-    containerd_version: "1.5.8"
-    runc_version: "v1.0.3"
-  1.23.12:
-    containerd_version: "1.5.8"
-    runc_version: "v1.0.3"
   1.24.7:
-    containerd_version: "1.6.8"
-    runc_version: "v1.1.4"
+    containerd_version: "1.6.28"
+    runc_version: "v1.1.12"
   1.24.16:
-    containerd_version: "1.6.8"
-    runc_version: "v1.1.4"
+    containerd_version: "1.6.28"
+    runc_version: "v1.1.12"
   1.25.6:
-    containerd_version: "1.6.8"
-    runc_version: "v1.1.4"
+    containerd_version: "1.6.28"
+    runc_version: "v1.1.12"
   1.25.12:
-    containerd_version: "1.6.8"
-    runc_version: "v1.1.4"
+    containerd_version: "1.6.28"
+    runc_version: "v1.1.12"
   1.26.3:
-    containerd_version: "1.7.0"
-    runc_version: "v1.1.7"
+    containerd_version: "1.7.13"
+    runc_version: "v1.1.12"
   1.26.7:
-    containerd_version: "1.7.0"
-    runc_version: "v1.1.7"
+    containerd_version: "1.7.13"
+    runc_version: "v1.1.12"
   1.27.6:
-    containerd_version: "1.7.0"
-    runc_version: "v1.1.7"
+    containerd_version: "1.7.13"
+    runc_version: "v1.1.12"
 
 # Service options.
 containerd_service_state: started
