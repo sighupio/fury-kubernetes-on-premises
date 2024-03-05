@@ -25,7 +25,7 @@
 
 - name: Set Kubernetes package version suffix on Debian/Ubuntu
   set_fact:
-    _pkg_suffix: "-00"
+    _pkg_suffix: "-*"
   when: ansible_os_family == 'Debian'
 
 - name: Set conntrack kernel module name on Ubuntu 18
@@ -43,6 +43,10 @@
     _conntrack_module_name: "nf_conntrack"
   when: ansible_facts['distribution'] == "Debian"
 
+- include_tasks: "repo-Rocky-RedHat.yml"
+  when: ansible_os_family in ['RedHat', 'Rocky']
+
 - include_tasks: "repo-{{ ansible_os_family }}.yml"
+  when: ansible_os_family in ['Debian']
 
 - include_tasks: node.yml
