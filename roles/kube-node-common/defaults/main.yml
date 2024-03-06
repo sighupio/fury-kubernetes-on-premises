@@ -1,8 +1,7 @@
 ---
-# Kubernetes components versions
-kubernetes_repo_distribution: "xenial"
 
-kubernetes_version: "1.27.6"
+
+kubernetes_version: "1.28.7"
 kubelet_version: "{{ kubernetes_version }}"
 kubectl_version: "{{ kubernetes_version }}"
 kubeadm_version: "{{ kubernetes_version }}"
@@ -17,15 +16,124 @@ dependencies:
   # To pin dependencies for each Kubernetes version
   "1.24.7":
     critools_version: "1.25.0"
+    apt: 
+      name: k8s-1.24
+      repo: "deb https://pkgs.k8s.io/core:/stable:/v1.24/deb/ /"
+      gpg_key: "https://pkgs.k8s.io/core:/stable:/v1.24/deb/Release.key"
+      gpg_key_id: "DE15B14486CD377B9E876E1A234654DA9A296436"
+    yum:
+      name: k8s-1.24
+      repo: https://pkgs.k8s.io/core:/stable:/v1.24/rpm/
+      gpg_key: https://pkgs.k8s.io/core:/stable:/v1.24/rpm/repodata/repomd.xml.key
+      gpg_key_check: yes
+      repo_gpg_check: yes
   "1.24.16":
     critools_version: "1.25.0"
+    apt: 
+      name: k8s-1.24
+      repo: "deb https://pkgs.k8s.io/core:/stable:/v1.24/deb/ /"
+      gpg_key: "https://pkgs.k8s.io/core:/stable:/v1.24/deb/Release.key"
+      gpg_key_id: "DE15B14486CD377B9E876E1A234654DA9A296436"
+    yum:
+      name: k8s-1.24
+      repo: https://pkgs.k8s.io/core:/stable:/v1.24/rpm/
+      gpg_key: https://pkgs.k8s.io/core:/stable:/v1.24/rpm/repodata/repomd.xml.key
+      gpg_key_check: yes
+      repo_gpg_check: yes
   "1.25.6":
     critools_version: "1.26.0"
+    apt: 
+      name: k8s-1.25
+      repo: "deb https://pkgs.k8s.io/core:/stable:/v1.25/deb/ /"
+      gpg_key: "https://pkgs.k8s.io/core:/stable:/v1.25/deb/Release.key"
+      gpg_key_id: "DE15B14486CD377B9E876E1A234654DA9A296436"
+    yum:
+      name: k8s-1.25
+      repo: https://pkgs.k8s.io/core:/stable:/v1.25/rpm/
+      gpg_key: https://pkgs.k8s.io/core:/stable:/v1.25/rpm/repodata/repomd.xml.key
+      gpg_key_check: yes
+      repo_gpg_check: yes
   "1.25.12":
     critools_version: "1.26.0"
+    apt: 
+      name: k8s-1.25
+      repo: "deb https://pkgs.k8s.io/core:/stable:/v1.25/deb/ /"
+      gpg_key: "https://pkgs.k8s.io/core:/stable:/v1.25/deb/Release.key"
+      gpg_key_id: "DE15B14486CD377B9E876E1A234654DA9A296436"
+    yum:
+      name: k8s-1.25
+      repo: https://pkgs.k8s.io/core:/stable:/v1.25/rpm/
+      gpg_key: https://pkgs.k8s.io/core:/stable:/v1.25/rpm/repodata/repomd.xml.key
+      gpg_key_check: yes
+      repo_gpg_check: yes
   "1.26.3":
     critools_version: "1.26.0"
+    apt: 
+      name: k8s-1.26
+      repo: "deb https://pkgs.k8s.io/core:/stable:/v1.26/deb/ /"
+      gpg_key: "https://pkgs.k8s.io/core:/stable:/v1.26/deb/Release.key"
+      gpg_key_id: "DE15B14486CD377B9E876E1A234654DA9A296436"
+    yum:
+      name: k8s-1.26
+      repo: https://pkgs.k8s.io/core:/stable:/v1.26/rpm/
+      gpg_key: https://pkgs.k8s.io/core:/stable:/v1.26/rpm/repodata/repomd.xml.key
+      gpg_key_check: yes
+      repo_gpg_check: yes
   "1.26.7":
     critools_version: "1.26.0"
+    apt: 
+      name: k8s-1.26
+      repo: "deb https://pkgs.k8s.io/core:/stable:/v1.26/deb/ /"
+      gpg_key: "https://pkgs.k8s.io/core:/stable:/v1.26/deb/Release.key"
+      gpg_key_id: "DE15B14486CD377B9E876E1A234654DA9A296436"
+    yum:
+      name: k8s-1.26
+      repo: https://pkgs.k8s.io/core:/stable:/v1.26/rpm/
+      gpg_key: https://pkgs.k8s.io/core:/stable:/v1.26/rpm/repodata/repomd.xml.key
+      gpg_key_check: yes
+      repo_gpg_check: yes
   "1.27.6":
-    critools_version: "1.26.0"
+    critools_version: "1.27.1"
+    apt: 
+      name: k8s-1.27
+      repo: "deb https://pkgs.k8s.io/core:/stable:/v1.27/deb/ /"
+      gpg_key: "https://pkgs.k8s.io/core:/stable:/v1.27/deb/Release.key"
+      gpg_key_id: "DE15B14486CD377B9E876E1A234654DA9A296436"
+    yum:
+      name: k8s-1.27
+      repo: https://pkgs.k8s.io/core:/stable:/v1.27/rpm/
+      gpg_key: https://pkgs.k8s.io/core:/stable:/v1.27/rpm/repodata/repomd.xml.key
+      gpg_key_check: yes
+      repo_gpg_check: yes
+  "1.28.7":
+    critools_version: "1.28.0"
+    apt: 
+      name: k8s-1.28
+      repo: "deb https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /"
+      gpg_key: "https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key"
+      gpg_key_id: "DE15B14486CD377B9E876E1A234654DA9A296436"
+    yum:
+      name: k8s-1.28
+      repo: https://pkgs.k8s.io/core:/stable:/v1.28/rpm/
+      gpg_key: https://pkgs.k8s.io/core:/stable:/v1.28/rpm/repodata/repomd.xml.key
+      gpg_key_check: yes
+      repo_gpg_check: yes
+
+
+
+
+# Old repo that was removed on February 2024, we need to maintain this variables to ensure the removal of the old repo from nodes
+
+# Kubernetes components versions
+kubernetes_repo_distribution: "xenial"
+
+kubernetes_repo_deprecated:
+  name: "kubernetes"
+  apt_repo: "deb https://apt.kubernetes.io/ kubernetes-{{ kubernetes_repo_distribution }} main"
+  apt_gpg_key: "https://packages.cloud.google.com/apt/doc/apt-key.gpg"
+  apt_gpg_key_id: "A362B822F6DEDC652817EA46B53DC80D13EDEF05"
+  yum_repo: "https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64"
+  yum_gpg_key:
+    - "https://packages.cloud.google.com/yum/doc/yum-key.gpg"
+    - "https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg"
+  yum_gpg_key_check: "yes"
