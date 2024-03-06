@@ -56,12 +56,15 @@ all:
     ansible_ssh_private_key_file: "../ssh-key"
     ansible_user: root
     kubernetes_kubeconfig_path: ./
-    # kubernetes_version: '1.22.13'
-    # kubernetes_version: '1.23.12'
     # kubernetes_version: '1.24.7'
     # kubernetes_version: "1.25.6"
     # kubernetes_version: "1.26.7"
-    kubernetes_version: "1.27.6"
+    # kubernetes_version: "1.27.6"
+    kubernetes_version: "1.28.7"
+    containerd_registry_configs: {}
+    # configuration should use the following format:
+    # - {registry: "registry.example.com:8080", username: "example", password: "password", insecure_skip_verify: false, mirror_endpoint: ["http://mirror.example.com"] } 
+    # - {registry: "secondary.example.com:8080", username: "example", password: "hunter2", insecure_skip_verify: true, mirror_endpoint: [] } 
     # kubernetes_encryption_config: "./encryption-config.yml"
     # tls_cipher_suites:
     #   - "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256"
