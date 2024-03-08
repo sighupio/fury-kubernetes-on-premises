@@ -1,13 +1,17 @@
 ---
+- name: Get host architecture
+  set_fact:
+    host_architecture: "{{ ansible_facts['architecture'] | regex_replace('^x86_64$', 'amd64') | regex_replace('^aarch64$', 'arm64') }}"
+
 - name: Getting etcd release
   unarchive:
-    src: "{{ etcd_download_url }}/{{ etcd_version }}/etcd-{{ etcd_version }}-linux-amd64.tar.gz"
+    src: "{{ etcd_download_url }}/{{ etcd_version }}/etcd-{{ etcd_version }}-linux-{{ host_architecture }}.tar.gz"
     dest: /tmp
     remote_src: yes
 
 - name: Installing etcd to binary dir
   copy:
-    src: "/tmp/etcd-{{ etcd_version }}-linux-amd64/{{ item }}"
+    src: "/tmp/etcd-{{ etcd_version }}-linux-{{ host_architecture }}/{{ item }}"
     dest: "{{ etcd_binary_dir }}/{{ item }}"
     remote_src: yes
     mode: 0511

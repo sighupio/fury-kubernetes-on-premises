@@ -1,4 +1,8 @@
 ---
+- name: Get host architecture
+  set_fact:
+    host_architecture: "{{ ansible_facts['architecture'] | regex_replace('^x86_64$', 'amd64') | regex_replace('^aarch64$', 'arm64') }}"
+
 - name: Check packages facts
   package_facts:
     manager: auto
@@ -21,11 +25,11 @@
   get_url:
     url: "{{ containerd_download_url }}"
     checksum: "sha256:{{ containerd_download_url }}.sha256sum"
-    dest: "/tmp/containerd-{{ containerd_version }}-linux-{{ image_arch }}.tar.gz"
+    dest: "/tmp/containerd-{{ containerd_version }}-linux-{{ host_architecture }}.tar.gz"
 
 - name: containerd | Unpack containerd archive
   unarchive:
-    src: "/tmp/containerd-{{ containerd_version }}-linux-{{ image_arch }}.tar.gz"
+    src: "/tmp/containerd-{{ containerd_version }}-linux-{{ host_architecture }}.tar.gz"
     dest: "{{ containerd_bin_dir }}"
     mode: 0755
     remote_src: yes
