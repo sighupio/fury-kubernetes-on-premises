@@ -1,4 +1,9 @@
 ---
+- name: Remove deprecated Kubernetes APT repository
+  apt_repository:
+    filename: "{{ kubernetes_repo_deprecated['name'] }}"
+    repo: "{{ kubernetes_repo_deprecated['apt_repo'] }}"
+    state: absent
 
 - name: Update APT cache
   apt:
@@ -9,12 +14,6 @@
   apt:
     name: apt-transport-https
     state: latest
-
-- name: Remove deprecated Kubernetes APT repository
-  apt_repository:
-    filename: "{{ kubernetes_repo_deprecated['name'] }}"
-    repo: "{{ kubernetes_repo_deprecated['apt_repo'] }}"
-    state: absent
 
 - name: Import Kubernetes APT public key
   apt_key:
