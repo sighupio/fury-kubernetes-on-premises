@@ -1,5 +1,17 @@
 ---
 
+- name: Remove deprecated Kubernetes YUM repository
+  yum_repository:
+    name: "{{ kubernetes_repo_deprecated['name'] }}"
+    file: "{{ kubernetes_repo_deprecated['name'] }}"
+    description: "{{ kubernetes_repo_deprecated['name'] }}"
+    baseurl: "{{ kubernetes_repo_deprecated['yum_repo'] }}"
+    gpgkey: "{{ kubernetes_repo_deprecated['yum_gpg_key'] }}"
+    gpgcheck: "{{ kubernetes_repo_deprecated['yum_gpg_key_check'] }}"
+    repo_gpgcheck: "yes"
+    state: absent
+  notify: Clean yum cache
+
 - name: Install yum-utils
   yum:
     name: yum-utils
@@ -26,18 +38,6 @@
     name: yum-versionlock
     state: latest
   when: 'package_list.results | length != 0'
-
-- name: Remove deprecated Kubernetes YUM repository
-  yum_repository:
-    name: "{{ kubernetes_repo_deprecated['name'] }}"
-    file: "{{ kubernetes_repo_deprecated['name'] }}"
-    description: "{{ kubernetes_repo_deprecated['name'] }}"
-    baseurl: "{{ kubernetes_repo_deprecated['yum_repo'] }}"
-    gpgkey: "{{ kubernetes_repo_deprecated['yum_gpg_key'] }}"
-    gpgcheck: "{{ kubernetes_repo_deprecated['yum_gpg_key_check'] }}"
-    repo_gpgcheck: "yes"
-    state: absent
-  notify: Clean yum cache
 
 - name: Add Kubernetes YUM repository
   yum_repository:
