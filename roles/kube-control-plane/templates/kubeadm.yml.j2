@@ -27,6 +27,9 @@ dns:
 {% endif %}
 apiServer:
   extraArgs:
+{% if tls_cipher_suites != "" %}
+    tls-cipher-suites: {{ tls_cipher_suites | join(',') }}
+{% endif %}
     enable-admission-plugins: "NamespaceLifecycle,LimitRanger,PodNodeSelector,ServiceAccount,DefaultStorageClass,DefaultTolerationSeconds,MutatingAdmissionWebhook,ValidatingAdmissionWebhook,ResourceQuota"
     cloud-provider: {{ kubernetes_cloud_provider }}
 {% if kubernetes_cloud_config != "" %}
@@ -37,6 +40,9 @@ apiServer:
     audit-policy-file: {{ audit_policy_config_path }}
     audit-log-maxsize: "50"
     audit-log-maxbackup: "20"
+{% if kubernetes_encryption_config != "" %}
+    encryption-provider-config: {{ kubernetes_remote_encryption_config }}
+{% endif %}
 {% if oidc_issuer_url != "" %}
     oidc-issuer-url: {{ oidc_issuer_url }}
     oidc-client-id: {{ oidc_client_id }}
@@ -63,6 +69,13 @@ apiServer:
     mountPath: {{ audit_policy_config_path }}
     readOnly: true
     pathType: File
+{% if kubernetes_encryption_config != "" %}
+  - name: encryption-configuration
+    hostPath: {{ kubernetes_remote_encryption_config }}
+    mountPath: {{ kubernetes_remote_encryption_config }}
+    readOnly: true
+    pathType: File
+{% endif %}
 {% if kubernetes_cloud_config != "" %}
   - name: cloud
     hostPath: {{ kubernetes_cloud_config }}
@@ -73,9 +86,15 @@ apiServer:
   timeoutForControlPlane: 4m0s
 scheduler:
   extraArgs:
+{% if tls_cipher_suites != "" %}
+    tls-cipher-suites: {{ tls_cipher_suites | join(',') }}
+{% endif %}
     bind-address: {{ ansible_default_ipv4.address }}
 controllerManager:
   extraArgs:
+{% if tls_cipher_suites != "" %}
+    tls-cipher-suites: {{ tls_cipher_suites | join(',') }}
+{% endif %}
     bind-address: {{ ansible_default_ipv4.address }}
     cloud-provider: {{ kubernetes_cloud_provider }}
 {% if kubernetes_cloud_config != "" %}
@@ -109,3 +128,6 @@ mode: ipvs
 apiVersion: kubelet.config.k8s.io/v1beta1
 kind: KubeletConfiguration
 cgroupDriver: systemd
+{% if tls_cipher_suites != "" %}
+tlsCipherSuites: {{ tls_cipher_suites | to_yaml | indent(2) }}
+{% endif %}

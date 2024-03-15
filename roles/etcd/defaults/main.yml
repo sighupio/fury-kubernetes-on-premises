@@ -9,3 +9,4 @@ etcd_certs_dir: /etc/etcd/pki
 etcd_address: "{{ ansible_default_ipv4.address }}"
 etcd_initial_cluster: "https://localhost:2380"
 etcd_client_address: 127.0.0.1
+tls_cipher_suites: ""
