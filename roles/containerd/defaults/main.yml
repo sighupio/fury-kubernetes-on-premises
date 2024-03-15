@@ -3,14 +3,13 @@
 
 # Check supported Kubernetes versions here: https://containerd.io/releases/#kubernetes-support
 containerd_version: "{{ versions[kubernetes_version].containerd_version }}"
-containerd_download_url: "https://github.com/containerd/containerd/releases/download/v{{ containerd_version }}/containerd-{{ containerd_version }}-linux-{{ image_arch }}.tar.gz"
+containerd_download_url: "https://github.com/containerd/containerd/releases/download/v{{ containerd_version }}/containerd-{{ containerd_version }}-linux-{{ host_architecture }}.tar.gz"
 containerd_bin_dir: "/usr/local/bin"
 # runc version from here: https://github.com/containerd/containerd/blob/main/docs/RUNC.md -> https://github.com/containerd/containerd/blob/main/script/setup/runc-version
 runc_version: "{{ versions[kubernetes_version].runc_version }}"
 runc_bin_dir: "/usr/local/bin"
-runc_download_url: "https://github.com/opencontainers/runc/releases/download/{{ runc_version }}/runc.{{ image_arch }}"
+runc_download_url: "https://github.com/opencontainers/runc/releases/download/{{ runc_version }}/runc.{{ host_architecture }}"
 runc_checksum: "sha256:https://github.com/opencontainers/runc/releases/download/{{ versions[kubernetes_version].runc_version }}/runc.sha256sum"
-image_arch: "{{host_architecture | default('amd64')}}"
 
 # Customize versions based on Kubernetes version to maintain compatibility
 kubernetes_version: "1.28.7"
@@ -68,19 +67,22 @@ containerd_max_container_log_line_size: 16384
 
 # Kernel modules.
 containerd_modprobe:
-  - {state: "present", option: "br_netfilter"}
-  - {state: "present", option: "overlay"}
+  - { state: "present", option: "br_netfilter" }
+  - { state: "present", option: "overlay" }
 
 # Entries for sysctl.
 containerd_sysctl:
-  - {state: "present", name: "net.bridge.bridge-nf-call-ip6tables", value: "1"}
-  - {state: "present", name: "net.bridge.bridge-nf-call-iptables", value: "1"}
-  - {state: "present", name: "net.ipv4.ip_forward", value: "1"}
+  - {
+      state: "present",
+      name: "net.bridge.bridge-nf-call-ip6tables",
+      value: "1",
+    }
+  - { state: "present", name: "net.bridge.bridge-nf-call-iptables", value: "1" }
+  - { state: "present", name: "net.ipv4.ip_forward", value: "1" }
 
 # Enable nvidia container toolkit
 
 containerd_nvidia_enabled: false
-
 
 # Registry Auth Configuration
 # You can add authentication details for registries and containerd will
