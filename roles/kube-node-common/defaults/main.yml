@@ -1,6 +1,4 @@
 ---
-
-
 kubernetes_version: "1.29.3"
 kubelet_version: "{{ kubernetes_version }}"
 kubectl_version: "{{ kubernetes_version }}"
@@ -16,7 +14,7 @@ dependencies:
   # To pin dependencies for each Kubernetes version
   "1.24.7":
     critools_version: "1.25.0"
-    apt: 
+    apt:
       name: k8s-1.24
       repo: "deb https://pkgs.k8s.io/core:/stable:/v1.24/deb/ /"
       gpg_key: "https://pkgs.k8s.io/core:/stable:/v1.24/deb/Release.key"
@@ -29,7 +27,7 @@ dependencies:
       repo_gpg_check: yes
   "1.24.16":
     critools_version: "1.25.0"
-    apt: 
+    apt:
       name: k8s-1.24
       repo: "deb https://pkgs.k8s.io/core:/stable:/v1.24/deb/ /"
       gpg_key: "https://pkgs.k8s.io/core:/stable:/v1.24/deb/Release.key"
@@ -42,7 +40,7 @@ dependencies:
       repo_gpg_check: yes
   "1.25.6":
     critools_version: "1.26.0"
-    apt: 
+    apt:
       name: k8s-1.25
       repo: "deb https://pkgs.k8s.io/core:/stable:/v1.25/deb/ /"
       gpg_key: "https://pkgs.k8s.io/core:/stable:/v1.25/deb/Release.key"
@@ -55,7 +53,7 @@ dependencies:
       repo_gpg_check: yes
   "1.25.12":
     critools_version: "1.26.0"
-    apt: 
+    apt:
       name: k8s-1.25
       repo: "deb https://pkgs.k8s.io/core:/stable:/v1.25/deb/ /"
       gpg_key: "https://pkgs.k8s.io/core:/stable:/v1.25/deb/Release.key"
@@ -68,7 +66,7 @@ dependencies:
       repo_gpg_check: yes
   "1.26.3":
     critools_version: "1.26.0"
-    apt: 
+    apt:
       name: k8s-1.26
       repo: "deb https://pkgs.k8s.io/core:/stable:/v1.26/deb/ /"
       gpg_key: "https://pkgs.k8s.io/core:/stable:/v1.26/deb/Release.key"
@@ -81,7 +79,7 @@ dependencies:
       repo_gpg_check: yes
   "1.26.7":
     critools_version: "1.26.0"
-    apt: 
+    apt:
       name: k8s-1.26
       repo: "deb https://pkgs.k8s.io/core:/stable:/v1.26/deb/ /"
       gpg_key: "https://pkgs.k8s.io/core:/stable:/v1.26/deb/Release.key"
@@ -94,7 +92,7 @@ dependencies:
       repo_gpg_check: yes
   "1.27.6":
     critools_version: "1.27.1"
-    apt: 
+    apt:
       name: k8s-1.27
       repo: "deb https://pkgs.k8s.io/core:/stable:/v1.27/deb/ /"
       gpg_key: "https://pkgs.k8s.io/core:/stable:/v1.27/deb/Release.key"
@@ -107,7 +105,7 @@ dependencies:
       repo_gpg_check: yes
   "1.28.7":
     critools_version: "1.28.0"
-    apt: 
+    apt:
       name: k8s-1.28
       repo: "deb https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /"
       gpg_key: "https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key"
@@ -120,7 +118,7 @@ dependencies:
       repo_gpg_check: yes
   "1.29.3":
     critools_version: "1.29.0"
-    apt: 
+    apt:
       name: k8s-1.29
       repo: "deb https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /"
       gpg_key: "https://pkgs.k8s.io/core:/stable:/v1.29/deb/Release.key"
@@ -132,7 +130,7 @@ dependencies:
       gpg_key_check: yes
       repo_gpg_check: yes
 
-
+dependencies_override: {}
 
 # Old repo that was removed on February 2024, we need to maintain this variables to ensure the removal of the old repo from nodes
 
