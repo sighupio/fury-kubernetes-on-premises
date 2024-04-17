@@ -1,7 +1,7 @@
 ---
 
 
-kubernetes_version: "1.28.7"
+kubernetes_version: "1.29.3"
 kubelet_version: "{{ kubernetes_version }}"
 kubectl_version: "{{ kubernetes_version }}"
 kubeadm_version: "{{ kubernetes_version }}"
@@ -118,7 +118,19 @@ dependencies:
       gpg_key: https://pkgs.k8s.io/core:/stable:/v1.28/rpm/repodata/repomd.xml.key
       gpg_key_check: yes
       repo_gpg_check: yes
-
+  "1.29.3":
+    critools_version: "1.29.0"
+    apt: 
+      name: k8s-1.29
+      repo: "deb https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /"
+      gpg_key: "https://pkgs.k8s.io/core:/stable:/v1.29/deb/Release.key"
+      gpg_key_id: "DE15B14486CD377B9E876E1A234654DA9A296436"
+    yum:
+      name: k8s-1.29
+      repo: https://pkgs.k8s.io/core:/stable:/v1.29/rpm/
+      gpg_key: https://pkgs.k8s.io/core:/stable:/v1.29/rpm/repodata/repomd.xml.key
+      gpg_key_check: yes
+      repo_gpg_check: yes
 
 
 

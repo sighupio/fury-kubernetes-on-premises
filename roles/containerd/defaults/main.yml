@@ -12,7 +12,7 @@ runc_download_url: "https://github.com/opencontainers/runc/releases/download/{{ 
 runc_checksum: "sha256:https://github.com/opencontainers/runc/releases/download/{{ versions[kubernetes_version].runc_version }}/runc.sha256sum"
 
 # Customize versions based on Kubernetes version to maintain compatibility
-kubernetes_version: "1.28.7"
+kubernetes_version: "1.29.3"
 
 versions:
   1.24.7:
@@ -37,6 +37,9 @@ versions:
     containerd_version: "1.7.13"
     runc_version: "v1.1.12"
   1.28.7:
+    containerd_version: "1.7.13"
+    runc_version: "v1.1.12"
+  1.29.3:
     containerd_version: "1.7.13"
     runc_version: "v1.1.12"
 
