@@ -26,6 +26,8 @@ dns:
   imageRepository: {{ kubernetes_image_registry }}{{ coredns_image_prefix }}
 {% endif %}
 apiServer:
+  certSANs:
+{{ kubernetes_apiserver_certSANs | to_nice_yaml | indent(2, true) }}
   extraArgs:
 {% if tls_cipher_suites != "" %}
     tls-cipher-suites: {{ tls_cipher_suites | join(',') }}
