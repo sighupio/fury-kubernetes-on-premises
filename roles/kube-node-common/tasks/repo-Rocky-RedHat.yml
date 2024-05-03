@@ -1,5 +1,4 @@
 ---
-
 - name: Remove deprecated Kubernetes YUM repository
   yum_repository:
     name: "{{ kubernetes_repo_deprecated['name'] }}"
@@ -26,7 +25,7 @@
   yum:
     name: yum-plugin-versionlock
     state: latest
-  when: 'package_list.results | length != 0'
+  when: "package_list.results | length != 0"
 
 - name: Search for yum-versionlock
   yum:
@@ -37,16 +36,16 @@
   yum:
     name: yum-versionlock
     state: latest
-  when: 'package_list.results | length != 0'
+  when: "package_list.results | length != 0"
 
 - name: Add Kubernetes YUM repository
   yum_repository:
-    name: "{{ dependencies[kubernetes_version].yum.name }}"
-    file: "{{ dependencies[kubernetes_version].yum.name }}"
-    description: "{{ dependencies[kubernetes_version].yum.name }}"
-    baseurl: "{{ dependencies[kubernetes_version].yum.repo }}"
-    gpgkey: "{{ dependencies[kubernetes_version].yum.gpg_key }}"
-    gpgcheck: "{{ dependencies[kubernetes_version].yum.gpg_key_check }}"
-    repo_gpgcheck: "{{ dependencies[kubernetes_version].yum.repo_gpg_check }}"
+    name: "{{ dependencies_override.yum.name | default(dependencies[kubernetes_version].yum.name) }}"
+    file: "{{ dependencies_override.yum.name | default(dependencies[kubernetes_version].yum.name) }}"
+    description: "{{ dependencies_override.yum.name | default(dependencies[kubernetes_version].yum.name) }}"
+    baseurl: "{{ dependencies_override.yum.repo | default(dependencies[kubernetes_version].yum.repo) }}"
+    gpgkey: "{{ dependencies_override.yum.gpg_key | default(dependencies[kubernetes_version].yum.gpg_key) }}"
+    gpgcheck: "{{ dependencies_override.yum.gpg_key_check | default(dependencies[kubernetes_version].yum.gpg_key_check) }}"
+    repo_gpgcheck: "{{ dependencies_override.yum.repo_gpg_check | default(dependencies[kubernetes_version].yum.repo_gpg_check) }}"
     state: present
   notify: Clean yum cache

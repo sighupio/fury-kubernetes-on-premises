@@ -17,14 +17,14 @@
 
 - name: Import Kubernetes APT public key
   apt_key:
-    id: "{{ dependencies[kubernetes_version].apt.gpg_key_id }}"
-    url: "{{ dependencies[kubernetes_version].apt.gpg_key }}"
+    id: "{{ dependencies_override.apt.gpg_key_id | default(dependencies[kubernetes_version].apt.gpg_key_id) }}"
+    url: "{{ dependencies_override.apt.gpg_key | default(dependencies[kubernetes_version].apt.gpg_key) }}"
     state: present
 
 - name: Add Kubernetes APT repository
   apt_repository:
-    filename: "{{ dependencies[kubernetes_version].apt.name }}"
-    repo: "{{ dependencies[kubernetes_version].apt.repo }}"
+    filename: "{{ dependencies_override.apt.name | default(dependencies[kubernetes_version].apt.name) }}"
+    repo: "{{ dependencies_override.apt.repo | default(dependencies[kubernetes_version].apt.repo) }}"
     state: present
 
 - name: Update APT cache
