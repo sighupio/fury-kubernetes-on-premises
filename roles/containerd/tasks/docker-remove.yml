@@ -1,11 +1,11 @@
 - name: Kill all running containers
-  shell: "docker kill $(docker ps -q) || true"
+  shell: "docker ps -q | xargs -r docker kill"
 
 - name: Delete all stopped containers
-  shell: "docker rm $(docker ps -a -q)"
+  shell: "docker ps -a -q | xargs -r docker rm"
 
 - name: Delete all images
-  shell: "docker rmi $(docker images -q)"
+  shell: "docker images -q | xargs -r docker rmi"
 
 - name: Docker service stop # systemd loads service
   service:
