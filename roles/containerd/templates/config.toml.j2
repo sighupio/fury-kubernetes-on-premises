@@ -45,9 +45,11 @@ oom_score = {{ containerd_oom_score }}
     {% if containerd_registry_configs -%}
       [plugins."io.containerd.grpc.v1.cri".registry.configs]
       {% for registry_config in containerd_registry_configs -%}
+        {% if registry_config.username is defined and registry_config.password is defined -%}
         [plugins."io.containerd.grpc.v1.cri".registry.configs."{{registry_config.registry}}".auth]
           auth = "{{(registry_config.username + ":" + registry_config.password) | b64encode}}"
-        {% if registry_config.insecure_skip_verify -%}
+        {% endif -%}
+        {% if registry_config.insecure_skip_verify is defined and registry_config.insecure_skip_verify -%}
         [plugins."io.containerd.grpc.v1.cri".registry.configs."{{registry_config.registry}}".tls]
           insecure_skip_verify = true
         {% endif -%}
@@ -58,10 +60,9 @@ oom_score = {{ containerd_oom_score }}
           endpoint = ["https://registry-1.docker.io"]
         {% if containerd_registry_configs -%}
         {% for registry_config in containerd_registry_configs -%}
-        {% if registry_config.mirror_endpoint -%}
+        {% if registry_config.mirror_endpoint is defined -%}
         [plugins."io.containerd.grpc.v1.cri".registry.mirrors."{{registry_config.registry}}"]
-          endpoint = {{registry_config.mirror_endpoint}}
+          endpoint = {{ registry_config.mirror_endpoint }}
         {% endif -%}
         {% endfor -%}
         {% endif -%}
-
