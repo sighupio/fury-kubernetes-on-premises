@@ -208,7 +208,7 @@
 
 # Finish install Kubernetes packages
 
-# Start remove kubelet server certificate,key for later renew when restart Kubelet service
+# Start remove kubelet server certificate,key for later renew when restart kubelet service
 
 - name: Remove kubelet crt and key for later renew
   file:
@@ -219,7 +219,7 @@
     - "{{ kubelet_pki_key_file }}"
   when: not skip_kubelet_upgrade
 
-# Finish remove kubelet server certificate,key for later renew when restart Kubelet service
+# Finish remove kubelet server certificate,key for later renew when restart kubelet service
 
 - name: Start and enable Kubelet service
   systemd:
