@@ -9,6 +9,8 @@ kubeadm_version: "{{ kubernetes_version }}"
 critools_version: "{{ dependencies[kubernetes_version].critools_version }}"
 
 skip_kubelet_upgrade: False
+kubelet_pki_cert_file: /var/lib/kubelet/pki/kubelet.crt
+kubelet_pki_key_file: /var/lib/kubelet/pki/kubelet.key
 
 dependencies:
   # To pin dependencies for each Kubernetes version
