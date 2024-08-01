@@ -43,15 +43,11 @@
         echo "$K8S_VERSION" | sed -E 's/^v?([0-9]+\.[0-9]+)\.[0-9]+.*/\1/'
       register: kubernetes_version
 
-    - name: Get the current Container Runtime
-      shell: | 
-        RUNTIME=$(kubectl get nodes -o=jsonpath='{.items[0].status.nodeInfo.containerRuntimeVersion}')
-        if [[ $RUNTIME == containerd* ]]; then
-          echo "containerd"
-        else
-          echo "docker"
-        fi
-      register: container_runtime
+    - name: Ensure rsync is installed
+      package:
+        name:
+          - rsync
+        state: latest
     
     - name: Backup all Kubernetes certs
       shell: |
@@ -84,13 +80,6 @@
         crictl ps -q --name 'kube-(controller-manager|scheduler|apiserver)' | xargs -r crictl stop
         crictl ps -a -q --state exited --name 'kube-(apiserver|controller-manager|scheduler)' | xargs -r crictl rm
         systemctl restart etcd
-      when: container_runtime.stdout == 'containerd'
-
-    - name: Restart all control plane components with Docker
-      shell: |
-        docker container restart $(docker container ls -q --filter name=k8s_kube-"(controller|scheduler|apiserver)")
-        && systemctl restart etcd
-      when: container_runtime.stdout == 'docker'
 
     - name: Wait for kube-controller-manager to be running
       shell: crictl ps --name kube-controller-manager | grep -q Running
