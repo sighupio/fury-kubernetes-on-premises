@@ -46,6 +46,18 @@
         state: present
   when: ansible_facts['distribution'] == "Debian"
 
+- name: Check if haproxy is already installed
+  stat:
+    path: /etc/haproxy/haproxy.cfg
+  register: haproxy_installed
+
+- name: Check the current state of haproxy service
+  systemd:
+    name: haproxy
+    state: started
+  register: haproxy_service
+  failed_when: false
+  changed_when: false
 
 - name: actually installing haproxy
   package:
@@ -65,12 +77,26 @@
   command: "haproxy -f /etc/haproxy/haproxy.cfg -c"
   when: ansible_os_family in ['RedHat', 'Rocky']
 
-- name: restarting haproxy service
+- name: Ensure haproxy is enabled and running if installed
+  systemd:
+    name: haproxy
+    enabled: yes
+    state: started
+  when: haproxy_installed.stat.exists and haproxy_service.status != 0
+
+- name: Restart haproxy if not previously installed
   systemd:
     daemon_reload: yes
     name: haproxy
     enabled: yes
     state: restarted
+  when: not haproxy_installed.stat.exists
+
+- name: Reload haproxy if already installed and running
+  systemd:
+    name: haproxy
+    state: reloaded
+  when: haproxy_installed.stat.exists and haproxy_service.status == 0
 
 - name: Check if port 6443 is open
   wait_for:
