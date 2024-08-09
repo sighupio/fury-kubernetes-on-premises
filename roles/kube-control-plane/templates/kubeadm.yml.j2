@@ -26,6 +26,10 @@ dns:
   imageRepository: {{ kubernetes_image_registry }}{{ coredns_image_prefix }}
 {% endif %}
 apiServer:
+{% if kubernetes_apiserver_certSANs | length %}
+  certSANs:
+{{ kubernetes_apiserver_certSANs | to_nice_yaml | indent(2, true) -}}
+{% endif %}
   extraArgs:
 {% if tls_cipher_suites != "" %}
     tls-cipher-suites: {{ tls_cipher_suites | join(',') }}
@@ -48,9 +52,9 @@ apiServer:
     oidc-client-id: {{ oidc_client_id }}
     oidc-ca-file: {{ oidc_ca_file }}
     oidc-username-claim: "{{ oidc_username_claim }}"
-    oidc-username-prefix: "{{ oidc_group_prefix }}"
+    oidc-username-prefix: "{{ oidc_username_prefix }}"
     oidc-groups-claim: "{{ oidc_groups_claim }}"
-    oidc-groups-prefix: "{{ oidc_group_prefix }}"
+    oidc-groups-prefix: "{{ oidc_groups_prefix }}"
 {% endif %}
 {% if service_account_issuer is defined %}
     service-account-issuer: "{{ service_account_issuer }}"
