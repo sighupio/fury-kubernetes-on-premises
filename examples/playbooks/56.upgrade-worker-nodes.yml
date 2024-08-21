@@ -1,45 +1,44 @@
-- name: Kubernetes node preparation
+- name: Upgrade Worker Nodes
   hosts: nodes
+  serial: 1
   become: true
-  vars:
-    skip_kubelet_upgrade: True
-  roles:
-    - kube-node-common
-  tags:
+  tasks:
+
+  - name: Kubernetes node preparation
+    block:
+    - include_role:
+        name: kube-node-common
+    vars:
+      skip_kubelet_upgrade: true
+    tags:
     - kube-node-common
 
-- name: Kubernetes drain
-  hosts: nodes
-  tasks:
+  - name: Kubernetes drain
+    block:
     - name: Get node name
       set_fact:
         node_name: "{{ kubernetes_hostname }}"
     - name: Drain node
       delegate_to: localhost
       shell: "kubectl drain --grace-period=60 --timeout=360s --force --ignore-daemonsets --delete-local-data {{ node_name }} --kubeconfig={{ kubernetes_kubeconfig_path }}admin.conf"
+  
+  - name: Kubernetes kubeadm upgrade node
+    shell: "kubeadm upgrade node"
 
-- name: Kubernetes kubeadm upgrade node
-  hosts: nodes
-  become: true
-  tasks:
-    - name: Upgrade kubelet config
-      shell: "kubeadm upgrade node"
-
-- name: Kubelet and Containerd upgrade
-  hosts: nodes
-  become: true
-  vars:
-    skip_kubelet_upgrade: False
-  roles:
-    - kube-node-common
-    - containerd
-  tags:
+  - name: Kubelet and Containerd upgrade
+    block:
+    - include_role:
+        name: kube-node-common
+    - include_role:
+        name: containerd
+    vars:
+      skip_kubelet_upgrade: false
+    tags:
     - kube-node-common
     - containerd
 
-- name: Kubernetes uncordon node
-  hosts: nodes
-  tasks:
+  - name: Kubernetes uncordon
+    block:
     - name: Get node name
       set_fact:
         node_name: "{{ kubernetes_hostname }}"
