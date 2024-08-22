@@ -1,34 +1,34 @@
----
-- name: Upgrade etcd
+- name: Upgrade Control Plane
   hosts: master
+  serial: "{{ serial_number | default(1) }}"
   become: true
-  serial: 1
-  roles:
-    - etcd
-  tags:
+  tasks:
+  
+  - name: Upgrade etcd
+    include_role:
+      name: etcd
+    tags:
     - kubeadm-upgrade
 
-- name: Control plane upgrade
-  hosts: master
-  become: true
-  serial: 1
-  vars:
-    skip_kubelet_upgrade: true
-    upgrade: true
-  roles:
-    - kube-node-common
-    - kube-control-plane
-  tags:
+  - name: Upgrade control-plane
+    block:
+    - include_role:
+        name: kube-node-common
+    - include_role:
+        name: kube-control-plane
+    vars:
+      skip_kubelet_upgrade: true
+      upgrade: true
+    tags:
     - kubeadm-upgrade
 
-- name: Kubelet and Containerd upgrade
-  hosts: master
-  become: true
-  serial: 1
-  vars:
-    skip_kubelet_upgrade: false
-  roles:
-    - kube-node-common
-    - containerd
-  tags:
+  - name: Kubelet and Containerd upgrade
+    block:
+    - include_role:
+        name: kube-node-common
+    - include_role:
+        name: containerd
+    vars:
+      skip_kubelet_upgrade: false
+    tags:
     - package-upgrade
