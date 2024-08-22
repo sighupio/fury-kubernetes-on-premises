@@ -1,6 +1,6 @@
 - name: Upgrade Worker Nodes
   hosts: nodes
-  serial: 1
+  serial: "{{ serial_number | default(1) }}"
   become: true
   tasks:
 

@@ -1,6 +1,6 @@
 - name: Upgrade Control Plane
   hosts: master
-  serial: 1
+  serial: "{{ serial_number | default(1) }}"
   become: true
   tasks:
   
