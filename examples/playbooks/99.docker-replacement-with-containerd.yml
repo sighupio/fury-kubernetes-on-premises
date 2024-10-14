@@ -10,7 +10,7 @@
         node_name: "{{ kubernetes_hostname }}"
     - name: Drain node
       delegate_to: localhost
-      shell: "kubectl drain --grace-period=60 --timeout=360s --force --ignore-daemonsets --delete-local-data {{ node_name }} --kubeconfig=./admin.conf"
+      shell: "kubectl drain --grace-period=60 --timeout=360s --force --ignore-daemonsets --delete-local-data {{ node_name }} --kubeconfig=./{{ admin_kubeconfig_filename }}"
     - name: Stop kubelet.service
       shell: "systemctl stop kubelet.service"
   tags:
@@ -32,13 +32,13 @@
         node_name: "{{ kubernetes_hostname }}"
     - name: Annotate node with containerd socket
       delegate_to: localhost
-      shell: "kubectl annotate node {{ node_name }} --overwrite kubeadm.alpha.kubernetes.io/cri-socket=unix:///run/containerd/containerd.sock --kubeconfig=./admin.conf"
+      shell: "kubectl annotate node {{ node_name }} --overwrite kubeadm.alpha.kubernetes.io/cri-socket=unix:///run/containerd/containerd.sock --kubeconfig=./{{ admin_kubeconfig_filename }}"
     - name: Add --container-runtime and --container-runtime-endpoint to kubeadm-flags.env
       shell: 'echo $(cat /var/lib/kubelet/kubeadm-flags.env | rev | cut -c 2- | rev)" --container-runtime=remote --container-runtime-endpoint=unix:///run/containerd/containerd.sock\"" > /var/lib/kubelet/kubeadm-flags.env'
     - name: Stop kubelet.service
       shell: "systemctl start kubelet.service"
     - name: Uncordon node
       delegate_to: localhost
-      shell: "kubectl uncordon {{ node_name }} --kubeconfig=./admin.conf"
+      shell: "kubectl uncordon {{ node_name }} --kubeconfig=./{{ admin_kubeconfig_filename }}"
   tags:
     - docker-remove

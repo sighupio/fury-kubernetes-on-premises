@@ -60,7 +60,9 @@ all:
     # kubernetes_version: "1.25.6"
     # kubernetes_version: "1.26.7"
     # kubernetes_version: "1.27.6"
-    kubernetes_version: "1.28.7"
+    # kubernetes_version: "1.28.7"
+    kubernetes_version: "1.29.3"
+    admin_kubeconfig_filename: admin.conf
     containerd_registry_configs: {}
     # configuration should use the following format:
     # - {registry: "registry.example.com:8080", username: "example", password: "password", insecure_skip_verify: false, mirror_endpoint: ["http://mirror.example.com"] } 
