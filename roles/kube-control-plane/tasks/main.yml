@@ -29,12 +29,18 @@
 - name: Check that the /etc/kubernetes/admin.conf exists
   stat:
     path: /etc/kubernetes/admin.conf
-  register: stat_result
+  register: admin_conf_stat_result
+
+- name: Check that the /etc/kubernetes/super-admin.conf exists
+  stat:
+    path: /etc/kubernetes/super-admin.conf
+  register: super_admin_conf_stat_result
+  when: kubernetes_version is version('1.29.0', 'ge', version_type='semver')
 
 - name: Initializing master
   command: "kubeadm init --config={{ kubeadm_config_file }}"
   when:
-    - not stat_result.stat.exists
+    - (not super_admin_conf_stat_result.stat.exists | default(false)) and (not admin_conf_stat_result.stat.exists)
 
 - name: Getting bootstrap token
   shell: "kubeadm token create --ttl=30m"
@@ -74,6 +80,14 @@
     src: /etc/kubernetes/admin.conf
     dest: "{{ kubernetes_kubeconfig_path }}/admin.conf"
     flat: yes
+
+- name: Getting super-admin.conf kubeconfig
+  run_once: true
+  fetch:
+    src: /etc/kubernetes/super-admin.conf
+    dest: "{{ kubernetes_kubeconfig_path }}/super-admin.conf"
+    flat: yes
+  when: (super_admin_conf_stat_result.stat.exists | default(false)) and (kubernetes_version is version('1.29.0', 'ge', version_type='semver'))
 
 - include_tasks: upgrade.yml
   when: upgrade
