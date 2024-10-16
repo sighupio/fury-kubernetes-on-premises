@@ -13,35 +13,54 @@ runc_checksum: "sha256:https://github.com/opencontainers/runc/releases/download/
 
 # Customize versions based on Kubernetes version to maintain compatibility
 kubernetes_version: "1.29.3"
+# Resgistry where to pull the pause (sandbox) image. We use the same name used in other roles for simplicity.
+# Upstream registry is "k8s.gcr.io"
+kubernetes_image_registry: "registry.sighup.io/fury/on-premises"
 
 versions:
   1.24.7:
     containerd_version: "1.6.28"
     runc_version: "v1.1.12"
+    sandbox_image: "{{ kubernetes_image_registry }}/pause:3.2" # using 3.2 because we had it hardcoded before.
   1.24.16:
     containerd_version: "1.6.28"
     runc_version: "v1.1.12"
+    sandbox_image: "{{ kubernetes_image_registry }}/pause:3.2" # using 3.2 because we had it hardcoded before.
   1.25.6:
     containerd_version: "1.6.28"
     runc_version: "v1.1.12"
+    sandbox_image: "{{ kubernetes_image_registry }}/pause:3.2" # using 3.2 because we had it hardcoded before.
   1.25.12:
     containerd_version: "1.6.28"
     runc_version: "v1.1.12"
+    sandbox_image: "{{ kubernetes_image_registry }}/pause:3.2" # using 3.2 because we had it hardcoded before.
   1.26.3:
     containerd_version: "1.7.13"
     runc_version: "v1.1.12"
+    sandbox_image: "{{ kubernetes_image_registry }}/pause:3.2" # using 3.2 because we had it hardcoded before.
   1.26.7:
     containerd_version: "1.7.13"
     runc_version: "v1.1.12"
+    sandbox_image: "{{ kubernetes_image_registry }}/pause:3.2" # using 3.2 because we had it hardcoded before.
   1.27.6:
     containerd_version: "1.7.13"
     runc_version: "v1.1.12"
+    sandbox_image: "{{ kubernetes_image_registry }}/pause:3.2" # using 3.2 because we had it hardcoded before.
   1.28.7:
     containerd_version: "1.7.13"
     runc_version: "v1.1.12"
+    sandbox_image: "{{ kubernetes_image_registry }}/pause:3.2" # using 3.2 because we had it hardcoded before.
   1.29.3:
     containerd_version: "1.7.13"
     runc_version: "v1.1.12"
+    # containerd defaults to `pause:3.8` for version 1.7.13, see:
+    # https://github.com/containerd/containerd/blob/v1.7.13/pkg/cri/config/config_unix.go#L96
+    # but `kubeadm config images list` (for kubeadm v1.29.2) points to pause:3.9,
+    # so prefering that version because:
+    #   1. kubeadm will pull this image anyway when initiating
+    #   2. kubeadm will instruct the kubelet that this image should not be garbage collected.
+    #   Ref: https://github.com/kubernetes/kubeadm/issues/2020
+    sandbox_image: "{{ kubernetes_image_registry }}/pause:3.9"
 
 # Service options.
 containerd_service_state: started
