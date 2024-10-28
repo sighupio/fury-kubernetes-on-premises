@@ -50,16 +50,28 @@ versions:
     containerd_version: "1.7.13"
     runc_version: "v1.1.12"
     sandbox_image: "{{ kubernetes_image_registry }}/pause:3.2" # using 3.2 because we had it hardcoded before.
+  1.28.14:
+    containerd_version: "1.7.13"
+    runc_version: "v1.1.12"
+    sandbox_image: "{{ kubernetes_image_registry }}/pause:3.2" # using 3.2 because we had it hardcoded before.
   1.29.3:
     containerd_version: "1.7.13"
     runc_version: "v1.1.12"
     # containerd defaults to `pause:3.8` for version 1.7.13, see:
     # https://github.com/containerd/containerd/blob/v1.7.13/pkg/cri/config/config_unix.go#L96
-    # but `kubeadm config images list` (for kubeadm v1.29.2) points to pause:3.9,
+    # but `kubeadm config images list` (for kubeadm v1.29.3) points to pause:3.9, (or https://github.com/kubernetes/kubernetes/blob/v1.29.3/cmd/kubeadm/app/constants/constants.go)
     # so prefering that version because:
     #   1. kubeadm will pull this image anyway when initiating
     #   2. kubeadm will instruct the kubelet that this image should not be garbage collected.
     #   Ref: https://github.com/kubernetes/kubeadm/issues/2020
+    sandbox_image: "{{ kubernetes_image_registry }}/pause:3.9"
+  1.29.9:
+    containerd_version: "1.7.23"
+    runc_version: "v1.1.14" # use this link (with the correct tag) to know which version of runc is needed https://github.com/containerd/containerd/blob/v1.7.23/script/setup/runc-version
+    sandbox_image: "{{ kubernetes_image_registry }}/pause:3.9"
+  1.30.5:
+    containerd_version: "1.7.23"
+    runc_version: "v1.1.14" # use this link (with the correct tag) to know which version of runc is needed https://github.com/containerd/containerd/blob/v1.7.23/script/setup/runc-version
     sandbox_image: "{{ kubernetes_image_registry }}/pause:3.9"
 
 # Service options.
