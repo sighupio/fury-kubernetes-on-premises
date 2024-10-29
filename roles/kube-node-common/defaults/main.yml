@@ -1,5 +1,5 @@
 ---
-kubernetes_version: "1.30.5"
+kubernetes_version: "1.30.6"
 kubelet_version: "{{ kubernetes_version }}"
 kubectl_version: "{{ kubernetes_version }}"
 kubeadm_version: "{{ kubernetes_version }}"
