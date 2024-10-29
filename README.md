@@ -26,9 +26,9 @@ The following packages are included in the Fury Kubernetes on-premises module:
 
 | Package                                        | Version  | Description                                                                   |
 | ---------------------------------------------- | -------- | ----------------------------------------------------------------------------- |
-| [etcd](roles/etcd)                             | `3.5.8`  | Ansible role to install etcd as systemd service                               |
+| [etcd](roles/etcd)                             | `3.5.15` | Ansible role to install etcd as systemd service                               |
 | [haproxy](roles/haproxy)                       | `2.6`    | Ansible role to install HAProxy as Kubernetes load balancer for the APIServer |
-| [containerd](roles/containerd)                 | `1.7.13`  | Ansible role to install containerd as container runtime                       |
+| [containerd](roles/containerd)                 | `1.7.23` | Ansible role to install containerd as container runtime                       |
 | [kube-node-common](roles/kube-node-common)     | `-`      | Ansible role to install prerequisites for Kubernetes setup                    |
 | [kube-control-plane](roles/kube-control-plane) | `-`      | Ansible role to install master nodes                                          |
 | [kube-worker](roles/kube-worker)               | `-`      | Ansible role to install worker nodes and join them to the cluster             |
@@ -37,7 +37,7 @@ Click on each package to see its full documentation.
 
 ## Compatibility
 
-This version is compatible with Kubernetes 1.29.3 plus the complete list in the compatibility matrix.
+This version is compatible with Kubernetes 1.30.6 plus the complete list in the compatibility matrix.
 
 Check the [compatibility matrix][compatibility-matrix] for additional information about previous releases of the module.
 
@@ -49,14 +49,16 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 | ----------------------- |------------| ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [furyctl][furyctl-repo] | `>=0.27.0` | The recommended tool to download and manage KFD modules and their packages. To learn more about `furyctl` read the [official documentation][furyctl-repo]. |
 
-### Provision the cluster
+### Legacy provisioning
+
+> Clusters are now being totally managed by furyctl with the OnPremises provider, the following example is for a manual install. Check the [getting-started][getting-started] repository to know more.
 
 1. List the role in a `Furyfile.yml` file
 
 ```yaml
 roles:
   - name: on-premises
-    version: v1.29.3
+    version: v1.30.6
 ```
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
@@ -73,6 +75,7 @@ roles:
 [compatibility-matrix]: https://github.com/sighupio/fury-kubernetes-on-premises/blob/master/docs/COMPATIBILITY_MATRIX.md
 [kfd-repo]: https://github.com/sighupio/fury-distribution
 [kfd-docs]: https://docs.kubernetesfury.com/docs/distribution/
+[getting-started]: https://github.com/sighupio/fury-getting-started/tree/main/fury-on-vms
 
 <!-- </KFD-DOCS> -->
 
