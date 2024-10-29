@@ -62,11 +62,11 @@ dependencies:
     kubernetes_image_registry: "registry.sighup.io/fury/on-premises"
   "1.28.7":
     kubernetes_image_registry: "registry.sighup.io/fury/on-premises"
-  "1.28.14":
+  "1.28.15":
     kubernetes_image_registry: "registry.sighup.io/fury/on-premises"
   "1.29.3":
     kubernetes_image_registry: "registry.sighup.io/fury/on-premises"
-  "1.29.9":
+  "1.29.10":
     kubernetes_image_registry: "registry.sighup.io/fury/on-premises"
-  "1.30.5":
+  "1.30.6":
     kubernetes_image_registry: "registry.sighup.io/fury/on-premises"

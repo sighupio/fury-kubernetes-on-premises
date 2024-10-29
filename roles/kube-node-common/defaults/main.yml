@@ -118,7 +118,7 @@ dependencies:
       gpg_key: https://pkgs.k8s.io/core:/stable:/v1.28/rpm/repodata/repomd.xml.key
       gpg_key_check: yes
       repo_gpg_check: yes
-  "1.28.14":
+  "1.28.15":
     critools_version: "1.28.0"
     apt:
       name: k8s-1.28
@@ -144,7 +144,7 @@ dependencies:
       gpg_key: https://pkgs.k8s.io/core:/stable:/v1.29/rpm/repodata/repomd.xml.key
       gpg_key_check: yes
       repo_gpg_check: yes
-  "1.29.9":
+  "1.29.10":
     critools_version: "1.29.0"
     apt:
       name: k8s-1.29
@@ -157,7 +157,7 @@ dependencies:
       gpg_key: https://pkgs.k8s.io/core:/stable:/v1.29/rpm/repodata/repomd.xml.key
       gpg_key_check: yes
       repo_gpg_check: yes
-  "1.30.5":
+  "1.30.6":
     critools_version: "1.30.0"
     apt:
       name: k8s-1.30
