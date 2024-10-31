@@ -16,8 +16,19 @@
   command: "kubeadm certs renew super-admin.conf"
   when: kubernetes_version is version('1.29.0', 'ge', version_type='semver')
 
-- name: Upgrade kubernetes master with kubeadm
+- name: Upgrade kubernetes master with kubeadm (legacy)
   command: kubeadm upgrade apply --config /etc/kubernetes/kubeadm.yml -y
+  when: kubernetes_version is version('1.30.0', 'lt', version_type='semver')
+
+- name: Ensuring kubeadm-upgrade-config.yml config file is present on machine
+  template:
+    src: kubeadm-upgrade-config.yml.j2
+    dest: "{{ kubeadm_upgrade_config_file }}"
+  when: kubernetes_version is version('1.30.0', 'ge', version_type='semver')
+
+- name: Upgrade kubernetes master with kubeadm
+  command: kubeadm upgrade apply --config /etc/kubernetes/kubeadm-upgrade-config.yml
+  when: kubernetes_version is version('1.30.0', 'ge', version_type='semver')
 
 - name: Restart etcd service
   systemd:

@@ -18,34 +18,6 @@ kubernetes_version: "1.30.6"
 kubernetes_image_registry: "registry.sighup.io/fury/on-premises"
 
 versions:
-  1.24.7:
-    containerd_version: "1.6.28"
-    runc_version: "v1.1.12"
-    sandbox_image: "{{ kubernetes_image_registry }}/pause:3.2" # using 3.2 because we had it hardcoded before.
-  1.24.16:
-    containerd_version: "1.6.28"
-    runc_version: "v1.1.12"
-    sandbox_image: "{{ kubernetes_image_registry }}/pause:3.2" # using 3.2 because we had it hardcoded before.
-  1.25.6:
-    containerd_version: "1.6.28"
-    runc_version: "v1.1.12"
-    sandbox_image: "{{ kubernetes_image_registry }}/pause:3.2" # using 3.2 because we had it hardcoded before.
-  1.25.12:
-    containerd_version: "1.6.28"
-    runc_version: "v1.1.12"
-    sandbox_image: "{{ kubernetes_image_registry }}/pause:3.2" # using 3.2 because we had it hardcoded before.
-  1.26.3:
-    containerd_version: "1.7.13"
-    runc_version: "v1.1.12"
-    sandbox_image: "{{ kubernetes_image_registry }}/pause:3.2" # using 3.2 because we had it hardcoded before.
-  1.26.7:
-    containerd_version: "1.7.13"
-    runc_version: "v1.1.12"
-    sandbox_image: "{{ kubernetes_image_registry }}/pause:3.2" # using 3.2 because we had it hardcoded before.
-  1.27.6:
-    containerd_version: "1.7.13"
-    runc_version: "v1.1.12"
-    sandbox_image: "{{ kubernetes_image_registry }}/pause:3.2" # using 3.2 because we had it hardcoded before.
   1.28.7:
     containerd_version: "1.7.13"
     runc_version: "v1.1.12"
