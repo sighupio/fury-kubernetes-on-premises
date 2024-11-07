@@ -1,7 +1,18 @@
 ---
-
 haproxy_configuration_file: "haproxy.cfg"
-haproxy_version: "2.6"
+haproxy_package:
+  Debian:
+    version: "3.0"
+    name: "haproxy=3.0.*"
+  Ubuntu:
+    version: "3.0"
+    name: "haproxy=3.0.*"
+  Rocky:
+    version: "30z"
+    name: "haproxy30z"
+  RedHat:
+    name: "haproxy30z"
+    version: "30z"
 keepalived_cluster: false
 keepalived_interface: "ens192"
 keepalived_on_k8s_master: false
