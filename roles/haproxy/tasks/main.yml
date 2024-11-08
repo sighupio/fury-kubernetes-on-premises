@@ -1,115 +1,142 @@
 ---
-
-- name: Update Package Cache 
-  apt:
-    update_cache: yes
+- name: Update Package Cache
+  ansible.builtin.apt:
+    update_cache: true
   when: ansible_os_family == "Debian"
 
 - name: Install dependencies
-  package:
+  when: ansible_os_family == 'Debian'
+  ansible.builtin.package:
     name:
       - software-properties-common
       - psmisc
     state: latest
-  when: ansible_os_family == 'Debian'
 
 - name: Disabling SELinux state
-  selinux:
+  when: ansible_os_family in ['RedHat', 'Rocky']
+  ansible.posix.selinux:
     state: disabled
-  when: ansible_os_family in ['RedHat', 'Rocky']
 
-- name: disable firewalld
-  systemd: name=firewalld enabled=no
+- name: Disable firewalld
   when: ansible_os_family in ['RedHat', 'Rocky']
+  ansible.builtin.systemd:
+    name: firewalld
+    enabled: false
 
-- name: stop firewalld
-  systemd: name=firewalld state=stopped
-  ignore_errors: yes
+- name: Stop firewalld
   when: ansible_os_family in ['RedHat', 'Rocky']
+  ansible.builtin.systemd:
+    name: firewalld
+    state: stopped
+  ignore_errors: true
 
-- name: installing haproxy repo (Ubuntu)
-  apt_repository:
-    repo: 'ppa:vbernat/haproxy-{{ haproxy_version }}'
+# We need to add this repo because the distro repo has outdated versions
+# https://github.com/haproxy/wiki/wiki/Packages
+# unfortunately packages are not signed with gpg and there is no ARM support:
+#   - https://github.com/zenetys/rpm-haproxy/issues/2
+#   - https://github.com/zenetys/rpm-haproxy/issues/9
+
+- name: Ensure /etc/yum.repos.d/ exists (RHEL)
+  when: ansible_os_family in ['RedHat', 'Rocky']
+  ansible.builtin.file:
+    path: /etc/yum.repos.d/
+    state: directory
+    mode: "0755"
+
+- name: Adding Zenetys HAProxy Repo (RHEL)
+  when: ansible_os_family in ['RedHat', 'Rocky']
+  ansible.builtin.yum_repository:
+    name: zenetys
+    description: Zenetys RPM Repo for HAProxy
+    baseurl: "https://packages.zenetys.com/latest/redhat/$releasever/RPMS/$basearch"
     state: present
+    gpgcheck: false
+
+# We need to add this repos because the official repo has outdated versions
+# https://github.com/haproxy/wiki/wiki/Packages
+- name: Adding HAProxy PPA (Ubuntu)
   when: ansible_facts['distribution'] == "Ubuntu"
-
-- name: installing haproxy repo (Debian)
-  block:
-    - name: Custom apt key
-      get_url:
-        url: https://haproxy.debian.net/bernat.debian.org.gpg
-        dest: /usr/share/keyrings/haproxy.debian.net.gpg
-
-    - name: Add source
-      apt_repository:
-        repo: 'deb "[signed-by=/usr/share/keyrings/haproxy.debian.net.gpg]" http://haproxy.debian.net {{ ansible_distribution_release }}-backports-{{ haproxy_version }} main'
-        state: present
-  when: ansible_facts['distribution'] == "Debian"
-
-
-- name: actually installing haproxy
-  package:
-    name: 'haproxy'
+  ansible.builtin.apt_repository:
+    repo: "ppa:vbernat/haproxy-{{ haproxy_package.Ubuntu.version }}"
     state: present
 
-- name: copying configuration file
-  copy:
-    src: "{{playbook_dir}}/{{ haproxy_configuration_file }}"
+- name: Adding HAProxy Repository (Debian)
+  when: ansible_facts['distribution'] == "Debian"
+  block:
+    - name: Get repo GPG key
+      ansible.builtin.get_url:
+        url: https://haproxy.debian.net/bernat.debian.org.gpg
+        dest: /usr/share/keyrings/haproxy.debian.net.gpg.armored
+
+    - name: Dearmor GPG key
+      ansible.builtin.shell:
+        cmd: "gpg --dearmor -o /usr/share/keyrings/haproxy.debian.net.gpg < /usr/share/keyrings/haproxy.debian.net.gpg.armored"
+        creates: /usr/share/keyrings/haproxy.debian.net.gpg
+
+    - name: Add repo source to Apt
+      ansible.builtin.apt_repository:
+        repo: "deb [signed-by=/usr/share/keyrings/haproxy.debian.net.gpg] http://haproxy.debian.net {{ ansible_distribution_release }}-backports-{{ haproxy_package.Debian.version }} main"
+        state: present
+        filename: haproxy
+
+- name: Install HAProxy
+  ansible.builtin.package:
+    name: "{{ haproxy_package[ansible_facts['distribution']].name }}"
+    state: present
+
+- name: Copy configuration file
+  ansible.builtin.copy:
+    src: "{{ playbook_dir }}/{{ haproxy_configuration_file }}"
     dest: /etc/haproxy/haproxy.cfg
 
-- name: validating configuration
-  command: "haproxy -c -- /etc/haproxy/haproxy.cfg"
-  when: ansible_os_family == 'Debian'
+- name: Validate configuration file
+  ansible.builtin.command: "haproxy -f /etc/haproxy/haproxy.cfg -c"
 
-- name: validating configuration
-  command: "haproxy -f /etc/haproxy/haproxy.cfg -c"
-  when: ansible_os_family in ['RedHat', 'Rocky']
-
-- name: restarting haproxy service
-  systemd:
-    daemon_reload: yes
+- name: (Re)start HAProxy service
+  ansible.builtin.systemd:
+    daemon_reload: true
     name: haproxy
-    enabled: yes
+    enabled: true
     state: restarted
 
-- name: Check if port 6443 is open
-  wait_for:
+- name: Wait for port 6443 to be started
+  ansible.builtin.wait_for:
     host: "localhost"
     port: "6443"
     state: started
     delay: 0
     timeout: 30
 
-- name: install keepalived for clustering
-  package:
+- name: Install keepalived for HA clustering
+  when: keepalived_cluster|bool
+  ansible.builtin.package:
     name: keepalived
     state: present
-  when: keepalived_cluster|bool
 
-- name: copying configuration file
-  template:
+- name: Copy keepliaved configuration file
+  when: keepalived_cluster|bool
+  ansible.builtin.template:
     src: "keepalived.conf.j2"
     dest: /etc/keepalived/keepalived.conf
   notify: reload keepalived
-  when: keepalived_cluster|bool
 
-- name: copying check api server script
-  template:
+- name: Copy check api server script
+  when: keepalived_cluster|bool and keepalived_on_k8s_master|bool
+  ansible.builtin.template:
     src: "check_apiserver.sh.j2"
     dest: /etc/keepalived/check_apiserver.sh
     owner: "{{ ansible_user }}"
     mode: u=rwx
   notify: reload keepalived
-  when: keepalived_cluster|bool and keepalived_on_k8s_master|bool
 
-- name: check keepalived configuration file for errors
-  command: "keepalived --config-test"
+- name: Check keepalived configuration file for errors
   when: keepalived_cluster|bool
+  ansible.builtin.command: "keepalived --config-test"
 
-- name: starting keepalived service
-  systemd:
-    daemon_reload: yes
+- name: Start keepalived service
+  when: keepalived_cluster|bool
+  ansible.builtin.systemd:
+    daemon_reload: true
     name: keepalived
-    enabled: yes
+    enabled: true
     state: started
-  when: keepalived_cluster|bool

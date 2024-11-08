@@ -1,13 +1,18 @@
 ---
+- name: Restart HAProxy
+  ansible.builtin.systemd:
+    name: haproxy
+    state: restarted
+  listen: restart haproxy
 
-- name: reload haproxy
-  systemd:
+- name: Reload HAProxy
+  ansible.builtin.systemd:
     name: haproxy
     state: reloaded
   listen: reload haproxy
 
-- name: reload keepalived
-  systemd:
+- name: Reload keepalived
+  ansible.builtin.systemd:
     name: keepalived
     state: reloaded
   listen: reload keepalived
