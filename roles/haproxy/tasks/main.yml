@@ -50,6 +50,7 @@
     description: Zenetys RPM Repo for HAProxy
     baseurl: "https://packages.zenetys.com/latest/redhat/$releasever/RPMS/$basearch"
     state: present
+    gpgcheck: false
 
 # We need to add this repos because the official repo has outdated versions
 # https://github.com/haproxy/wiki/wiki/Packages
