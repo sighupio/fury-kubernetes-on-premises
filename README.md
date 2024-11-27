@@ -5,7 +5,7 @@
 </h1>
 <!-- markdownlint-enable MD033 -->
 
-![Release](https://img.shields.io/badge/Latest%20Release-v1.29.3-blue)
+![Release](https://img.shields.io/badge/Latest%20Release-v1.30.6-blue)
 ![License](https://img.shields.io/github/license/sighupio/fury-kubernetes-on-premises?label=License)
 ![Slack](https://img.shields.io/badge/slack-@kubernetes/fury-yellow.svg?logo=slack&label=Slack)
 
@@ -27,7 +27,7 @@ The following packages are included in the Fury Kubernetes on-premises module:
 | Package                                        | Version  | Description                                                                   |
 | ---------------------------------------------- | -------- | ----------------------------------------------------------------------------- |
 | [etcd](roles/etcd)                             | `3.5.15` | Ansible role to install etcd as systemd service                               |
-| [haproxy](roles/haproxy)                       | `2.6`    | Ansible role to install HAProxy as Kubernetes load balancer for the APIServer |
+| [haproxy](roles/haproxy)                       | `3.0`    | Ansible role to install HAProxy as Kubernetes load balancer for the APIServer |
 | [containerd](roles/containerd)                 | `1.7.23` | Ansible role to install containerd as container runtime                       |
 | [kube-node-common](roles/kube-node-common)     | `-`      | Ansible role to install prerequisites for Kubernetes setup                    |
 | [kube-control-plane](roles/kube-control-plane) | `-`      | Ansible role to install master nodes                                          |
