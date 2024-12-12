@@ -1,6 +1,6 @@
 <!-- markdownlint-disable MD033 -->
 <h1>
-    <img src="https://github.com/sighupio/fury-distribution/blob/main/docs/assets/fury-epta-white.png?raw=true" align="left" width="90" style="margin-right: 15px" alt="fury logo, and F in an hexagon"/>
+    <img src="https://github.com/sighupio/fury-distribution/blob/main/docs/assets/fury-epta-white.png?raw=true" align="left" width="90" style="margin-right: 15px" alt="fury logo, an F in an hexagon"/>
     Kubernetes Fury on-premises
 </h1>
 <!-- markdownlint-enable MD033 -->
