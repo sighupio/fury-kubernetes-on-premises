@@ -1,5 +1,5 @@
 ---
-kubernetes_version: "1.31.3"
+kubernetes_version: "1.31.4"
 kubelet_version: "{{ kubernetes_version }}"
 kubectl_version: "{{ kubernetes_version }}"
 kubeadm_version: "{{ kubernetes_version }}"
@@ -79,7 +79,7 @@ dependencies:
       gpg_key: https://pkgs.k8s.io/core:/stable:/v1.30/rpm/repodata/repomd.xml.key
       gpg_key_check: yes
       repo_gpg_check: yes
-  "1.31.3":
+  "1.31.4":
     critools_version: "1.31.0"
     apt:
       name: k8s-1.31

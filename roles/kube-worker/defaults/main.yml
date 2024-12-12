@@ -1,5 +1,4 @@
 ---
-
 kubeadm_config_file: /etc/kubernetes/kubeadm.yml
 kubernetes_control_plane_address: "{{ ansible_fqdn }}"
 kubernetes_bootstrap_token: ""

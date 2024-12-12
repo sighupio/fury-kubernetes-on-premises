@@ -6,6 +6,9 @@ This role also supports having >1 `haproxy` in a failover scheme using a shared 
 
 ## Configuration
 
+> [!IMPORTANT]
+> Please notice that the role will assume that if the machine hostname ends with `-1`, the machine will be configured as a keepalived `MASTER` and will have the highest weight.
+
 | Variable                       | Description                                                                                                                    | Default Value |
 | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ | ------------- |
 | `haproxy_version`              | HAproxy version to install                                                                                                     | `2.2`         |
@@ -17,5 +20,3 @@ This role also supports having >1 `haproxy` in a failover scheme using a shared 
 | `keepalived_virtual_router_id` | VRRP virtual router ID. Must be different for every keepalived cluster.                                                        | `51`          |
 | `keepalived_on_k8s_master`     | Set to `true` if keepalived is running on a Kubernets master to enable specific checks.                                        | `false`       |
 | `control_plane_endpoint`       | Kubernetes control plane endpoint. Generally set as part of Kubernetes roles. Needed when `keepalived_on_k8s_master` is `true` | -             |
-
-> ⚠️ Please notice that the role will assume that if the machine hostname ends with `-1`, the machine will be configured as a keepalived `MASTER` and will have the highest weight.
