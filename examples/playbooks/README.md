@@ -1,7 +1,7 @@
 # Example Playbooks for Kubernetes cluster deployment with Fury
 
 In this directory we provide example playbooks for deploying a Kubernetes cluster using Kubernetes Fury Distribution
-to on-premises virtual machines at version 1.23.12 and then how to upgrade it to 1.24.7.
+to on-premises virtual machines at version 1.23.12 and then how to upgrade it to 1.24.7. The process is the same for the other supported Kuberntes versions.
 
 - [Example Playbooks for Kubernetes cluster deployment with Fury](#example-playbooks-for-kubernetes-cluster-deployment-with-fury)
   - [Requirements](#requirements)
@@ -55,12 +55,10 @@ The install phases are ordered, and each playbook has the order in which it shou
 ### Initialize PKI
 
 First of all, we need to initialize CAs certificates for the etcd cluster and the Kubernetes components.
-The initialization of the PKI is done locally, using `furyagent`. The playbook is `0.pki.yml`.
-
-Run the playbook with:
+The initialization of the PKI is done locally, using `furyctl`:
 
 ```bash
-ansible-playbook 0.pki.yml
+furyctl create pki
 ```
 
 As a result, a `./pki` directory with the following files will be created:

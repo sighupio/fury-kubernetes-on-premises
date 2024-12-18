@@ -61,7 +61,10 @@ all:
     # kubernetes_version: "1.26.7"
     # kubernetes_version: "1.27.6"
     # kubernetes_version: "1.28.7"
-    kubernetes_version: "1.29.3"
+    # kubernetes_version: "1.29.3"
+    # kubernetes_version: "1.29.10"
+    # kubernetes_version: "1.30.6"
+    kubernetes_version: "1.31.4"
     admin_kubeconfig_filename: admin.conf
     containerd_registry_configs: {}
     # configuration should use the following format:
