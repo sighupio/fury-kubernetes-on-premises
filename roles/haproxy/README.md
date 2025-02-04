@@ -4,6 +4,11 @@ This Ansible role installs and configures HAproxy on a machine.
 
 This role also supports having >1 `haproxy` in a failover scheme using a shared virtual IP with `keepalived` and VRRP.
 
+> [!WARNING]
+> Since ARM support is still in *beta*, at the moment there
+> is no support for HAProxy 3.0 in RHEL/RHEL-derivatives running
+> on ARM hardware.
+
 ## Configuration
 
 > [!IMPORTANT]

@@ -41,6 +41,11 @@ This version is compatible with Kubernetes 1.31.4 plus the complete list in the 
 
 Check the [compatibility matrix][compatibility-matrix] for additional information about previous releases of the module.
 
+> [!WARNING]
+> Since ARM support is still in *beta*, at the moment there
+> is no support for HAProxy 3.0 in RHEL/RHEL-derivatives running
+> on ARM hardware.
+
 ## Usage
 
 ### Prerequisites
