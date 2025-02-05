@@ -31,6 +31,7 @@ oom_score = {{ containerd_oom_score }}
           privileged_without_host_devices = false
           [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.nvidia.options]
             BinaryName = "/usr/bin/nvidia-container-runtime"
+            SystemdCgroup = true
 {% else %} {# Default runtime = runc #}
         [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
           runtime_type = "io.containerd.runc.v2"
