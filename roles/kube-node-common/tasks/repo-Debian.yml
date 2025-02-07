@@ -22,22 +22,34 @@
         path: "{{ gpg_keyrings_path }}"
         state: directory
 
-    - name: Import Kubernetes APT public key
-      ansible.builtin.get_url:
-        url: "{{ gpg_key }}"
-        dest: "{{ gpg_keyrings_path }}/kubernetes-apt-keyring.gpg.armored"
-        force: true # always download the latest remote key to avoid expiration of the local one
+    # - name: Import Kubernetes APT public key
+    #   ansible.builtin.get_url:
+    #     url: "{{ gpg_key }}"
+    #     dest: "{{ gpg_keyrings_path }}/kubernetes-apt-keyring.gpg.armored"
+    #     force: true # always download the latest remote key to avoid expiration of the local one
 
-    - name: Dearmor GPG key
-      ansible.builtin.shell:
-        cmd: "gpg --dearmor -o {{ gpg_keyrings_path }}/kubernetes-apt-keyring.gpg < {{ gpg_keyrings_path }}/kubernetes-apt-keyring.gpg.armored"
-        creates: "{{ gpg_keyrings_path }}/kubernetes-apt-keyring.gpg"
+    # - name: Dearmor GPG key
+    #   ansible.builtin.shell:
+    #     cmd: "gpg --dearmor -o {{ gpg_keyrings_path }}/kubernetes-apt-keyring.gpg < {{ gpg_keyrings_path }}/kubernetes-apt-keyring.gpg.armored"
+    #     creates: "{{ gpg_keyrings_path }}/kubernetes-apt-keyring.gpg"
 
-    - name: Add repo source to Apt
-      ansible.builtin.apt_repository:
-        filename: "{{ filename }}"
-        repo: "{{ repo }}"
-        state: present
+    # - name: Add repo source to Apt
+    #   ansible.builtin.apt_repository:
+    #     filename: "{{ filename }}"
+    #     repo: "{{ repo }}"
+    #     state: present
+
+    - name: Add repo using key from URL
+      deb822_repository:
+        name: "{{ filename }}"
+        types: deb
+        # the repo string can be on the following form:
+        # [deb ]<url> [codename] [component]
+        uris: "{{ repo | regex_replace('^(?:deb )?(https?:\\/\\/\\S*)(?: \\S)?(?: \\S$)?', '\\1') }}" # extract only the url portion
+        architectures: "{{ ansible_facts['architecture'] | regex_replace('^x86_64$', 'amd64') | regex_replace('^aarch64$', 'arm64') }}"
+        suites: "{{ repo | regex_replace('^(?:deb )?(?:https?:\\/\\/\\S*)( \\S)?(?: \\S$)?', '\\1') }}" # extract only the codename portion
+        components: "{{ repo | regex_replace('^(?:deb )?(?:https?:\\/\\/\\S*)( \\S)?( \\S$)?', '\\1') }}" # extract only the component portion
+        signed_by: "{{ gpg_key }}"
 
     - name: Update APT cache
       apt:
