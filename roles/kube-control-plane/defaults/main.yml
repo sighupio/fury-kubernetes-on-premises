@@ -33,6 +33,7 @@ etcd:
   caFile: "/etc/etcd/pki/etcd/ca.crt"
   keyFile: "/etc/etcd/pki/apiserver-etcd-client.key"
   certFile: "/etc/etcd/pki/apiserver-etcd-client.crt"
+etcd_on_control_plane: True
 
 ## OIDC
 oidc_issuer_url: ""
