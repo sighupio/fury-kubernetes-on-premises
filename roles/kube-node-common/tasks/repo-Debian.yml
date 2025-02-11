@@ -17,6 +17,10 @@
     filename: "{{ dependencies_override.apt.name | default(dependencies[kubernetes_version].apt.name) }}"
     repo: "{{ dependencies_override.apt.repo | default(dependencies[kubernetes_version].apt.repo) }}"
   block:
+    - name: Remove old repository
+      ansible.builtin.apt_repository:
+        repo: "{{ repo }}"
+        state: absent
     - name: Ensure keyring directory exists
       file:
         path: "{{ gpg_keyrings_path }}"
@@ -49,7 +53,7 @@
         #     https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-kubeadm-kubelet-and-kubectl
         # NB: the only allowed [type] is "deb". Anything else is discarded and replaced with "deb"
         # NB: the [signature] value is currently ignored and statically replaced with "/etc/apt/keyrings/kubernetes-apt-keyring.gpg"
-        repo: "{{ repo | regex_replace('^(?P<type>deb)?\\ ?(?P<signature>\\[signed-by=\\S+\\])?\\ ?(?P<url>https?://\\S+)\\ (?P<suite>\\S+)\\ ?(?P<component>\\S+)?$', 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] \\g<url>') }}"
+        repo: "{{ repo | regex_replace('^(?P<type>deb)?\\ ?(?P<signature>\\[signed-by=\\S+\\])?\\ ?(?P<url>https?://\\S+)\\ (?P<suite>\\S+)\\ ?(?P<component>\\S+)?$', 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] \\g<url> \\g<suite> \\g<component>') }}"
         state: present
 
     - name: Update APT cache
