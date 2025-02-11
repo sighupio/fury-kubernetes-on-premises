@@ -20,6 +20,7 @@ dependencies:
       name: k8s-1.28
       repo: "deb https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /"
       gpg_key: "https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key"
+      gpg_key_id: "DE15B14486CD377B9E876E1A234654DA9A296436"
     yum:
       name: k8s-1.28
       repo: https://pkgs.k8s.io/core:/stable:/v1.28/rpm/
@@ -32,6 +33,7 @@ dependencies:
       name: k8s-1.28
       repo: "deb https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /"
       gpg_key: "https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key"
+      gpg_key_id: "DE15B14486CD377B9E876E1A234654DA9A296436"
     yum:
       name: k8s-1.28
       repo: https://pkgs.k8s.io/core:/stable:/v1.28/rpm/
@@ -44,6 +46,7 @@ dependencies:
       name: k8s-1.29
       repo: "deb https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /"
       gpg_key: "https://pkgs.k8s.io/core:/stable:/v1.29/deb/Release.key"
+      gpg_key_id: "DE15B14486CD377B9E876E1A234654DA9A296436"
     yum:
       name: k8s-1.29
       repo: https://pkgs.k8s.io/core:/stable:/v1.29/rpm/
@@ -56,6 +59,7 @@ dependencies:
       name: k8s-1.29
       repo: "deb https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /"
       gpg_key: "https://pkgs.k8s.io/core:/stable:/v1.29/deb/Release.key"
+      gpg_key_id: "DE15B14486CD377B9E876E1A234654DA9A296436"
     yum:
       name: k8s-1.29
       repo: https://pkgs.k8s.io/core:/stable:/v1.29/rpm/
@@ -68,6 +72,7 @@ dependencies:
       name: k8s-1.30
       repo: "deb https://pkgs.k8s.io/core:/stable:/v1.30/deb/ /"
       gpg_key: "https://pkgs.k8s.io/core:/stable:/v1.30/deb/Release.key"
+      gpg_key_id: "DE15B14486CD377B9E876E1A234654DA9A296436"
     yum:
       name: k8s-1.30
       repo: https://pkgs.k8s.io/core:/stable:/v1.30/rpm/
@@ -80,6 +85,7 @@ dependencies:
       name: k8s-1.31
       repo: "deb https://pkgs.k8s.io/core:/stable:/v1.31/deb/ /"
       gpg_key: "https://pkgs.k8s.io/core:/stable:/v1.31/deb/Release.key"
+      gpg_key_id: "DE15B14486CD377B9E876E1A234654DA9A296436"
     yum:
       name: k8s-1.31
       repo: https://pkgs.k8s.io/core:/stable:/v1.31/rpm/

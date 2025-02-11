@@ -21,6 +21,12 @@
       ansible.builtin.apt_repository:
         repo: "{{ repo }}"
         state: absent
+
+    - name: Remove old Apt signing key
+      ansible.builtin.apt_key:
+      id: "{{ gpg_key_id }}"
+      state: absent
+
     - name: Ensure keyring directory exists
       file:
         path: "{{ gpg_keyrings_path }}"
@@ -29,7 +35,7 @@
     - name: Import Kubernetes APT public key
       ansible.builtin.get_url:
         url: "{{ gpg_key }}"
-        dest: "{{ gpg_keyrings_path }}/kubernetes-apt-keyring.gpg.armored"
+        dest: "/tmp/kubernetes-apt-keyring.gpg.armored"
         force: true # always download the latest remote key to avoid expiration of the local one
 
     - name: Dearmor GPG key
@@ -38,7 +44,7 @@
             path: "{{ gpg_keyrings_path }}/kubernetes-apt-keyring.gpg"
             state: absent # if the file already exists, the dearmor process fails
         - ansible.builtin.shell:
-            cmd: "gpg --dearmor -o {{ gpg_keyrings_path }}/kubernetes-apt-keyring.gpg < {{ gpg_keyrings_path }}/kubernetes-apt-keyring.gpg.armored"
+            cmd: "gpg --dearmor -o {{ gpg_keyrings_path }}/kubernetes-apt-keyring.gpg < /tmp/kubernetes-apt-keyring.gpg.armored"
 
     - name: Add repo source to Apt
       ansible.builtin.apt_repository:
