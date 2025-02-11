@@ -13,43 +13,34 @@
 - name: Add Kubernetes APT repository
   vars:
     gpg_key: "{{ dependencies_override.apt.gpg_key | default(dependencies[kubernetes_version].apt.gpg_key) }}"
-    gpg_keyrings_path: "{{ dependencies_override.apt.gpg_keyrings_path | default(dependencies[kubernetes_version].apt.gpg_keyrings_path) }}"
+    gpg_keyrings_path: "/etc/apt/keyrings" # use default apt keyrings path
     filename: "{{ dependencies_override.apt.name | default(dependencies[kubernetes_version].apt.name) }}"
-    repo: "deb [signed-by={{ gpg_keyrings_path }}/kubernetes-apt-keyring.gpg] {{ dependencies_override.apt.repo | default(dependencies[kubernetes_version].apt.repo) }} /"
+    repo: "{{ dependencies_override.apt.repo | default(dependencies[kubernetes_version].apt.repo) }}"
   block:
     - name: Ensure keyring directory exists
       file:
         path: "{{ gpg_keyrings_path }}"
         state: directory
 
-    # - name: Import Kubernetes APT public key
-    #   ansible.builtin.get_url:
-    #     url: "{{ gpg_key }}"
-    #     dest: "{{ gpg_keyrings_path }}/kubernetes-apt-keyring.gpg.armored"
-    #     force: true # always download the latest remote key to avoid expiration of the local one
+    - name: Import Kubernetes APT public key
+      ansible.builtin.get_url:
+        url: "{{ gpg_key }}"
+        dest: "{{ gpg_keyrings_path }}/kubernetes-apt-keyring.gpg.armored"
+        force: true # always download the latest remote key to avoid expiration of the local one
 
-    # - name: Dearmor GPG key
-    #   ansible.builtin.shell:
-    #     cmd: "gpg --dearmor -o {{ gpg_keyrings_path }}/kubernetes-apt-keyring.gpg < {{ gpg_keyrings_path }}/kubernetes-apt-keyring.gpg.armored"
-    #     creates: "{{ gpg_keyrings_path }}/kubernetes-apt-keyring.gpg"
+    - name: Dearmor GPG key
+      block:
+        - file:
+            path: "{{ gpg_keyrings_path }}/kubernetes-apt-keyring.gpg"
+            state: absent # if the file already exists, the dearmor process fails
+        - ansible.builtin.shell:
+            cmd: "gpg --dearmor -o {{ gpg_keyrings_path }}/kubernetes-apt-keyring.gpg < {{ gpg_keyrings_path }}/kubernetes-apt-keyring.gpg.armored"
 
-    # - name: Add repo source to Apt
-    #   ansible.builtin.apt_repository:
-    #     filename: "{{ filename }}"
-    #     repo: "{{ repo }}"
-    #     state: present
-
-    - name: Add repo using key from URL
-      deb822_repository:
-        name: "{{ filename }}"
-        types: deb
-        # the repo string can be on the following form:
-        # [deb ]<url> [codename] [component]
-        uris: "{{ repo | regex_replace('^(?:deb )?(https?:\\/\\/\\S*)(?: \\S)?(?: \\S$)?', '\\1') }}" # extract only the url portion
-        architectures: "{{ ansible_facts['architecture'] | regex_replace('^x86_64$', 'amd64') | regex_replace('^aarch64$', 'arm64') }}"
-        suites: "{{ repo | regex_replace('^(?:deb )?(?:https?:\\/\\/\\S*)( \\S)?(?: \\S$)?', '\\1') }}" # extract only the codename portion
-        components: "{{ repo | regex_replace('^(?:deb )?(?:https?:\\/\\/\\S*)( \\S)?( \\S$)?', '\\1') }}" # extract only the component portion
-        signed_by: "{{ gpg_key }}"
+    - name: Add repo source to Apt
+      ansible.builtin.apt_repository:
+        filename: "{{ filename }}"
+        repo: "{{ repo | regex_replace('^(?P<type>deb)?\\ ?(?P<signature>\\[signed-by=\\S+\\])?\\ ?(?P<url>https?://\\S+)\\ ?(?P<suite>\\S+)?\\ ?(?P<component>\\S+)?$', 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] \\g<url>') }}"
+        state: present
 
     - name: Update APT cache
       apt:
