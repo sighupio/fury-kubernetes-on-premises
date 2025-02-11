@@ -13,6 +13,7 @@
 - name: Add Kubernetes APT repository
   vars:
     gpg_key: "{{ dependencies_override.apt.gpg_key | default(dependencies[kubernetes_version].apt.gpg_key) }}"
+    gpg_key_id: "{{ dependencies_override.apt.gpg_key_id | default(dependencies[kubernetes_version].apt.gpg_key_id) }}"
     gpg_keyrings_path: "/etc/apt/keyrings" # use default apt keyrings path
     filename: "{{ dependencies_override.apt.name | default(dependencies[kubernetes_version].apt.name) }}"
     repo: "{{ dependencies_override.apt.repo | default(dependencies[kubernetes_version].apt.repo) }}"
