@@ -12,6 +12,10 @@ This release adds support for Kubernetes version vTBD.
 
 - [[#107](https://github.com/sighupio/fury-kubernetes-on-premises/pull/107)] **Add AlmaLinux support**: this release adds support for the AlmaLinux distribution to the OnPremises provider.
 
+## Bug fixes 🐞
+
+- [[#114](https://github.com/sighupio/fury-kubernetes-on-premises/pull/114)] **Resolve failing upgrades on Debian/Ubuntu on corner cases**: this release fixes failing runs of this installer in cases where a user previously downloaded the K8S APT repository's GPG key in a node (either by using this module or manually, it makes no difference), and that key has expired.
+
 ## Update Guide 🦮
 
 - TBD
