@@ -34,6 +34,21 @@ all:
         kubernetes_svc_cidr: "172.16.0.0/17"
         # Uncomment the following when using the vSphere Cloud Provider
         # kubernetes_cloud_provider: "external"
+    # Uncomment the following when etcd running on dedicated nodes
+    # etcd:
+    #   hosts:
+    #     etcd1:
+    #       ansible_host: "192.168.1.191"
+    #       kubernetes_hostname: "etcd1.example.com"
+    #     etcd2:
+    #       ansible_host: "192.168.1.192"
+    #       kubernetes_hostname: "etcd2.example.com"
+    #     etcd3:
+    #       ansible_host: "192.168.1.193"
+    #       kubernetes_hostname: "etcd3.example.com"
+    #   vars:
+    #     dns_zone: "example.com"
+    #     etcd_initial_cluster: "etcd1=https://etcd1.example.com:2380,etcd2=https://etcd2.example.com:2380,etcd3=https://etcd3.example.com:2380"
     nodes:
       children:
         worker:
