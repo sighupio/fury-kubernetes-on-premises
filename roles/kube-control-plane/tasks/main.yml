@@ -37,6 +37,27 @@
   register: super_admin_conf_stat_result
   when: kubernetes_version is version('1.29.0', 'ge', version_type='semver')
 
+# We are patching the bind-address of the kube-scheduler and kube-controller-manager
+# to be able to scrape metrics from them (kubeadm's feault is 127.0.0.1), we have
+# to patch the liveness and startup probe too in consequence.
+# NOTE: the same patches used here are used for the upgrades, so if you add new
+# patches remember to add them also in the upgrade.yml file.
+- name: Ensuring the patches directory exists
+  ansible.builtin.file:
+    path: "{{ kubeadm_patches_path }}"
+    state: directory
+    mode: "0755"
+
+- name: Copy kube-scheduler patch files
+  ansible.builtin.template:
+    src: patches/kube-scheduler0+json.json.j2
+    dest: "{{ kubeadm_patches_path }}/kube-scheduler0+json.json"
+
+- name: Copy kube-controller-manager patch files
+  ansible.builtin.template:
+    src: patches/kube-controller-manager0+json.json.j2
+    dest: "{{ kubeadm_patches_path }}/kube-controller-manager0+json.json"
+
 - name: Initializing master
   command: "kubeadm init --config={{ kubeadm_config_file }}"
   when:

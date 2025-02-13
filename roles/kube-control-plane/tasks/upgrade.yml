@@ -1,5 +1,5 @@
 - name: Renew certificates
-  command: "{{ item }}"
+  ansible.builtin.command: "{{ item }}"
   with_items:
     - "kubeadm certs renew admin.conf"
     - "kubeadm certs renew apiserver"
@@ -13,25 +13,44 @@
     - "kubeadm certs renew --cert-dir=/etc/etcd/pki etcd-server --config=/etc/etcd/kubeadm-etcd.yml"
 
 - name: Renew `super-admin.conf` certificate
-  command: "kubeadm certs renew super-admin.conf"
+  ansible.builtin.command: "kubeadm certs renew super-admin.conf"
   when: kubernetes_version is version('1.29.0', 'ge', version_type='semver')
 
+# We copy again the patches because we could come from a previous version of
+# the installer that did not use them or the patches could have been updated
+# as part of a new release of the installer.
+- name: Ensuring the patches directory exists
+  ansible.builtin.file:
+    path: "{{ kubeadm_patches_path }}"
+    state: directory
+    mode: "0755"
+
+- name: Copy kube-scheduler patch files
+  ansible.builtin.template:
+    src: patches/kube-scheduler0+json.json.j2
+    dest: "{{ kubeadm_patches_path }}/kube-scheduler0+json.json"
+
+- name: Copy kube-controller-manager patch files
+  ansible.builtin.template:
+    src: patches/kube-controller-manager0+json.json.j2
+    dest: "{{ kubeadm_patches_path }}/kube-controller-manager0+json.json"
+
 - name: Upgrade kubernetes master with kubeadm (legacy)
-  command: kubeadm upgrade apply --config /etc/kubernetes/kubeadm.yml -y
+  ansible.builtin.command: kubeadm upgrade apply --config /etc/kubernetes/kubeadm.yml -y
   when: kubernetes_version is version('1.30.0', 'lt', version_type='semver')
 
 - name: Ensuring kubeadm-upgrade-config.yml config file is present on machine
-  template:
+  ansible.builtin.template:
     src: kubeadm-upgrade-config.yml.j2
     dest: "{{ kubeadm_upgrade_config_file }}"
   when: kubernetes_version is version('1.30.0', 'ge', version_type='semver')
 
 - name: Upgrade kubernetes master with kubeadm
-  command: kubeadm upgrade apply --config /etc/kubernetes/kubeadm-upgrade-config.yml
+  ansible.builtin.command: kubeadm upgrade apply --config /etc/kubernetes/kubeadm-upgrade-config.yml
   when: kubernetes_version is version('1.30.0', 'ge', version_type='semver')
 
 - name: Restart etcd service
-  systemd:
+  ansible.builtin.systemd:
     name: etcd
     daemon_reload: yes
     state: restarted
