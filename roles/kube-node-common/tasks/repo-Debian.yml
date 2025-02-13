@@ -36,13 +36,13 @@
         path: "{{ gpg_keyrings_path }}"
         state: directory
 
-    - name: Import Kubernetes APT public key
+    - name: Download public key for Kubernetes APT repository
       ansible.builtin.get_url:
         url: "{{ gpg_key }}"
         dest: "/tmp/kubernetes-apt-keyring.gpg.armored"
         force: true # always download the latest remote key to avoid expiration of the local one
 
-    - name: Dearmor GPG key
+    - name: Dearmor and install public key for Kubernetes APT repository
       block:
         - file:
             path: "{{ gpg_keyrings_path }}/kubernetes-apt-keyring.gpg"
@@ -50,7 +50,7 @@
         - ansible.builtin.shell:
             cmd: "gpg --dearmor -o {{ gpg_keyrings_path }}/kubernetes-apt-keyring.gpg < /tmp/kubernetes-apt-keyring.gpg.armored"
 
-    - name: Add repo source to APT
+    - name: Add Kubernetes APT repository to APT sources
       ansible.builtin.apt_repository:
         filename: "{{ filename }}"
 
