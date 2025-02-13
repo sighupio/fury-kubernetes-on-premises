@@ -95,7 +95,7 @@ dependencies:
 
 dependencies_override: {}
 
-# Old repo that was removed on February 2024, we need to maintain this variables to ensure the removal of the old repo from nodes
+# Old repo that was removed on February 2024, we need to maintain these variables to ensure the removal of the old repo from nodes
 
 # Kubernetes components versions
 kubernetes_repo_distribution: "xenial"
