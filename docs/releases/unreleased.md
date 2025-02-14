@@ -16,6 +16,8 @@ This release adds support for Kubernetes version vTBD.
 
 - [[#114](https://github.com/sighupio/fury-kubernetes-on-premises/pull/114)] **Resolve failing upgrades on Debian/Ubuntu on corner cases**: this release fixes failing runs of this installer in cases where a user previously downloaded the K8S APT repository's GPG key in a node (either by using this module or manually, it makes no difference), and that key has expired.
 
+- [[#117](https://github.com/sighupio/fury-kubernetes-on-premises/pull/117)] **Fix upgrade to 1.31**: this release fixes the upgrade process to Kubernetes 1.31 that previously could result in either an error or finish without errors but kube-scheduler and kube-controller-manager would be in crash loop.
+
 ## Update Guide 🦮
 
 - TBD

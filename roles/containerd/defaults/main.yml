@@ -48,7 +48,7 @@ versions:
   1.31.4:
     containerd_version: "1.7.23"
     runc_version: "v1.1.14" # use this link (with the correct tag) to know which version of runc is needed https://github.com/containerd/containerd/blob/v1.7.23/script/setup/runc-version
-    sandbox_image: "{{ kubernetes_image_registry }}/pause:3.9"
+    sandbox_image: "{{ kubernetes_image_registry }}/pause:3.10"
 
 # Service options.
 containerd_service_state: started
