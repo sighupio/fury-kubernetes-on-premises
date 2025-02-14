@@ -26,7 +26,7 @@ To be able to run the examples, you need to have the following software installe
 
 One of the following supported Operating Systems on the target machines:
 
-- Ubuntu 20.04 LTS
+- Ubuntu 24.04 LTS
 - RHEL 8
 - Rocky 8
 - Debian 12
