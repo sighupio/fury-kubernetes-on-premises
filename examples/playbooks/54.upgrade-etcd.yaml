@@ -62,29 +62,28 @@
   tasks:
     - name: Fetching certificates from etcd
       run_once: true
-      delegate_to: "{{ print "{{ groups.etcd[0] }}" }}"
+      delegate_to: "{{ groups.etcd[0] }}"
       fetch:
-        src: "/etc/etcd/pki/{{ print "{{ item }}" }}"
+        src: "/etc/etcd/pki/{{ item }}"
         dest: "/tmp/etcd-certs/"
         flat: yes
-      with_items: "{{ print "{{ etcd_certs }}" }}"
+      with_items: "{{ etcd_certs }}"
       when: not etcd_on_control_plane | bool
-
     - name: Copying certificates to control plane nodes
       run_once: true
       copy:
-        src: "/tmp/etcd-certs/{{ print "{{ item[1] | basename }}" }}"
-        dest: "/etc/etcd/pki/{{ print "{{ item[1] }}" }}"
+        src: "/tmp/etcd-certs/{{ item[1] | basename }}"
+        dest: "/etc/etcd/pki/{{ item[1] }}"
         owner: root
         group: root
         mode: '0640'
-      loop: "{{ print "{{ groups['master'] | product(etcd_certs) | list }}" }}"
+      loop: "{{ groups['master'] | product(etcd_certs) | list }}"
       loop_control:
         loop_var: item
       vars:
-        master: "{{ print "{{ item[0] }}" }}"
-        cert: "{{ print "{{ item[1] }}" }}"
-      delegate_to: "{{ print "{{ item[0] }}" }}"
+        master: "{{ item[0] }}"
+        cert: "{{ item[1] }}"
+      delegate_to: "{{ item[0] }}"
       when: not etcd_on_control_plane | bool
 
     - name: Cleaning up temporary certificates
