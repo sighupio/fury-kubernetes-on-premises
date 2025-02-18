@@ -7,6 +7,8 @@ nodeRegistration:
 localAPIEndpoint:
   advertiseAddress: {{ kubernetes_apiserver_advertise_address }}
   bindPort: 6443
+patches:
+  directory: {{ kubeadm_patches_path }}
 ---
 apiVersion: kubeadm.k8s.io/v1beta3
 kind: ClusterConfiguration
@@ -93,13 +95,11 @@ scheduler:
 {% if tls_cipher_suites != "" %}
     tls-cipher-suites: {{ tls_cipher_suites | join(',') }}
 {% endif %}
-    bind-address: {{ ansible_default_ipv4.address }}
 controllerManager:
   extraArgs:
 {% if tls_cipher_suites != "" %}
     tls-cipher-suites: {{ tls_cipher_suites | join(',') }}
 {% endif %}
-    bind-address: {{ ansible_default_ipv4.address }}
     cloud-provider: {{ kubernetes_cloud_provider }}
 {% if kubernetes_cloud_config != "" %}
     cloud-config: {{ kubernetes_cloud_config }}

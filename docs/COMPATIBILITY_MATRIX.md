@@ -8,7 +8,8 @@
 | v1.29.3-rev.1                       |                    |                    |                    | :white_check_mark: |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | v1.29.3-rev.2                       |                    |                    |                    | :white_check_mark: |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | v1.30.6                             |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |                    |                    |                    |                    |                    |                    |                    |
-| v1.31.4                             | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |                    |                    |                    |                    |                    |                    |                    |
+| v1.31.4                             |     :warning:      | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |                    |                    |                    |                    |                    |                    |                    |
+| v1.31.4-rev.1                       | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |                    |                    |                    |                    |                    |                    |                    |
 
 All versions below v1.28.7 will not work due to the removal of the old package registry managed by google.
 
@@ -17,3 +18,7 @@ All versions below v1.28.7 will not work due to the removal of the old package r
 | :white_check_mark: | Compatible   |
 |     :warning:      | Has issues   |
 |        :x:         | Incompatible |
+
+## Warnings
+
+- v1.31.4 has a known issue that affects the upgrade process, please use v1.31.4-rev.1 instead. See issue [#115](https://github.com/sighupio/fury-kubernetes-on-premises/issues/115) for more information.

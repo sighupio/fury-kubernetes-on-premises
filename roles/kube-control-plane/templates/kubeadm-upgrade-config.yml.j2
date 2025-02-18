@@ -3,3 +3,5 @@ kind: UpgradeConfiguration
 apply:
     kubernetesVersion: {{ kubernetes_version }}
     forceUpgrade: true
+    patches:
+      directory: {{ kubeadm_patches_path }}
