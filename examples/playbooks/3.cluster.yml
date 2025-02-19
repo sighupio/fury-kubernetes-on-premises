@@ -3,7 +3,7 @@
 # license that can be found in the LICENSE file.
 
 - name: Copy etcd and master PKIs
-  hosts: master
+  hosts: master,etcd
   become: true
   vars:
     pki_dir: ./pki
@@ -50,15 +50,15 @@
     - pki
 
 - name: Kubernetes node preparation
-  hosts: master,nodes
+  hosts: master,nodes,etcd
   become: true
   roles:
     - kube-node-common
   tags:
     - kube-node-common
 
-- name: etcd cluster preparation
-  hosts: master
+- name: Etcd cluster preparation
+  hosts: etcd
   become: true
   vars:
     etcd_address: "{{ ansible_host }}"
