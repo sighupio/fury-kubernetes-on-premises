@@ -44,24 +44,40 @@
       register: kubernetes_version
       when: inventory_hostname in groups['master']
 
-    - name: Ensure rsync is installed
-      package:
-        name:
-          - rsync
-        state: latest
+    - name: Set backup timestamp
+      set_fact:
+        backup_timestamp: "{{ lookup('pipe', 'date +%Y-%m-%d_%H-%M-%S') }}"
 
-    - name: Backup Kubernetes certs
-      shell: |
-        BCK_FOLDER=$HOME/certs-backup/$(date +%Y-%m-%d_%H-%M-%S)
-        mkdir -p $BCK_FOLDER/etc-kubernetes $BCK_FOLDER/etc-etcd-pki
-        rsync -av /etc/kubernetes/ $BCK_FOLDER/etc-kubernetes --exclude tmp
+    - name: Ensure Kubernetes backup directory exists
+      file:
+        path: "{{ ansible_env.HOME }}/certs-backup/{{ backup_timestamp }}/etc-kubernetes-pki"
+        state: directory
+        mode: '0750'
       when: inventory_hostname in groups['master']
 
-    - name: Backup etcd certs
-      shell: |
-        BCK_FOLDER=$HOME/certs-backup/$(date +%Y-%m-%d_%H-%M-%S)
-        mkdir -p $BCK_FOLDER/etc-etcd-pki
-        rsync -av /etc/etcd/pki/ $BCK_FOLDER/etc-etcd-pki
+    - name: Ensure etcd backup directory exists
+      file:
+        path: "{{ ansible_env.HOME }}/certs-backup/{{ backup_timestamp }}/etc-etcd-pki"
+        state: directory
+        mode: '0750'
+      when: inventory_hostname in groups['etcd']
+
+    - name: Backup Kubernetes certificates
+      copy:
+        src: /etc/kubernetes/pki
+        dest: "{{ ansible_env.HOME }}/certs-backup/{{ backup_timestamp }}/etc-kubernetes-pki"
+        remote_src: yes
+        mode: preserve
+        directory_mode: '0750'
+      when: inventory_hostname in groups['master']
+
+    - name: Backup etcd certificates
+      copy:
+        src: /etc/etcd/pki/
+        dest: "{{ ansible_env.HOME }}/certs-backup/{{ backup_timestamp }}/etc-etcd-pki"
+        remote_src: yes
+        mode: preserve
+        directory_mode: '0750'
       when: inventory_hostname in groups['etcd']
 
     - name: Renew Kubernetes control plane certs
