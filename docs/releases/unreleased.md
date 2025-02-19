@@ -10,7 +10,6 @@ This release adds support for Kubernetes version vTBD.
 
 ## New features 🌟
 
-- [[#107](https://github.com/sighupio/fury-kubernetes-on-premises/pull/107)] **Add AlmaLinux support**: this release adds support for the AlmaLinux distribution to the OnPremises provider.
 - [[#116](ttps://github.com/sighupio/fury-kubernetes-on-premises/pull/116)] **Add support for etcd cluster on dedicated nodes**: adding support for deploying etcd on dedicated nodes instead of control plane nodes to the OnPremises provider.
 
 ## Update Guide 🦮
