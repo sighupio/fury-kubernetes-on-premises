@@ -28,38 +28,8 @@
     enabled: yes
     state: started
 
-- name: Set backup timestamp
-  set_fact:
-    backup_timestamp: "{{ lookup('pipe', 'date +%Y-%m-%d_%H-%M-%S') }}"
-
-- name: Ensure etcd backup directory exists
-  file:
-    path: "{{ ansible_env.HOME }}/certs-backup/{{ backup_timestamp }}/etc-etcd-pki"
-    state: directory
-    mode: '0750'
-  when: upgrade
-
-- name: Backup etcd certificates
-  copy:
-    src: /etc/etcd/pki/
-    dest: "{{ ansible_env.HOME }}/certs-backup/{{ backup_timestamp }}/etc-etcd-pki"
-    remote_src: yes
-  when: upgrade
-
-- name: Renewing etcd certificates
-  command: "{{ item }}"
-  loop:
-    - "kubeadm certs renew --cert-dir=/etc/etcd/pki apiserver-etcd-client --config=/etc/etcd/kubeadm-etcd.yml"
-    - "kubeadm certs renew --cert-dir=/etc/etcd/pki etcd-healthcheck-client --config=/etc/etcd/kubeadm-etcd.yml"
-    - "kubeadm certs renew --cert-dir=/etc/etcd/pki etcd-peer --config=/etc/etcd/kubeadm-etcd.yml"
-    - "kubeadm certs renew --cert-dir=/etc/etcd/pki etcd-server --config=/etc/etcd/kubeadm-etcd.yml"
-  when: upgrade
-
-- name: Restarting etcd service
-  systemd:
-    name: etcd
-    daemon_reload: yes
-    state: restarted
+- name: Renewal etcd certificates
+  import_tasks: renewal.yml
   when: upgrade
 
 - name: Distribute etcd certificates from etcd to control plane nodes
