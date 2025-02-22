@@ -14,5 +14,6 @@ etcd_certs:
   - etcd/ca.crt
   - apiserver-etcd-client.crt
   - apiserver-etcd-client.key
+etcd_on_control_plane: true
 tls_cipher_suites: ""
-upgrade: False
+upgrade: false
