@@ -6,15 +6,15 @@
 - name: Fetching certificates from etcd
   run_once: true
   delegate_to: "{{ groups.etcd[0] }}"
-  fetch:
+  ansible.builtin.fetch:
     src: "/etc/etcd/pki/{{ item }}"
     dest: "/tmp/etcd-certs/"
-    flat: yes
+    flat: true
   with_items: "{{ etcd_certs }}"
-  
+
 - name: Copying certificates to control plane nodes
   run_once: true
-  copy:
+  ansible.builtin.copy:
     src: "/tmp/etcd-certs/{{ item[1] | basename }}"
     dest: "/etc/etcd/pki/{{ item[1] }}"
     owner: root
@@ -32,6 +32,6 @@
   run_once: true
   become: false
   delegate_to: localhost
-  file:
+  ansible.builtin.file:
     path: /tmp/etcd-certs
     state: absent
