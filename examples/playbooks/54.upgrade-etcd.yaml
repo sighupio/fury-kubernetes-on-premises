@@ -22,6 +22,6 @@
     - name: Include kube-node-common role
       include_role:
         name: kube-node-common
-      when: not etcd_on_control_plane | bool
+      when: not etcd_on_control_plane
   tags:
     - kube-node-common

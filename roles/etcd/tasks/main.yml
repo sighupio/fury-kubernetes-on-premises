@@ -34,4 +34,4 @@
 
 - name: Distribute etcd certificates from etcd to control plane nodes
   import_tasks: distribute.yml
-  when: not etcd_on_control_plane | bool
+  when: not etcd_on_control_plane
