@@ -29,9 +29,9 @@
     state: started
 
 - name: Renewal etcd certificates
-  import_tasks: renewal.yml
-  when: upgrade
+  ansible.builtin.import_tasks: certs_renewal.yaml
+  when: etcd_upgrade
 
 - name: Distribute etcd certificates from etcd to control plane nodes
-  import_tasks: distribute.yml
+  ansible.builtin.import_tasks: certs_distribution.yaml
   when: not etcd_on_control_plane

@@ -9,7 +9,7 @@
   become: true
   vars:
     etcd_address: "{{ ansible_host }}"
-    upgrade: True
+    etcd_upgrade: true
   roles:
     - etcd
   tags:
