@@ -20,7 +20,7 @@
   hosts: etcd
   tasks:
     - name: Include kube-node-common role
-      include_role:
+      ansible.builtin.include_role:
         name: kube-node-common
       when: not etcd_on_control_plane
   tags:
