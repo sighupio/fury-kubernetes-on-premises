@@ -23,9 +23,6 @@
   loop: "{{ groups['master'] | product(etcd_certs) | list }}"
   loop_control:
     loop_var: item
-  vars:
-    master: "{{ item[0] }}"
-    cert: "{{ item[1] }}"
   delegate_to: "{{ item[0] }}"
 
 - name: Cleaning up temporary certificates
