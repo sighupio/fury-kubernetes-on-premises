@@ -10,4 +10,10 @@ etcd_address: "{{ ansible_default_ipv4.address }}"
 etcd_initial_cluster: "https://localhost:2380"
 etcd_initial_cluster_state: "new"
 etcd_client_address: 127.0.0.1
+etcd_certs:
+  - etcd/ca.crt
+  - apiserver-etcd-client.crt
+  - apiserver-etcd-client.key
+etcd_on_control_plane: true
+etcd_upgrade: false
 tls_cipher_suites: ""
