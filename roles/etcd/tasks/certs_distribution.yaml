@@ -7,7 +7,7 @@
   run_once: true
   delegate_to: "{{ groups.etcd[0] }}"
   ansible.builtin.fetch:
-    src: "/etc/etcd/pki/{{ item }}"
+    src: "{{ etcd_certs_dir }}/{{ item }}"
     dest: "/tmp/etcd-certs/"
     flat: true
   with_items: "{{ etcd_certs }}"
@@ -16,7 +16,7 @@
   run_once: true
   ansible.builtin.copy:
     src: "/tmp/etcd-certs/{{ item[1] | basename }}"
-    dest: "/etc/etcd/pki/{{ item[1] }}"
+    dest: "{{ etcd_certs_dir }}/{{ item[1] }}"
     owner: root
     group: root
     mode: '0640'

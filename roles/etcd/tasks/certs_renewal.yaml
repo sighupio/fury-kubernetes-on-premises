@@ -15,7 +15,7 @@
 
 - name: Backup etcd certificates
   ansible.builtin.copy:
-    src: /etc/etcd/pki/
+    src: "{{ etcd_certs_dir }}/"
     dest: "{{ ansible_env.HOME }}/certs-backup/{{ backup_timestamp }}/etc-etcd-pki"
     remote_src: true
     mode: '0600'
