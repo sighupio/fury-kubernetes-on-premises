@@ -42,7 +42,7 @@ The cluster is composed of:
 - 3 Master nodes
 - 3 Worker nodes
 
-In the default setup, we also deploy etcd on the master nodes as a standalone systemd service. However, installation of the etcd cluster on dedicated nodes is also supported.
+In the default setup, we also deploy etcd on the control-plane nodes as a standalone systemd service. However, installation of the etcd cluster on dedicated nodes is also supported.
 
 Check the following files for a complete example:
 
