@@ -10,7 +10,8 @@ This release adds support for Kubernetes version vTBD.
 
 ## New features 🌟
 
-- [[#116](ttps://github.com/sighupio/fury-kubernetes-on-premises/pull/116)] **Add support for etcd cluster on dedicated nodes**: adding support for deploying etcd on dedicated nodes instead of control plane nodes to the OnPremises provider. Using this feature needs some fields to be set in the Ansible inventory file, see the [/examples/playbooks/hosts.yaml](/examples/playbooks/hosts.yaml) file for an example (note: this is a breaking change).
+- [[#116](ttps://github.com/sighupio/fury-kubernetes-on-premises/pull/116)] **Add support for etcd cluster on dedicated nodes**: adding support for deploying etcd on dedicated nodes instead of control plane nodes to the OnPremises provider. 
+Using this feature needs some fields to be set in the Ansible inventory file, see the [/examples/playbooks/hosts.yaml](/examples/playbooks/hosts.yaml) file for an example (note: this is a breaking change).
 
 ## Breaking Changes 💔
 
