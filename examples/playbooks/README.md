@@ -12,9 +12,11 @@ to on-premises virtual machines at version 1.23.12 and then how to upgrade it to
       - [Containerd](#containerd)
     - [Install the Load Balancer](#install-the-load-balancer)
     - [Provision Master and Worker Nodes](#provision-master-and-worker-nodes)
-  - [Upgrade cluster](#upgrade-cluster)
+  - [Upgrade etcd cluster](#upgrade-etcd-cluster)
+  - [Upgrade Kubernetes cluster](#upgrade-kubernetes-cluster)
   - [Utilities](#utilities)
     - [How to migrate from Docker to Containerd](#how-to-migrate-from-docker-to-containerd)
+    - [How to renew Kubernetes PKI certificates](#how-to-renew-kubernetes-pki-certificates)
 
 ## Requirements
 
@@ -40,7 +42,7 @@ The cluster is composed of:
 - 3 Master nodes
 - 3 Worker nodes
 
-In the master nodes we also deploy etcd as a standalone systemd service.
+In the default setup, we also deploy etcd on the master nodes as a standalone systemd service. However, installation of the etcd cluster on dedicated nodes is also supported.
 
 Check the following files for a complete example:
 
@@ -104,7 +106,8 @@ ansible-playbook 2.load-balancer.yml
 
 Now that all the prerequisites are installed, we can provision the Kubernetes master and worker nodes.
 
-The `3.cluster.yml` playbook needs some variables to be set in the `hosts.ini` file, double-check that everything is ok.
+The `3.cluster.yml` playbook needs some variables to be set in the `hosts.yaml` file, double-check that everything is ok.
+There is also a commented example of the fields and variables needed to install etcd on separated nodes.
 
 Run the playbook with:
 
@@ -112,7 +115,17 @@ Run the playbook with:
 ansible-playbook 3.cluster.yml
 ```
 
-## Upgrade cluster
+## Upgrade etcd cluster
+
+Starting from version v1.32.x, in this folder there is a dedicated playbook to upgrade the etcd cluster.
+
+You need to upgrade etcd version with the `54.upgrade-etcd.yaml` playbook with:
+
+```bash
+ansible-playbook 54.upgrade-etcd.yaml --limit etcd
+```
+
+## Upgrade Kubernetes cluster
 
 In this folder there are two playbooks to upgrade the cluster to a new kubernetes version.
 
@@ -156,4 +169,12 @@ It must be executed **one node at a time**:
 
 ```bash
 ansible-playbook 99.migrate-docker-to-containerd.yml --limit worker1
+```
+
+### How to renew Kubernetes PKI certificates
+
+This playbook automates the Kubernetes and etcd certificates renewal process, there is an example in this directory `98.cluster-certificates-renewal.yaml`.
+
+```bash
+ansible-playbook 98.cluster-certificates-renewal.yaml
 ```

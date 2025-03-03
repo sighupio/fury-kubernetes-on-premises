@@ -10,7 +10,7 @@ This release adds support for Kubernetes version vTBD.
 
 ## New features 🌟
 
-- [[#116](ttps://github.com/sighupio/fury-kubernetes-on-premises/pull/116)] **Add support for etcd cluster on dedicated nodes**: adding support for deploying etcd on dedicated nodes instead of control plane nodes to the OnPremises provider.
+- [[#116](ttps://github.com/sighupio/fury-kubernetes-on-premises/pull/116)] **Add support for etcd cluster on dedicated nodes**: adding support for deploying etcd on dedicated nodes instead of control plane nodes to the OnPremises provider. That change needs some fields to be set in the inventory, see the `hosts.yaml` example file and double-check that everything is ok.
 
 ## Update Guide 🦮
 
