@@ -44,6 +44,20 @@ all:
         kubernetes_svc_cidr: "172.16.0.0/17"
         # Uncomment the following when using the vSphere Cloud Provider
         # kubernetes_cloud_provider: "external"
+    # Comment the following when etcd running on dedicated nodes
+    etcd:
+      hosts:
+        master1:
+          ansible_host: 192.168.1.181
+          kubernetes_hostname: master1.example.com
+        master2:
+          ansible_host: 192.168.1.182
+          kubernetes_hostname: master2.example.com
+        master3:
+          ansible_host: 192.168.1.183
+          kubernetes_hostname: master3.example.com
+      vars:
+        dns_zone: "example.com"
     # Uncomment the following when etcd running on dedicated nodes
     # etcd:
     #   hosts:
