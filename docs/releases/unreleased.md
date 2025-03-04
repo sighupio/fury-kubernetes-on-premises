@@ -10,7 +10,7 @@ This release adds support for Kubernetes version vTBD.
 
 ## New features 🌟
 
-- [[#116](ttps://github.com/sighupio/fury-kubernetes-on-premises/pull/116)] **Add support for etcd cluster on dedicated nodes**: adding support for deploying etcd on dedicated nodes instead of control plane nodes to the OnPremises provider.
+- [[#116](https://github.com/sighupio/fury-kubernetes-on-premises/pull/116)] **Add support for etcd cluster on dedicated nodes**: adding support for deploying etcd on dedicated nodes instead of control plane nodes to the OnPremises provider.
 Using this feature needs some fields to be set in the Ansible inventory file, see the [/examples/playbooks/hosts.yaml](/examples/playbooks/hosts.yaml) file for an example (note: this is a breaking change).
 
 ## Breaking Changes 💔
@@ -20,7 +20,7 @@ Using this feature needs some fields to be set in the Ansible inventory file, se
 ## Update Guide 🦮
 
 - TBD
-- Inventory file update required: before upgrading users must update their Ansible inventory files to include the etcd group. To maintain etcd on control plane nodes without any change, make sure to define the etcd group with the same names and hosts as your control plane nodes.
+- Inventory file update required: before upgrading users must update their Ansible inventory file to include the etcd group. To maintain etcd on control plane nodes without any change, make sure to define the etcd group with the same names and hosts as your control plane nodes and add the global variable `etcd_on_control_plane`.
     ```yaml
     all:
       children:
@@ -38,6 +38,10 @@ Using this feature needs some fields to be set in the Ansible inventory file, se
               kubernetes_hostname: master3.example.com
           vars:
             dns_zone: "example.com"
+        ...
+      vars:
+        ...
+        etcd_on_control_plane: true
         ...
     ```
 
