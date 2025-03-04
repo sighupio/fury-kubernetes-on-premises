@@ -1,13 +1,4 @@
 ---
-- name: Upgrade etcd
-  hosts: master
-  become: true
-  serial: 1
-  roles:
-    - etcd
-  tags:
-    - kubeadm-upgrade
-
 - name: Control plane upgrade
   hosts: master
   become: true

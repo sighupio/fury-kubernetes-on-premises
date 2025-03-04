@@ -27,13 +27,55 @@ all:
           kubernetes_hostname: master3.example.com
       vars:
         dns_zone: "example.com"
+        # Comment the following when etcd running on dedicated nodes
         etcd_initial_cluster: "master1=https://master1.example.com:2380,master2=https://master2.example.com:2380,master3=https://master3.example.com:2380"
+        # Uncomment the following when etcd running on dedicated nodes
+        # etcd:
+        #   endpoints:
+        #     - "https://etcd1.example.com:2379"
+        #     - "https://etcd2.example.com:2379"
+        #     - "https://etcd3.example.com:2379"
+        #   caFile: "/etc/etcd/pki/etcd/ca.crt"
+        #   keyFile: "/etc/etcd/pki/apiserver-etcd-client.key"
+        #   certFile: "/etc/etcd/pki/apiserver-etcd-client.crt"
         kubernetes_cluster_name: sighup
         kubernetes_control_plane_address: control-plane.example.com:6443
         kubernetes_pod_cidr: "172.16.128.0/17"
         kubernetes_svc_cidr: "172.16.0.0/17"
         # Uncomment the following when using the vSphere Cloud Provider
         # kubernetes_cloud_provider: "external"
+    # Comment the following when etcd running on dedicated nodes
+    etcd:
+      hosts:
+        master1:
+          ansible_host: 192.168.1.181
+          kubernetes_hostname: master1.example.com
+        master2:
+          ansible_host: 192.168.1.182
+          kubernetes_hostname: master2.example.com
+        master3:
+          ansible_host: 192.168.1.183
+          kubernetes_hostname: master3.example.com
+      vars:
+        dns_zone: "example.com"
+    # Uncomment the following when etcd running on dedicated nodes
+    # etcd:
+    #   hosts:
+    #     etcd1:
+    #       ansible_host: "192.168.1.191"
+    #       kubernetes_hostname: "etcd1.example.com"
+    #       etcd_client_address: "192.168.1.191"
+    #     etcd2:
+    #       ansible_host: "192.168.1.192"
+    #       kubernetes_hostname: "etcd2.example.com"
+    #       etcd_client_address: "192.168.1.192"
+    #     etcd3:
+    #       ansible_host: "192.168.1.193"
+    #       kubernetes_hostname: "etcd3.example.com"
+    #       etcd_client_address: "192.168.1.193"
+    #   vars:
+    #     dns_zone: "example.com"
+    #     etcd_initial_cluster: "etcd1=https://etcd1.example.com:2380,etcd2=https://etcd2.example.com:2380,etcd3=https://etcd3.example.com:2380"
     nodes:
       children:
         worker:
@@ -65,6 +107,8 @@ all:
     # kubernetes_version: "1.29.10"
     # kubernetes_version: "1.30.6"
     kubernetes_version: "1.31.4"
+    # Switch to false the following field when etcd running on dedicated nodes
+    etcd_on_control_plane: true
     admin_kubeconfig_filename: admin.conf
     containerd_registry_configs: {}
     # configuration should use the following format:

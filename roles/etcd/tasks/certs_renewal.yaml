@@ -1,0 +1,36 @@
+# Copyright (c) 2017-present SIGHUP s.r.l All rights reserved.
+# Use of this source code is governed by a BSD-style
+# license that can be found in the LICENSE file.
+
+---
+- name: Set backup timestamp
+  ansible.builtin.set_fact:
+    backup_timestamp: "{{ lookup('pipe', 'date +%Y-%m-%d_%H-%M-%S') }}"
+
+- name: Ensure etcd backup directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/certs-backup/{{ backup_timestamp }}/etc-etcd-pki"
+    state: directory
+    mode: '0750'
+
+- name: Backup etcd certificates
+  ansible.builtin.copy:
+    src: "{{ etcd_certs_dir }}/"
+    dest: "{{ ansible_env.HOME }}/certs-backup/{{ backup_timestamp }}/etc-etcd-pki"
+    remote_src: true
+    mode: '0600'
+
+- name: Renewing etcd certificates
+  ansible.builtin.command: "{{ item }}"
+  loop:
+    - "kubeadm certs renew --cert-dir=/etc/etcd/pki --config=/etc/etcd/kubeadm-etcd.yml apiserver-etcd-client"
+    - "kubeadm certs renew --cert-dir=/etc/etcd/pki --config=/etc/etcd/kubeadm-etcd.yml etcd-healthcheck-client"
+    - "kubeadm certs renew --cert-dir=/etc/etcd/pki --config=/etc/etcd/kubeadm-etcd.yml etcd-peer"
+    - "kubeadm certs renew --cert-dir=/etc/etcd/pki --config=/etc/etcd/kubeadm-etcd.yml etcd-server"
+  changed_when: true
+
+- name: Restarting etcd service
+  ansible.builtin.systemd:
+    name: etcd
+    daemon_reload: true
+    state: restarted
