@@ -1,4 +1,4 @@
-# On Premises module release vTBD
+# On Premises module release v1.32.0
 
 Welcome to the latest release of `on-premises` module of [`Kubernetes Fury Distribution`](https://github.com/sighupio/fury-distribution) maintained by SIGHUP team.
 
@@ -6,7 +6,14 @@ This release adds support for Kubernetes version vTBD.
 
 ## Package Versions 🚢
 
-- TBD
+| Package                                        | Supported Version | Previous Version |
+| ---------------------------------------------- | ----------------- | ---------------- |
+| [etcd](roles/etcd)                             | `3.5.16`          | `Updated`        |
+| [haproxy](roles/haproxy)                       | `3.0`             | `No update`      |
+| [containerd](roles/containerd)                 | `1.7.26`          | `Updated`        |
+| [kube-node-common](roles/kube-node-common)     | `-`               | `Updated`        |
+| [kube-control-plane](roles/kube-control-plane) | `-`               | `Updated`        |
+| [kube-worker](roles/kube-worker)               | `-`               | `No update`      |
 
 ## New features 🌟
 
