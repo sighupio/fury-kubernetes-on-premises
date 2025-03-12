@@ -1,0 +1,104 @@
+etcd:
+  external:
+    endpoints:
+{{ etcd.endpoints | to_nice_yaml | indent(4, true) }}
+    caFile: {{ etcd.caFile }}
+    certFile: {{ etcd.certFile }}
+    keyFile: {{ etcd.keyFile }}
+clusterName: {{ kubernetes_cluster_name }}
+kubernetesVersion: {{ kubernetes_version }}
+imageRepository: "{{ kubernetes_image_registry }}"
+controlPlaneEndpoint: {{ kubernetes_control_plane_address }}
+dns:
+{% if coredns_image_prefix != "" %}
+  imageRepository: {{ kubernetes_image_registry }}{{ coredns_image_prefix }}
+{% endif %}
+apiServer:
+{% if kubernetes_apiserver_certSANs | length %}
+  certSANs:
+{{ kubernetes_apiserver_certSANs | to_nice_yaml | indent(2, true) -}}
+{% endif %}
+  extraArgs:
+{% if tls_cipher_suites != "" %}
+    tls-cipher-suites: {{ tls_cipher_suites | join(',') }}
+{% endif %}
+    enable-admission-plugins: "NamespaceLifecycle,LimitRanger,PodNodeSelector,ServiceAccount,DefaultStorageClass,DefaultTolerationSeconds,MutatingAdmissionWebhook,ValidatingAdmissionWebhook,ResourceQuota"
+    cloud-provider: {{ kubernetes_cloud_provider }}
+{% if kubernetes_cloud_config != "" %}
+    cloud-config: {{ kubernetes_cloud_config }}
+{% endif %}
+    audit-log-maxage: "{{ audit_policy_max_age }}"
+    audit-log-path: "{{ audit_log_dir }}/kube-apiserver-audit.log"
+    audit-policy-file: {{ audit_policy_config_path }}
+    audit-log-maxsize: "50"
+    audit-log-maxbackup: "20"
+{% if kubernetes_encryption_config != "" %}
+    encryption-provider-config: {{ kubernetes_remote_encryption_config }}
+{% endif %}
+{% if oidc_issuer_url != "" %}
+    oidc-issuer-url: {{ oidc_issuer_url }}
+    oidc-client-id: {{ oidc_client_id }}
+    oidc-ca-file: {{ oidc_ca_file }}
+    oidc-username-claim: "{{ oidc_username_claim }}"
+    oidc-username-prefix: "{{ oidc_username_prefix }}"
+    oidc-groups-claim: "{{ oidc_groups_claim }}"
+    oidc-groups-prefix: "{{ oidc_groups_prefix }}"
+{% endif %}
+{% if service_account_issuer is defined %}
+    service-account-issuer: "{{ service_account_issuer }}"
+{% endif %}
+{% if api_audiences is defined %}
+    api-audiences: "{{ api_audiences }}"
+{% endif %}
+  extraVolumes:
+  - name: audit-files
+    hostPath: {{ audit_log_dir }}
+    mountPath: {{ audit_log_dir }}
+    readOnly: false
+    pathType: Directory
+  - name: audit-policy
+    hostPath: {{ audit_policy_config_path }}
+    mountPath: {{ audit_policy_config_path }}
+    readOnly: true
+    pathType: File
+{% if kubernetes_encryption_config != "" %}
+  - name: encryption-configuration
+    hostPath: {{ kubernetes_remote_encryption_config }}
+    mountPath: {{ kubernetes_remote_encryption_config }}
+    readOnly: true
+    pathType: File
+{% endif %}
+{% if kubernetes_cloud_config != "" %}
+  - name: cloud
+    hostPath: {{ kubernetes_cloud_config }}
+    mountPath: {{ kubernetes_cloud_config }}
+    readOnly: true
+    pathType: File
+{% endif %}
+  timeoutForControlPlane: 4m0s
+scheduler:
+  extraArgs:
+{% if tls_cipher_suites != "" %}
+    tls-cipher-suites: {{ tls_cipher_suites | join(',') }}
+{% endif %}
+controllerManager:
+  extraArgs:
+{% if tls_cipher_suites != "" %}
+    tls-cipher-suites: {{ tls_cipher_suites | join(',') }}
+{% endif %}
+    cloud-provider: {{ kubernetes_cloud_provider }}
+{% if kubernetes_cloud_config != "" %}
+    cloud-config: {{ kubernetes_cloud_config }}
+{% endif %}
+{% if kubernetes_cloud_config != "" %}
+  extraVolumes:
+  - name: cloud
+    hostPath: {{ kubernetes_cloud_config }}
+    mountPath: {{ kubernetes_cloud_config }}
+    readOnly: true
+    pathType: File
+{% endif %}
+networking:
+  podSubnet: {{ kubernetes_pod_cidr }}
+  serviceSubnet: {{ kubernetes_svc_cidr }}
+  dnsDomain: "cluster.local"

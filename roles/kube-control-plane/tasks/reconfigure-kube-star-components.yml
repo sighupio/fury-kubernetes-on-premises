@@ -1,0 +1,26 @@
+- name: Dump kubeadm-config
+  ansible.builtin.command: kubectl get cm kubeadm-config -o jsonpath='{.data.ClusterConfiguration}' --kubeconfig /etc/kubernetes/admin.conf > /etc/kubernetes/kubeadm-config-ClusterConfiguration-dump.yaml
+
+- name: Generate patch file from template
+  template:
+    src: patch-ClusterConfiguration.yml.j2
+    dest: /etc/kubernetes/kubeadm-config-ClusterConfiguration-patch.yaml
+
+- name: Read original YAML
+  set_fact:
+    original: "{{ lookup('file', '/etc/kubernetes/kubeadm-config-ClusterConfiguration-dump.yaml') | from_yaml }}"
+
+- name: Read patch YAML
+  set_fact:
+    patch: "{{ lookup('file', '/etc/kubernetes/kubeadm-config-ClusterConfiguration-patch.yaml') | from_yaml }}"
+
+- name: Merge patch into original
+  set_fact:
+    merged: "{{ original | combine(patch, recursive=True) }}"
+
+- name: Write merged YAML to file
+  copy:
+    content: "{{ merged | to_nice_yaml }}"
+    dest: /etc/kubernetes/kubeadm-config-ClusterConfiguration-final.yaml
+
+# TODO init components
