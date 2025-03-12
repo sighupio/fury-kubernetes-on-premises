@@ -58,6 +58,10 @@
     src: patches/kube-controller-manager0+json.json.j2
     dest: "{{ kubeadm_patches_path }}/kube-controller-manager0+json.json"
 
+- include_tasks: reconfigure-kube-star-components.yml
+  when:
+    - (not super_admin_conf_stat_result.stat.exists | default(false)) and (not admin_conf_stat_result.stat.exists)
+
 - name: Initializing master
   command: "kubeadm init --config={{ kubeadm_config_file }}"
   when:
