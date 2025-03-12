@@ -1,26 +1,24 @@
+# TODO add a backup for the current configmap with date-time, to be able to restore
+
 - name: Dump kubeadm-config
-  ansible.builtin.command: kubectl get cm kubeadm-config -o jsonpath='{.data.ClusterConfiguration}' --kubeconfig /etc/kubernetes/admin.conf > /etc/kubernetes/kubeadm-config-ClusterConfiguration-dump.yaml
+  ansible.builtin.shell: |
+    echo 'metadata:'
+    echo '  name: kubeadm-config'
+    kubectl -n kube-system get cm kubeadm-config -o jsonpath='{.data.ClusterConfiguration}' --kubeconfig /etc/kubernetes/admin.conf
+  register: command_output
+
+- name: Write the command output to a file
+  copy:
+    content: "{{ command_output.stdout }}"
+    dest: /etc/kubernetes/kubeadm-config-ClusterConfiguration-dump.yaml
 
 - name: Generate patch file from template
   template:
     src: patch-ClusterConfiguration.yml.j2
     dest: /etc/kubernetes/kubeadm-config-ClusterConfiguration-patch.yaml
 
-- name: Read original YAML
-  set_fact:
-    original: "{{ lookup('file', '/etc/kubernetes/kubeadm-config-ClusterConfiguration-dump.yaml') | from_yaml }}"
+# TODO copy kustomization.yaml and openapi json file to the node
 
-- name: Read patch YAML
-  set_fact:
-    patch: "{{ lookup('file', '/etc/kubernetes/kubeadm-config-ClusterConfiguration-patch.yaml') | from_yaml }}"
+# TODO generate final config with kustomize and apply the CM with kubectl (the CM should have the ClusterConfiguration key)
 
-- name: Merge patch into original
-  set_fact:
-    merged: "{{ original | combine(patch, recursive=True) }}"
-
-- name: Write merged YAML to file
-  copy:
-    content: "{{ merged | to_nice_yaml }}"
-    dest: /etc/kubernetes/kubeadm-config-ClusterConfiguration-final.yaml
-
-# TODO init components
+# TODO init components to regenerate static manifests
