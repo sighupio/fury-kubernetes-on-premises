@@ -1,4 +1,4 @@
-# On Premises module release v1.32.0
+# On Premises module release v1.32.3
 
 Welcome to the latest release of `on-premises` module of [`Kubernetes Fury Distribution`](https://github.com/sighupio/fury-distribution) maintained by SIGHUP team.
 
