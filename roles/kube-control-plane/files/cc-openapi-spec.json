@@ -1,0 +1,34 @@
+{
+  "definitions": {
+      "v1beta4.ClusterConfiguration": {
+          "type": "object",
+          "properties": {
+              "apiServer": {
+                  "properties": {
+                      "extraArgs": {
+                          "type": "array",
+                          "x-kubernetes-patch-merge-key": "name",
+                          "x-kubernetes-patch-strategy": "merge",
+                          "items": {
+                              "type": "object",
+                              "properties": {
+                                  "name": {
+                                      "type": "string"
+                                  },
+                                  "value": {
+                                      "type": "string"
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+        "x-kubernetes-group-version-kind": [{
+            "group": "kubeadm.k8s.io",
+            "kind": "ClusterConfiguration",
+            "version": "v1beta4"
+        }]
+    }
+  }
+}
