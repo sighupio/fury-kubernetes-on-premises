@@ -1,24 +1,89 @@
-# TODO add a backup for the current configmap with date-time, to be able to restore
+- name: Check if cm exists
+  command: kubectl -n kube-system get cm kubeadm-config --kubeconfig /etc/kubernetes/admin.conf
+  register: kubeadm_cm_check
+  failed_when: kubeadm_cm_check.rc != 0
 
-- name: Dump kubeadm-config
+- name: Set backup timestamp
+  ansible.builtin.set_fact:
+    timestamp: "{{ lookup('pipe', 'date +%Y-%m-%d_%H-%M-%S') }}"
+
+- name: Backup kubeadm-config
   ansible.builtin.shell: |
-    echo 'metadata:'
-    echo '  name: kubeadm-config'
+    kubectl -n kube-system get cm kubeadm-config -o yaml --kubeconfig /etc/kubernetes/admin.conf > /etc/kubernetes/kubeadm-config-backup-{{ timestamp }}.yaml
+  when: kubeadm_cm_check.rc == 0
+
+- name: Dump kubeadm-config data
+  ansible.builtin.shell: |
     kubectl -n kube-system get cm kubeadm-config -o jsonpath='{.data.ClusterConfiguration}' --kubeconfig /etc/kubernetes/admin.conf
+  when: kubeadm_cm_check.rc == 0
   register: command_output
 
 - name: Write the command output to a file
-  copy:
+  ansible.builtin.copy:
     content: "{{ command_output.stdout }}"
     dest: /etc/kubernetes/kubeadm-config-ClusterConfiguration-dump.yaml
 
+- name: Ensure apiVersion
+  ansible.builtin.lineinfile:
+    path: /etc/kubernetes/kubeadm-config-ClusterConfiguration-dump.yaml
+    line: "apiVersion: kubeadm.k8s.io/v1beta4"
+    insertbefore: BOF
+  when: command_output.rc == 0
+
+- name: Add metadata field 
+  ansible.builtin.lineinfile:
+    path: /etc/kubernetes/kubeadm-config-ClusterConfiguration-dump.yaml
+    line: "metadata:"
+    insertafter: "apiVersion: kubeadm.k8s.io/v1beta4"
+  when: command_output.rc == 0
+
+- name: Add name field
+  ansible.builtin.lineinfile:
+    path: /etc/kubernetes/kubeadm-config-ClusterConfiguration-dump.yaml
+    line: "  name: kubeadm-config"
+    insertafter: "metadata:"
+  when: command_output.rc == 0
+
+# TODO check if there is this resource on the upstream repo 
+- name: Copy OpenAPI spec file to node
+  ansible.builtin.copy:
+    src: cc-openapi-spec.json
+    dest: /etc/kubernetes/cc-openapi-spec.json
+
 - name: Generate patch file from template
-  template:
+  ansible.builtin.template:
     src: patch-ClusterConfiguration.yml.j2
     dest: /etc/kubernetes/kubeadm-config-ClusterConfiguration-patch.yaml
 
-# TODO copy kustomization.yaml and openapi json file to the node
+- name: Copy kustomization file 
+  ansible.builtin.copy:
+    src: kustomization.yaml
+    dest: /etc/kubernetes/kustomization.yaml
 
-# TODO generate final config with kustomize and apply the CM with kubectl (the CM should have the ClusterConfiguration key)
+- name: Kustomize final file
+  ansible.builtin.shell: |
+    kubectl kustomize /etc/kubernetes/ > /etc/kubernetes/kubeadm-config-final.yaml
 
-# TODO init components to regenerate static manifests
+#TODO add validation step here
+
+- name: Apply the new cm
+  ansible.builtin.shell: |
+    kubectl create configmap kubeadm-config -n kube-system --from-file=ClusterConfiguration=/etc/kubernetes/kubeadm-config-final.yaml --dry-run=client -o yaml | kubectl apply -f -
+
+- name: Exec init phase
+  ansible.builtin.shell: |
+    kubeadm init phase control-plane all --config /etc/kubernetes/kubeadm-config-final.yaml
+
+# - name: Debug
+#   ansible.builtin.shell: |
+#     cat /etc/kubernetes/manifests/kube-apiserver.yaml
+#   register: apiserver_manifest
+
+# - name: Debug
+#   ansible.builtin.debug:
+#     msg: "{{ apiserver_manifest.stdout }}"
+
+- name: Restart kubelet to apply changes
+  ansible.builtin.systemd:
+    name: kubelet
+    state: restarted
