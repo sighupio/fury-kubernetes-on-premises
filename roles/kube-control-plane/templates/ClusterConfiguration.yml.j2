@@ -3,10 +3,6 @@ kind: ClusterConfiguration
 metadata:
   name: kubeadm-config
 
-# clusterName: {{ kubernetes_cluster_name }}
-# kubernetesVersion: {{ kubernetes_version }}
-# controlPlaneEndpoint: {{ kubernetes_control_plane_address }}
-
 etcd:
   external:
     endpoints:
@@ -14,14 +10,11 @@ etcd:
     caFile: {{ etcd.caFile }}
     certFile: {{ etcd.certFile }}
     keyFile: {{ etcd.keyFile }}
-
 imageRepository: "{{ kubernetes_image_registry }}"
-
 dns:
 {% if coredns_image_prefix != "" %}
   imageRepository: {{ kubernetes_image_registry }}{{ coredns_image_prefix }}
 {% endif %}
-
 apiServer:
 {% if kubernetes_apiserver_certSANs | length %}
   certSANs:
@@ -145,7 +138,7 @@ apiServer:
     readOnly: true
     pathType: File
 {% endif %}
-  timeoutForControlPlane: 4m0s
+  timeoutForControlPlane: null
 scheduler:
   extraArgs:
 {% if tls_cipher_suites != "" %}
@@ -156,8 +149,6 @@ scheduler:
     - name: tls-cipher-suites
       $patch: delete
 {% endif %}
-    - name: bind-address
-      value: {{ ansible_default_ipv4.address }}
 controllerManager:
   extraArgs:
 {% if tls_cipher_suites != "" %}
@@ -168,8 +159,6 @@ controllerManager:
     - name: tls-cipher-suites
       $patch: delete
 {% endif %}
-    - name: bind-address
-      value: {{ ansible_default_ipv4.address }}
 {% if kubernetes_cloud_config != "" %}
     - name: cloud-config
       value: {{ kubernetes_cloud_config }}

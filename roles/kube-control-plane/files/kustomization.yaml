@@ -8,7 +8,7 @@ resources:
   - kubeadm-config-ClusterConfiguration-dump.yaml
 
 patches:
-  - path: kubeadm-config-ClusterConfiguration-patch.yaml
+  - path: ClusterConfiguration-patch.yaml
     target: 
       kind: ClusterConfiguration
       name: kubeadm-config

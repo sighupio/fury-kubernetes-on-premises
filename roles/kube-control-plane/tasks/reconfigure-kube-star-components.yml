@@ -1,89 +1,90 @@
-- name: Check if cm exists
-  command: kubectl -n kube-system get cm kubeadm-config --kubeconfig /etc/kubernetes/admin.conf
-  register: kubeadm_cm_check
-  failed_when: kubeadm_cm_check.rc != 0
+- name: Ensuring the kubeadm-config backup directory exists
+  ansible.builtin.file:
+    path: "{{ kubeadm_config_path }}/backups/"
+    state: directory
+    mode: "0755"
 
-- name: Set backup timestamp
+- name: Set timestamp
   ansible.builtin.set_fact:
     timestamp: "{{ lookup('pipe', 'date +%Y-%m-%d_%H-%M-%S') }}"
 
-- name: Backup kubeadm-config
-  ansible.builtin.shell: |
-    kubectl -n kube-system get cm kubeadm-config -o yaml --kubeconfig /etc/kubernetes/admin.conf > /etc/kubernetes/kubeadm-config-backup-{{ timestamp }}.yaml
-  when: kubeadm_cm_check.rc == 0
+- name: Backup current kubeadm-config configmap
+  ansible.builtin.shell: >
+    kubectl -n kube-system get cm kubeadm-config
+    -o yaml --kubeconfig /etc/kubernetes/admin.conf
+    > {{ kubeadm_config_path }}/backups/kubeadm-config-backup-{{ timestamp }}.yaml
+  changed_when: false
 
 - name: Dump kubeadm-config data
-  ansible.builtin.shell: |
-    kubectl -n kube-system get cm kubeadm-config -o jsonpath='{.data.ClusterConfiguration}' --kubeconfig /etc/kubernetes/admin.conf
-  when: kubeadm_cm_check.rc == 0
-  register: command_output
+  ansible.builtin.shell: >
+    kubectl -n kube-system get cm kubeadm-config
+    -o jsonpath='{.data.ClusterConfiguration}'
+    --kubeconfig /etc/kubernetes/admin.conf
+    > {{ kubeadm_config_path }}/kubeadm-config-ClusterConfiguration-dump.yaml
+  changed_when: false
 
-- name: Write the command output to a file
-  ansible.builtin.copy:
-    content: "{{ command_output.stdout }}"
-    dest: /etc/kubernetes/kubeadm-config-ClusterConfiguration-dump.yaml
-
-- name: Ensure apiVersion
+- name: Add metadata field on kubeadm-config dump file
   ansible.builtin.lineinfile:
-    path: /etc/kubernetes/kubeadm-config-ClusterConfiguration-dump.yaml
-    line: "apiVersion: kubeadm.k8s.io/v1beta4"
-    insertbefore: BOF
-  when: command_output.rc == 0
-
-- name: Add metadata field 
-  ansible.builtin.lineinfile:
-    path: /etc/kubernetes/kubeadm-config-ClusterConfiguration-dump.yaml
+    path: "{{ kubeadm_config_path }}/kubeadm-config-ClusterConfiguration-dump.yaml"
     line: "metadata:"
-    insertafter: "apiVersion: kubeadm.k8s.io/v1beta4"
-  when: command_output.rc == 0
+    insertbefore: BOF
+    state: present
+    firstmatch: true
+    regexp: "^metadata:$"
 
-- name: Add name field
+- name: Add metadata.name field on kubeadm-config dump file
   ansible.builtin.lineinfile:
-    path: /etc/kubernetes/kubeadm-config-ClusterConfiguration-dump.yaml
+    path: "{{ kubeadm_config_path }}/kubeadm-config-ClusterConfiguration-dump.yaml"
     line: "  name: kubeadm-config"
-    insertafter: "metadata:"
-  when: command_output.rc == 0
+    insertafter: "^metadata:$"
+    state: present
+    firstmatch: true
+    regexp: "^  name: kubeadm-config$"
 
-# TODO check if there is this resource on the upstream repo 
-- name: Copy OpenAPI spec file to node
+- name: Copy openapi spec file
   ansible.builtin.copy:
     src: cc-openapi-spec.json
-    dest: /etc/kubernetes/cc-openapi-spec.json
+    dest: "{{ kubeadm_config_path }}/cc-openapi-spec.json"
+    mode: '0644'
 
-- name: Generate patch file from template
-  ansible.builtin.template:
-    src: patch-ClusterConfiguration.yml.j2
-    dest: /etc/kubernetes/kubeadm-config-ClusterConfiguration-patch.yaml
-
-- name: Copy kustomization file 
+- name: Copy kustomization file
   ansible.builtin.copy:
     src: kustomization.yaml
-    dest: /etc/kubernetes/kustomization.yaml
+    dest: "{{ kubeadm_config_path }}/kustomization.yaml"
+    mode: '0644'
+  changed_when: false
 
-- name: Kustomize final file
+- name: Generate kubeadm-config new configuration
   ansible.builtin.shell: |
-    kubectl kustomize /etc/kubernetes/ > /etc/kubernetes/kubeadm-config-final.yaml
+    kubectl kustomize {{ kubeadm_config_path }}/ > {{ kubeadm_config_path }}/ClusterConfiguration-patched.yaml
+  changed_when: false
 
-#TODO add validation step here
+- name: Remove metadata field from kubeadm-config patched file
+  ansible.builtin.lineinfile:
+    path: "{{ kubeadm_config_path }}/ClusterConfiguration-patched.yaml"
+    regexp: "^metadata:$"
+    state: absent
 
-- name: Apply the new cm
+- name: Remove metadata.name field from kubeadm-config patched file
+  ansible.builtin.lineinfile:
+    path: "{{ kubeadm_config_path }}/ClusterConfiguration-patched.yaml"
+    regexp: "^  name: kubeadm-config$"
+    state: absent
+
+- name: Apply new kubeadm-config configmap
+  ansible.builtin.shell: >
+    set -o pipefail &&
+    kubectl create configmap kubeadm-config -n kube-system
+    --from-file=ClusterConfiguration={{ kubeadm_config_path }}/ClusterConfiguration-patched.yaml
+    --dry-run=client -o yaml | kubectl apply -f -
+  changed_when: false
+
+- name: Init control-plane components
   ansible.builtin.shell: |
-    kubectl create configmap kubeadm-config -n kube-system --from-file=ClusterConfiguration=/etc/kubernetes/kubeadm-config-final.yaml --dry-run=client -o yaml | kubectl apply -f -
+    kubeadm init phase control-plane all --config {{ kubeadm_config_path }}/ClusterConfiguration-patched.yaml
+  changed_when: false
 
-- name: Exec init phase
-  ansible.builtin.shell: |
-    kubeadm init phase control-plane all --config /etc/kubernetes/kubeadm-config-final.yaml
-
-# - name: Debug
-#   ansible.builtin.shell: |
-#     cat /etc/kubernetes/manifests/kube-apiserver.yaml
-#   register: apiserver_manifest
-
-# - name: Debug
-#   ansible.builtin.debug:
-#     msg: "{{ apiserver_manifest.stdout }}"
-
-- name: Restart kubelet to apply changes
+- name: Restart kubelet service
   ansible.builtin.systemd:
     name: kubelet
     state: restarted
