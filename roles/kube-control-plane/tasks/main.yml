@@ -51,6 +51,12 @@
     src: patches/kube-scheduler0+json.json.j2
     dest: "{{ kubeadm_patches_path }}/kube-scheduler0+json.json"
 
+- name: Copy kube-scheduler patch files for versions greater or equal to 1.32.0
+  ansible.builtin.template:
+    src: patches/kube-scheduler1+json.json.j2
+    dest: "{{ kubeadm_patches_path }}/kube-scheduler1+json.json"
+  when: kubernetes_version is version('1.32.0', 'ge', version_type='semver')
+
 - name: Copy kube-controller-manager patch files
   ansible.builtin.template:
     src: patches/kube-controller-manager0+json.json.j2
