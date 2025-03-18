@@ -1,0 +1,362 @@
+apiVersion: kubelet.config.k8s.io/v1beta1
+kind: KubeletConfiguration
+metadata:
+  name: kubelet-config
+
+{% if enable_server is defined %}
+enableServer: {{ enable_server }}
+{% endif %}
+{% if static_pod_path is defined %}
+staticPodPath: {{ static_pod_path }}
+{% endif %}
+{% if pod_logs_dir is defined %}
+podLogsDir: {{ pod_logs_dir }}
+{% endif %}
+{% if sync_frequency is defined %}
+syncFrequency: {{ sync_frequency }}
+{% endif %}
+{% if file_check_frequency is defined %}
+fileCheckFrequency: {{ file_check_frequency }}
+{% endif %}
+{% if http_check_frequency is defined %}
+httpCheckFrequency: {{ http_check_frequency }}
+{% endif %}
+{% if static_pod_url is defined %}
+staticPodURL: {{ static_pod_url }}
+{% endif %}
+{% if static_pod_url_header is defined %}
+staticPodURLHeader: {{ static_pod_url_header | to_yaml | indent(2) }}
+{% endif %}
+{% if address is defined %}
+address: {{ address }}
+{% endif %}
+{% if port is defined %}
+port: {{ port }}
+{% endif %}
+{% if read_only_port is defined %}
+readOnlyPort: {{ read_only_port }}
+{% endif %}
+{% if tls_cert_file is defined %}
+tlsCertFile: {{ tls_cert_file }}
+{% endif %}
+{% if tls_private_key_file is defined %}
+tlsPrivateKeyFile: {{ tls_private_key_file }}
+{% endif %}
+{% if tls_cipher_suites is defined %}
+tlsCipherSuites: {{ tls_cipher_suites | to_yaml | indent(2) }}
+{% endif %}
+{% if tls_min_version is defined %}
+tlsMinVersion: {{ tls_min_version }}
+{% endif %}
+{% if rotate_certificates is defined %}
+rotateCertificates: {{ rotate_certificates }}
+{% endif %}
+{% if server_tls_bootstrap is defined %}
+serverTLSBootstrap: {{ server_tls_bootstrap }}
+{% endif %}
+{% if authentication is defined %}
+authentication: {{ authentication | to_yaml | indent(2) }}
+{% endif %}
+{% if authorization is defined %}
+authorization: {{ authorization | to_yaml | indent(2) }}
+{% endif %}
+{% if registry_pull_qps is defined %}
+registryPullQPS: {{ registry_pull_qps }}
+{% endif %}
+{% if registry_burst is defined %}
+registryBurst: {{ registry_burst }}
+{% endif %}
+{% if event_record_qps is defined %}
+eventRecordQPS: {{ event_record_qps }}
+{% endif %}
+{% if event_burst is defined %}
+eventBurst: {{ event_burst }}
+{% endif %}
+{% if enable_debugging_handlers is defined %}
+enableDebuggingHandlers: {{ enable_debugging_handlers }}
+{% endif %}
+{% if enable_contention_profiling is defined %}
+enableContentionProfiling: {{ enable_contention_profiling }}
+{% endif %}
+{% if healthz_port is defined %}
+healthzPort: {{ healthz_port }}
+{% endif %}
+{% if healthz_bind_address is defined %}
+healthzBindAddress: {{ healthz_bind_address }}
+{% endif %}
+{% if oom_score_adj is defined %}
+oomScoreAdj: {{ oom_score_adj }}
+{% endif %}
+{% if cluster_domain is defined %}
+clusterDomain: {{ cluster_domain }}
+{% endif %}
+{% if cluster_dns is defined %}
+clusterDNS: {{ cluster_dns | to_yaml | indent(2) }}
+{% endif %}
+{% if streaming_connection_idle_timeout is defined %}
+streamingConnectionIdleTimeout: {{ streaming_connection_idle_timeout }}
+{% endif %}
+{% if node_status_update_frequency is defined %}
+nodeStatusUpdateFrequency: {{ node_status_update_frequency }}
+{% endif %}
+{% if node_status_report_frequency is defined %}
+nodeStatusReportFrequency: {{ node_status_report_frequency }}
+{% endif %}
+{% if node_lease_duration_seconds is defined %}
+nodeLeaseDurationSeconds: {{ node_lease_duration_seconds }}
+{% endif %}
+{% if image_minimum_gc_age is defined %}
+imageMinimumGCAge: {{ image_minimum_gc_age }}
+{% endif %}
+{% if image_maximum_gc_age is defined %}
+imageMaximumGCAge: {{ image_maximum_gc_age }}
+{% endif %}
+{% if image_gc_high_threshold_percent is defined %}
+imageGCHighThresholdPercent: {{ image_gc_high_threshold_percent }}
+{% endif %}
+{% if image_gc_low_threshold_percent is defined %}
+imageGCLowThresholdPercent: {{ image_gc_low_threshold_percent }}
+{% endif %}
+{% if volume_stats_agg_period is defined %}
+volumeStatsAggPeriod: {{ volume_stats_agg_period }}
+{% endif %}
+{% if kubelet_cgroups is defined %}
+kubeletCgroups: {{ kubelet_cgroups }}
+{% endif %}
+{% if system_cgroups is defined %}
+systemCgroups: {{ system_cgroups }}
+{% endif %}
+{% if cgroup_root is defined %}
+cgroupRoot: {{ cgroup_root }}
+{% endif %}
+{% if cgroups_per_qos is defined %}
+cgroupsPerQOS: {{ cgroups_per_qos }}
+{% endif %}
+{% if cgroup_driver is defined %}
+cgroupDriver: {{ cgroup_driver }}
+{% endif %}
+{% if cpu_manager_policy is defined %}
+cpuManagerPolicy: {{ cpu_manager_policy }}
+{% endif %}
+{% if single_process_oom_kill is defined %}
+singleProcessOOMKill: {{ single_process_oom_kill }}
+{% endif %}
+{% if cpu_manager_policy_options is defined %}
+cpuManagerPolicyOptions: {{ cpu_manager_policy_options | to_yaml | indent(2) }}
+{% endif %}
+{% if cpu_manager_reconcile_period is defined %}
+cpuManagerReconcilePeriod: {{ cpu_manager_reconcile_period }}
+{% endif %}
+{% if memory_manager_policy is defined %}
+memoryManagerPolicy: {{ memory_manager_policy }}
+{% endif %}
+{% if topology_manager_policy is defined %}
+topologyManagerPolicy: {{ topology_manager_policy }}
+{% endif %}
+{% if topology_manager_scope is defined %}
+topologyManagerScope: {{ topology_manager_scope }}
+{% endif %}
+{% if topology_manager_policy_options is defined %}
+topologyManagerPolicyOptions: {{ topology_manager_policy_options | to_yaml | indent(2) }}
+{% endif %}
+{% if qos_reserved is defined %}
+qosReserved: {{ qos_reserved | to_yaml | indent(2) }}
+{% endif %}
+{% if runtime_request_timeout is defined %}
+runtimeRequestTimeout: {{ runtime_request_timeout }}
+{% endif %}
+{% if hairpin_mode is defined %}
+hairpinMode: {{ hairpin_mode }}
+{% endif %}
+{% if max_pods is defined %}
+maxPods: {{ max_pods }}
+{% endif %}
+{% if pod_cidr is defined %}
+podCIDR: {{ pod_cidr }}
+{% endif %}
+{% if pod_pids_limit is defined %}
+podPidsLimit: {{ pod_pids_limit }}
+{% endif %}
+{% if resolv_conf is defined %}
+resolvConf: {{ resolv_conf }}
+{% endif %}
+{% if run_once is defined %}
+runOnce: {{ run_once }}
+{% endif %}
+{% if cpu_cfs_quota is defined %}
+cpuCFSQuota: {{ cpu_cfs_quota }}
+{% endif %}
+{% if cpu_cfs_quota_period is defined %}
+cpuCFSQuotaPeriod: {{ cpu_cfs_quota_period }}
+{% endif %}
+{% if node_status_max_images is defined %}
+nodeStatusMaxImages: {{ node_status_max_images }}
+{% endif %}
+{% if max_open_files is defined %}
+maxOpenFiles: {{ max_open_files }}
+{% endif %}
+{% if content_type is defined %}
+contentType: {{ content_type }}
+{% endif %}
+{% if kube_api_qps is defined %}
+kubeAPIQPS: {{ kube_api_qps }}
+{% endif %}
+{% if kube_api_burst is defined %}
+kubeAPIBurst: {{ kube_api_burst }}
+{% endif %}
+{% if serialize_image_pulls is defined %}
+serializeImagePulls: {{ serialize_image_pulls }}
+{% endif %}
+{% if max_parallel_image_pulls is defined %}
+maxParallelImagePulls: {{ max_parallel_image_pulls }}
+{% endif %}
+{% if eviction_hard is defined %}
+evictionHard: {{ eviction_hard | to_yaml | indent(2) }}
+{% endif %}
+{% if eviction_soft is defined %}
+evictionSoft: {{ eviction_soft | to_yaml | indent(2) }}
+{% endif %}
+{% if eviction_soft_grace_period is defined %}
+evictionSoftGracePeriod: {{ eviction_soft_grace_period | to_yaml | indent(2) }}
+{% endif %}
+{% if eviction_pressure_transition_period is defined %}
+evictionPressureTransitionPeriod: {{ eviction_pressure_transition_period }}
+{% endif %}
+{% if eviction_max_pod_grace_period is defined %}
+evictionMaxPodGracePeriod: {{ eviction_max_pod_grace_period }}
+{% endif %}
+{% if eviction_minimum_reclaim is defined %}
+evictionMinimumReclaim: {{ eviction_minimum_reclaim | to_yaml | indent(2) }}
+{% endif %}
+{% if pods_per_core is defined %}
+podsPerCore: {{ pods_per_core }}
+{% endif %}
+{% if enable_controller_attach_detach is defined %}
+enableControllerAttachDetach: {{ enable_controller_attach_detach }}
+{% endif %}
+{% if protect_kernel_defaults is defined %}
+protectKernelDefaults: {{ protect_kernel_defaults }}
+{% endif %}
+{% if make_ip_tables_util_chains is defined %}
+makeIPTablesUtilChains: {{ make_ip_tables_util_chains }}
+{% endif %}
+{% if iptables_masquerade_bit is defined %}
+iptablesMasqueradeBit: {{ iptables_masquerade_bit }}
+{% endif %}
+{% if iptables_drop_bit is defined %}
+iptablesDropBit: {{ iptables_drop_bit }}
+{% endif %}
+{% if feature_gates is defined %}
+featureGates: {{ feature_gates | to_yaml | indent(2) }}
+{% endif %}
+{% if fail_swap_on is defined %}
+failSwapOn: {{ fail_swap_on }}
+{% endif %}
+{% if memory_swap is defined %}
+memorySwap: {{ memory_swap | to_yaml | indent(2) }}
+{% endif %}
+{% if container_log_max_size is defined %}
+containerLogMaxSize: {{ container_log_max_size }}
+{% endif %}
+{% if container_log_max_files is defined %}
+containerLogMaxFiles: {{ container_log_max_files }}
+{% endif %}
+{% if container_log_max_workers is defined %}
+containerLogMaxWorkers: {{ container_log_max_workers }}
+{% endif %}
+{% if container_log_monitor_interval is defined %}
+containerLogMonitorInterval: {{ container_log_monitor_interval }}
+{% endif %}
+{% if config_map_and_secret_change_detection_strategy is defined %}
+configMapAndSecretChangeDetectionStrategy: {{ config_map_and_secret_change_detection_strategy }}
+{% endif %}
+{% if system_reserved is defined %}
+systemReserved: {{ system_reserved | to_yaml | indent(2) }}
+{% endif %}
+{% if kube_reserved is defined %}
+kubeReserved: {{ kube_reserved | to_yaml | indent(2) }}
+{% endif %}
+{% if reserved_system_cpus is defined %}
+reservedSystemCPUs: {{ reserved_system_cpus }}
+{% endif %}
+{% if show_hidden_metrics_for_version is defined %}
+showHiddenMetricsForVersion: {{ show_hidden_metrics_for_version }}
+{% endif %}
+{% if system_reserved_cgroup is defined %}
+systemReservedCgroup: {{ system_reserved_cgroup }}
+{% endif %}
+{% if kube_reserved_cgroup is defined %}
+kubeReservedCgroup: {{ kube_reserved_cgroup }}
+{% endif %}
+{% if enforce_node_allocatable is defined %}
+enforceNodeAllocatable: {{ enforce_node_allocatable | to_yaml | indent(2) }}
+{% endif %}
+{% if allowed_unsafe_sysctls is defined %}
+allowedUnsafeSysctls: {{ allowed_unsafe_sysctls | to_yaml | indent(2) }}
+{% endif %}
+{% if volume_plugin_dir is defined %}
+volumePluginDir: {{ volume_plugin_dir }}
+{% endif %}
+{% if provider_id is defined %}
+providerID: {{ provider_id }}
+{% endif %}
+{% if kernel_memcg_notification is defined %}
+kernelMemcgNotification: {{ kernel_memcg_notification }}
+{% endif %}
+{% if logging is defined %}
+logging: {{ logging | to_yaml | indent(2) }}
+{% endif %}
+{% if enable_system_log_handler is defined %}
+enableSystemLogHandler: {{ enable_system_log_handler }}
+{% endif %}
+{% if enable_system_log_query is defined %}
+enableSystemLogQuery: {{ enable_system_log_query }}
+{% endif %}
+{% if shutdown_grace_period is defined %}
+shutdownGracePeriod: {{ shutdown_grace_period }}
+{% endif %}
+{% if shutdown_grace_period_critical_pods is defined %}
+shutdownGracePeriodCriticalPods: {{ shutdown_grace_period_critical_pods }}
+{% endif %}
+{% if shutdown_grace_period_by_pod_priority is defined %}
+shutdownGracePeriodByPodPriority: {{ shutdown_grace_period_by_pod_priority | to_yaml | indent(2) }}
+{% endif %}
+{% if crash_loop_back_off is defined %}
+crashLoopBackOff: {{ crash_loop_back_off | to_yaml | indent(2) }}
+{% endif %}
+{% if reserved_memory is defined %}
+reservedMemory: {{ reserved_memory | to_yaml | indent(2) }}
+{% endif %}
+{% if enable_profiling_handler is defined %}
+enableProfilingHandler: {{ enable_profiling_handler }}
+{% endif %}
+{% if enable_debug_flags_handler is defined %}
+enableDebugFlagsHandler: {{ enable_debug_flags_handler }}
+{% endif %}
+{% if seccomp_default is defined %}
+seccompDefault: {{ seccomp_default }}
+{% endif %}
+{% if memory_throttling_factor is defined %}
+memoryThrottlingFactor: {{ memory_throttling_factor }}
+{% endif %}
+{% if register_with_taints is defined %}
+registerWithTaints: {{ register_with_taints | to_yaml | indent(2) }}
+{% endif %}
+{% if register_node is defined %}
+registerNode: {{ register_node }}
+{% endif %}
+{% if tracing is defined %}
+tracing: {{ tracing | to_yaml | indent(2) }}
+{% endif %}
+{% if local_storage_capacity_isolation is defined %}
+localStorageCapacityIsolation: {{ local_storage_capacity_isolation }}
+{% endif %}
+{% if container_runtime_endpoint is defined %}
+containerRuntimeEndpoint: {{ container_runtime_endpoint }}
+{% endif %}
+{% if image_service_endpoint is defined %}
+imageServiceEndpoint: {{ image_service_endpoint }}
+{% endif %}
+{% if fail_cgroup_v1 is defined %}
+failCgroupV1: {{ fail_cgroup_v1 }}
+{% endif %}
