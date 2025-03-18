@@ -15,3 +15,9 @@
     state: restarted
     daemon_reload: yes
   listen: Restart kubelet
+
+- name: Apply kubelet-config patches
+  ansible.builtin.shell: |
+    kubeadm upgrade node phase kubelet-config --patches {{ kubelet_config_path }}/patches/ --kubeconfig /etc/kubernetes/admin.conf
+  changed_when: false
+  listen: Apply kubelet-config patches
