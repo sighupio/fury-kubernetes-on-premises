@@ -94,23 +94,6 @@
               }
             }
           },
-          "etcd": {
-            "type": "object",
-            "properties": {
-              "external": {
-                "type": "object",
-                "properties": {
-                  "endpoints": {
-                    "type": "array",
-                    "x-kubernetes-patch-strategy": "merge"
-                  },
-                  "caFile": { "type": "string" },
-                  "certFile": { "type": "string" },
-                  "keyFile": { "type": "string" }
-                }
-              }
-            }
-          },
           "networking": {
             "type": "object",
             "properties": {
