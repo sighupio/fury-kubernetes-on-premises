@@ -42,9 +42,7 @@ This version is compatible with Kubernetes 1.32.3 plus the complete list in the 
 Check the [compatibility matrix][compatibility-matrix] for additional information about previous releases of the module.
 
 > [!WARNING]
-> Since ARM support is still in *beta*, at the moment there
-> is no support for HAProxy 3.0 in RHEL/RHEL-derivatives running
-> on ARM hardware.
+> Support for the ARM platform is still in beta status, the Load Balancers installed with the `haproxy` role are not currently supported for RHEL and RHEL derivatives running on ARM. Please use a different OS for the Load Balancers VMs (or disable them and create your own load balancer).
 
 ## Usage
 
@@ -66,7 +64,7 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 ```yaml
 roles:
   - name: on-premises
-    version: v1.32.0
+    version: v1.32.3
 ```
 
 1. Execute `furyctl legacy vendor -H` to download the roles
