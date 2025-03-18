@@ -40,8 +40,6 @@
 # We are patching the bind-address of the kube-scheduler and kube-controller-manager
 # to be able to scrape metrics from them (kubeadm's feault is 127.0.0.1), we have
 # to patch the liveness and startup probe too in consequence.
-# NOTE: the same patches used here are used for the upgrades, so if you add new
-# patches remember to add them also in the upgrade.yml file.
 - name: Ensuring the patches directory exists
   ansible.builtin.file:
     path: "{{ kubeadm_patches_path }}"
