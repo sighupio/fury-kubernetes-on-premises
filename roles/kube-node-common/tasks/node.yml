@@ -221,6 +221,14 @@
 
 # Finish remove kubelet server certificate,key for later renew when restart kubelet service
 
+- name: Check if kubelet config file exists
+  ansible.builtin.stat:
+    path: /var/lib/kubelet/config.yaml
+  register: kubelet_config_file
+
+- include_tasks: reconfigure-kubelet.yml
+  when: kubelet_config_file.stat.exists
+
 - name: Start and enable Kubelet service
   systemd:
     name: kubelet
