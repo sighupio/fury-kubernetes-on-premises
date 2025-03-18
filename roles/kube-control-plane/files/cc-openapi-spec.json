@@ -10,7 +10,7 @@
               "extraArgs": {
                 "type": "array",
                 "x-kubernetes-patch-merge-key": "name",
-                "x-kubernetes-patch-strategy": "merge,delete",
+                "x-kubernetes-patch-strategy": "merge",
                 "items": {
                   "type": "object",
                   "properties": {
@@ -23,7 +23,7 @@
               "extraVolumes": {
                 "type": "array",
                 "x-kubernetes-patch-merge-key": "name",
-                "x-kubernetes-patch-strategy": "merge,delete",
+                "x-kubernetes-patch-strategy": "merge",
                 "items": {
                   "type": "object",
                   "properties": {
@@ -38,9 +38,8 @@
               },
               "certSANs": {
                 "type": "array",
-                "x-kubernetes-patch-strategy": "merge,delete"
-              },
-              "timeoutForControlPlane": { "type": "string" }
+                "x-kubernetes-patch-strategy": "merge"
+              }
             }
           },
           "controllerManager": {
@@ -49,7 +48,7 @@
               "extraArgs": {
                 "type": "array",
                 "x-kubernetes-patch-merge-key": "name",
-                "x-kubernetes-patch-strategy": "merge,delete",
+                "x-kubernetes-patch-strategy": "merge",
                 "items": {
                   "type": "object",
                   "properties": {
@@ -62,7 +61,7 @@
               "extraVolumes": {
                 "type": "array",
                 "x-kubernetes-patch-merge-key": "name",
-                "x-kubernetes-patch-strategy": "merge,delete",
+                "x-kubernetes-patch-strategy": "merge",
                 "items": {
                   "type": "object",
                   "properties": {
@@ -83,7 +82,7 @@
               "extraArgs": {
                 "type": "array",
                 "x-kubernetes-patch-merge-key": "name",
-                "x-kubernetes-patch-strategy": "merge,delete",
+                "x-kubernetes-patch-strategy": "merge",
                 "items": {
                   "type": "object",
                   "properties": {
@@ -103,7 +102,7 @@
                 "properties": {
                   "endpoints": {
                     "type": "array",
-                    "x-kubernetes-patch-strategy": "merge,delete"
+                    "x-kubernetes-patch-strategy": "merge"
                   },
                   "caFile": { "type": "string" },
                   "certFile": { "type": "string" },
