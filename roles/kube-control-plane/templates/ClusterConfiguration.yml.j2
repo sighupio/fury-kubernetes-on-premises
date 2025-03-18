@@ -3,13 +3,6 @@ kind: ClusterConfiguration
 metadata:
   name: kubeadm-config
 
-etcd:
-  external:
-    endpoints:
-{{ etcd.endpoints | to_nice_yaml | indent(4, true) }}
-    caFile: {{ etcd.caFile }}
-    certFile: {{ etcd.certFile }}
-    keyFile: {{ etcd.keyFile }}
 imageRepository: "{{ kubernetes_image_registry }}"
 dns:
 {% if coredns_image_prefix != "" %}
