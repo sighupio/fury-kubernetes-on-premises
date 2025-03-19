@@ -73,10 +73,9 @@
 
 - name: Apply new kubeadm-config configmap
   ansible.builtin.shell: >
-    set -o pipefail &&
-    kubectl create configmap kubeadm-config -n kube-system
+    kubectl apply -f <(kubectl create configmap kubeadm-config -n kube-system
     --from-file=ClusterConfiguration={{ kubeadm_config_path }}/ClusterConfiguration-patched.yaml
-    --dry-run=client -o yaml | kubectl apply -f -
+    --dry-run=client -o yaml)
   changed_when: false
 
 - name: Init control-plane components
