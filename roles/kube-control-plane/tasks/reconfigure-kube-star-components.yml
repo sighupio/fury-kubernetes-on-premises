@@ -78,12 +78,10 @@
     --dry-run=client -o yaml)
   changed_when: false
 
-- name: Init control-plane components
+# By passing only the ClusterConfiguration object, the InitConfiguration patches are lost.
+# To fix this we need to pass the InitConfiguration object as well, using the kubeadm.yml.
+- name: Reflect ClusterConfiguration changes on control plane components
   ansible.builtin.shell: |
-    kubeadm init phase control-plane all --config {{ kubeadm_config_path }}/ClusterConfiguration-patched.yaml
+    kubeadm init phase control-plane all --config {{ kubeadm_config_file }}
   changed_when: false
-
-- name: Restart kubelet service
-  ansible.builtin.systemd:
-    name: kubelet
-    state: restarted
+  notify: Restart kubelet
