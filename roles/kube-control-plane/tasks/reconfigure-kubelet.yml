@@ -24,4 +24,6 @@
     src: KubeletConfiguration.yml.j2
     dest: "{{ kubelet_config_path }}/patches/kubeletconfiguration.yaml"
     mode: '0644'
-  notify: Apply kubelet-config patches
+  notify:
+    - Apply kubelet-config patches
+    - Restart kubelet
