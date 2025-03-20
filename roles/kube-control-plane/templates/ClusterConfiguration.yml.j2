@@ -14,11 +14,11 @@ apiServer:
 {{ kubernetes_apiserver_certSANs | to_nice_yaml | indent(2, true) -}}
 {% endif %}
   extraArgs:
-{% if tls_cipher_suites != "" %}
+{% if tls_cipher_suites is defined %}
     - name: tls-cipher-suites
       value: {{ tls_cipher_suites | join(',') }}
 {% endif %}
-{% if tls_cipher_suites == "" %}
+{% if tls_cipher_suites is not defined %}
     - name: tls-cipher-suites
       $patch: delete
 {% endif %}
@@ -134,21 +134,21 @@ apiServer:
   timeoutForControlPlane: null
 scheduler:
   extraArgs:
-{% if tls_cipher_suites != "" %}
+{% if tls_cipher_suites is defined %}
     - name: tls-cipher-suites
       value: {{ tls_cipher_suites | join(',') }}
 {% endif %}
-{% if tls_cipher_suites == "" %}
+{% if tls_cipher_suites is not defined %}
     - name: tls-cipher-suites
       $patch: delete
 {% endif %}
 controllerManager:
   extraArgs:
-{% if tls_cipher_suites != "" %}
+{% if tls_cipher_suites is defined %}
     - name: tls-cipher-suites
       value: {{ tls_cipher_suites | join(',') }}
 {% endif %}
-{% if tls_cipher_suites == "" %}
+{% if tls_cipher_suites is not defined %}
     - name: tls-cipher-suites
       $patch: delete
 {% endif %}

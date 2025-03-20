@@ -29,7 +29,7 @@ kubernetes_users_org: sighup
 kubernetes_users_kubeconfig_dir: /etc/kubernetes/users
 kubernetes_encryption_config: ""
 kubernetes_remote_encryption_config: "/etc/kubernetes/encryption-config.yml"
-tls_cipher_suites: ""
+
 etcd:
   endpoints:
     - "https://127.0.0.1:2379"
