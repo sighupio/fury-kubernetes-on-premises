@@ -85,5 +85,5 @@
 - name: Reflect ClusterConfiguration changes on control plane components
   ansible.builtin.shell: |
     kubeadm init phase control-plane all --config {{ kubeadm_config_file }}
-  changed_when: false
+  changed_when: true
   notify: Restart kubelet
