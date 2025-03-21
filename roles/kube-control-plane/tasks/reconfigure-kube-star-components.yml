@@ -75,7 +75,9 @@
   ansible.builtin.shell: >
     kubectl apply -f <(kubectl create configmap kubeadm-config -n kube-system
     --from-file=ClusterConfiguration={{ kubeadm_config_path }}/ClusterConfiguration-patched.yaml
-    --dry-run=client -o yaml)
+    --dry-run=client -o yaml) --kubeconfig /etc/kubernetes/admin.conf
+  args:
+    executable: /bin/bash
   changed_when: false
 
 # By passing only the ClusterConfiguration object, the InitConfiguration patches are lost.
