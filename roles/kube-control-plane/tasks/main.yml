@@ -51,6 +51,11 @@
     src: patches/kube-scheduler0+json.json.j2
     dest: "{{ kubeadm_patches_path }}/kube-scheduler0+json.json"
 
+# Kubernetes 1.32+ introduces the readinessProbe in kube-scheduler, so
+# we need two patch files to manage this. Kubeadm applies all patches that follow the
+# naming pattern kube-scheduler<INDEX>+json.json, where <INDEX> determines application order.
+# Now we have 2 patches, the index 0 common for all versions and the index 1
+# that's applied on top only for K8s 1.32.0 or newer.
 - name: Copy kube-scheduler patch files for versions greater than or equal to 1.32.0
   ansible.builtin.template:
     src: patches/kube-scheduler1+json.json.j2
