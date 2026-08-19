@@ -136,8 +136,13 @@
     --client-name={{ item | quote }} --org={{ kubernetes_users_org | quote }}
     > {{ [kubernetes_users_kubeconfig_dir, item ~ '.kubeconfig'] | path_join | quote }}
   with_items: "{{ kubernetes_users_names }}"
+  # No need to create the users in all the control plane nodes: only the copy of the first node
+  # goes to the local machine, thus the other nodes get a certificate that nobody receives.
+  run_once: true
 
 - name: Fix Kuberneters API server address in generated kubeconfigs
+  # run_once, because the previous task makes these files on the first node only.
+  run_once: true
   ansible.builtin.replace:
     path: "{{ kubernetes_users_kubeconfig_dir }}/{{item}}.kubeconfig"
     regexp: '^(\s*server: https://).*$'
