@@ -130,7 +130,11 @@
     state: directory
 
 - name: Creating Kubernetes Users with kubeadm
-  ansible.builtin.shell: "kubeadm kubeconfig user --config={{ kubeadm_config_file }} --client-name={{item}} --org={{kubernetes_users_org}} > {{ kubernetes_users_kubeconfig_dir }}/{{item}}.kubeconfig"
+  # The values go into a shell command, thus they are quoted: a user name can contain a space.
+  ansible.builtin.shell: >
+    kubeadm kubeconfig user --config={{ kubeadm_config_file }}
+    --client-name={{ item | quote }} --org={{ kubernetes_users_org | quote }}
+    > {{ [kubernetes_users_kubeconfig_dir, item ~ '.kubeconfig'] | path_join | quote }}
   with_items: "{{ kubernetes_users_names }}"
 
 - name: Fix Kuberneters API server address in generated kubeconfigs
